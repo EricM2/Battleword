@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameSetupActivity"
+    android:background="@color/colorPrimary">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/battleword" />
+
+    <Spinner
+        android:id="@+id/select_game_level_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:background="@color/colorPrimaryDark"
+        android:entries="@array/game_levels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"></Spinner>
+
+    <Button
+        android:id="@+id/play_solitaire"
+        android:layout_width="198dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="64dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="SOLITAIRE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_game_level_spinner" />
+
+    <Button
+        android:id="@+id/play_battle"
+        android:layout_width="176dp"
+        android:layout_height="152dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="BATTLE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play_solitaire"
+        app:layout_constraintVertical_bias="0.52" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
