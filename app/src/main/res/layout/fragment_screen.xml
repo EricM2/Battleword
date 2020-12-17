@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScreenFragment"
+    android:background="@drawable/screen_background">
+
+
+
+
+    <TextView
+        android:id="@+id/screen_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="_______________________________"
+        android:textSize="15dp"
+        android:letterSpacing="0.4"
+        tools:layout_editor_absoluteX="155dp"
+        tools:layout_editor_absoluteY="380dp" />
+
+    <!--<GridView
+        android:id="@+id/screen_grid"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:numColumns="31"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:listitem="@layout/screen_items" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

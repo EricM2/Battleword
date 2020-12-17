@@ -6,4 +6,7 @@
     <color name="colorTextOnPrimary">#000000</color>
     <color name="colorSegondary">#ffffff</color>
     <color name="transparent">#19000000</color>
+    <color name="fully_transparent">#01000000</color>
+    <color name="dark_transparent">#80000000</color>
+    <color name="primary_dark_transparent">#66c88719</color>
 </resources>

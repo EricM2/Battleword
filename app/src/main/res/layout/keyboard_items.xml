@@ -5,16 +5,17 @@
     android:layout_height="match_parent"
     >
 
-    <ImageView
-        android:id="@+id/key_background"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="@drawable/key_letter_shape"/>
+
     <Button
         android:id="@+id/key_letter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/a"/>
+    <ImageView
+        android:id="@+id/key_background"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        />
 
 
 

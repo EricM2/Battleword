@@ -2,6 +2,7 @@ package com.app.battle_word;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class CountDownActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                startGameActivity();
             }
         };
     }
@@ -33,5 +34,10 @@ public class CountDownActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         countDownTimer.start();
+    }
+
+    private void startGameActivity(){
+        Intent i = new Intent(this,PlayerControlActivity.class);
+        startActivity(i);
     }
 }
