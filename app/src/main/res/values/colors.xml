@@ -5,4 +5,5 @@
     <color name="colorPrimaryLight">#ffe97d</color>
     <color name="colorTextOnPrimary">#000000</color>
     <color name="colorSegondary">#ffffff</color>
+    <color name="transparent">#19000000</color>
 </resources>
