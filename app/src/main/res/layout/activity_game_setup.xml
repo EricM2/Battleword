@@ -5,46 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameSetupActivity"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/app_background">
+
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_width="0dp"
+        android:layout_height="73dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/battleword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/battleword" />
-
-    <Spinner
-        android:id="@+id/select_game_level_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:background="@color/colorPrimaryDark"
-        android:entries="@array/game_levels"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"></Spinner>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/play_solitaire"
-        android:layout_width="198dp"
-        android:layout_height="112dp"
-        android:layout_marginTop="56dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_background_1"
         android:text="SOLITAIRE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_game_level_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintBottom_toTopOf="@id/play_battle"/>
 
     <Button
         android:id="@+id/play_battle"
-        android:layout_width="198dp"
-        android:layout_height="112dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_background_1"
         android:text="BATTLE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

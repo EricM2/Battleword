@@ -3,6 +3,7 @@ package com.app.battle_word;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -45,7 +46,10 @@ public class KeyBoardFragment extends Fragment {
         return v;
     }
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     private List<Integer> buildKeyboardBackground(){
         List<Integer> res = new ArrayList<>();

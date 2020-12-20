@@ -26,10 +26,10 @@ public class GameSetupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_setup);
         selectedGameLevel = null;
         solitaireButton = findViewById(R.id.play_solitaire);
-        gameLevelSpinner = findViewById(R.id.select_game_level_spinner);
+        //gameLevelSpinner = findViewById(R.id.select_game_level_spinner);
         String[] gameLevels = getResources().getStringArray(R.array.game_levels);
-        gameLevelSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,gameLevels));
-        gameLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //gameLevelSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,gameLevels));
+        /*gameLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
@@ -48,18 +48,15 @@ public class GameSetupActivity extends AppCompatActivity {
                 selectedGameLevel = null;
 
             }
-        });
+        });*/
 
         solitaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectedGameLevel!=null){
+
                     Intent intent = solitaireIntent();
                     startActivity(intent);
-                }
-                else {
-                    Toast.makeText(GameSetupActivity.this, "Set the Level", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
     }
@@ -67,7 +64,7 @@ public class GameSetupActivity extends AppCompatActivity {
     private Intent solitaireIntent(){
         Intent intent = new Intent(this,CountDownActivity.class);
         intent.putExtra(MODE,"solitare");
-        intent.putExtra(LEVEL, selectedGameLevel);
+        //intent.putExtra(LEVEL, selectedGameLevel);
       return  intent;
     }
 }

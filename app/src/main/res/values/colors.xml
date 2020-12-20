@@ -4,9 +4,11 @@
     <color name="colorPrimaryDark">#c88719</color>
     <color name="colorPrimaryLight">#ffe97d</color>
     <color name="colorTextOnPrimary">#000000</color>
+    <color name="colorAccent">#AC48EF</color>
     <color name="colorSegondary">#ffffff</color>
     <color name="transparent">#19000000</color>
     <color name="fully_transparent">#01000000</color>
     <color name="dark_transparent">#80000000</color>
     <color name="primary_dark_transparent">#66c88719</color>
+    <color name="primary_light_transparent">#f6ffe97d</color>
 </resources>

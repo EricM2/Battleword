@@ -17,6 +17,7 @@ public class Utils {
             return false;
         }
     }
+    //String[] wordbank = new String[] ()
 
     public static Map<Integer,String> getKeyString(){
         Map<Integer,String> res = new HashMap<>();
@@ -59,6 +60,8 @@ public class Utils {
             ini+="_";
         return ini;
     }
+
+
 
     public static  String putCharInScreenText(String c,String requiredString,String currentScreenText){
 
