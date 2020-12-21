@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlayerControlActivity"></activity>
+        <activity android:name=".GameScenarioActivity"></activity>
+        <activity android:name=".PlayerControlActivity" />
         <activity android:name=".CountDownActivity" />
         <activity android:name=".GameSetupActivity" />
         <activity android:name=".MainActivity">

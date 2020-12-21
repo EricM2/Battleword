@@ -53,9 +53,17 @@ public class GameSetupActivity extends AppCompatActivity {
         solitaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    Intent intent;
+                    if(isFirstTime()){
+                       intent = gameScenarioIntent();
 
-                    Intent intent = solitaireIntent();
-                    startActivity(intent);
+                    }
+                    else{
+                        intent = solitaireIntent();
+
+                    }
+                startActivity(intent);
+
 
             }
         });
@@ -66,5 +74,15 @@ public class GameSetupActivity extends AppCompatActivity {
         intent.putExtra(MODE,"solitare");
         //intent.putExtra(LEVEL, selectedGameLevel);
       return  intent;
+    }
+    private Intent gameScenarioIntent(){
+
+        Intent intent = new Intent(this,GameScenarioActivity.class);
+        intent.putExtra(MODE,"solitare");
+        return  intent;
+    }
+
+    private boolean isFirstTime(){
+        return  true;
     }
 }
