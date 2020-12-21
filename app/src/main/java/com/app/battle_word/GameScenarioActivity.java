@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.app.battle_word.listeners.OnSwipeListener;
+
 public class GameScenarioActivity extends AppCompatActivity {
 
     private Button playNow;
@@ -37,11 +39,38 @@ public class GameScenarioActivity extends AppCompatActivity {
         slideIndicator2 = findViewById(R.id.slide_indicator_2);
         slideIndicator3 = findViewById(R.id.slide_indicator_3);
         slideIndicator4 = findViewById(R.id.slide_indicator_4);
+
+        rollPaper.setOnTouchListener(new OnSwipeListener(GameScenarioActivity.this){
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+                slidePrev();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+                slideNext();
+            }
+        });
+
         playNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = solitaireIntent();
                 startActivity(intent);
+            }
+        });
+        slideRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slideNext();
+            }
+        });
+        slideLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slidePrev();
             }
         });
     }
@@ -92,23 +121,25 @@ public class GameScenarioActivity extends AppCompatActivity {
 
             if(pageIndex < 4){
                 ImageView prevIndicator = getIndicatorView(pageIndex);
-                prevIndicator.setBackgroundResource(R.drawable.slide_indicator_transparent);
-                prevIndicator.getLayoutParams().height=10;
-                prevIndicator.getLayoutParams().width=10;
+
+                prevIndicator.setImageResource(R.drawable.slide_indicator_transparent);
+               /* prevIndicator.getLayoutParams().height=10;
+                prevIndicator.getLayoutParams().width=10;*/
                 prevIndicator.requestLayout();
 
                 pageIndex +=1;
                 int id = getPageId(pageIndex);
-
+                int rollMessageBackground = getPageId(pageIndex);
                 ImageView slideIndicator = getIndicatorView(pageIndex);
-                slideIndicator.setBackgroundResource(R.drawable.slide_indicator_black);
-                slideIndicator.getLayoutParams().height=11;
+                slideIndicator.setImageResource(R.drawable.slide_indicator_black);
+                /*slideIndicator.getLayoutParams().height=11;
                 slideIndicator.getLayoutParams().width=11;
-                slideIndicator.requestLayout();
+                slideIndicator.requestLayout();*/
+                rollPaper.setImageResource(rollMessageBackground);
                 if(pageIndex==4)
-                    slideLeft.setVisibility(View.INVISIBLE);
-                if ((pageIndex-1)==1)
-                    slideRight.setVisibility(View.VISIBLE);
+                    slideRight.setVisibility(View.INVISIBLE);
+                if (pageIndex==2)
+                    slideLeft.setVisibility(View.VISIBLE);
 
 
 
@@ -124,24 +155,27 @@ public class GameScenarioActivity extends AppCompatActivity {
         try {
 
             if(pageIndex > 1){
+
                 ImageView prevIndicator = getIndicatorView(pageIndex);
-                prevIndicator.setBackgroundResource(R.drawable.slide_indicator_transparent);
-                prevIndicator.getLayoutParams().height=10;
+                prevIndicator.setImageResource(R.drawable.slide_indicator_transparent);
+                /*prevIndicator.getLayoutParams().height=10;
                 prevIndicator.getLayoutParams().width=10;
-                prevIndicator.requestLayout();
+                prevIndicator.requestLayout();*/
 
                 pageIndex -=1;
+                int rollMessageBackground = getPageId(pageIndex);
+                rollPaper.setImageResource(rollMessageBackground);
                 int id = getPageId(pageIndex);
 
                 ImageView slideIndicator = getIndicatorView(pageIndex);
-                slideIndicator.setBackgroundResource(R.drawable.slide_indicator_black);
-                slideIndicator.getLayoutParams().height=11;
-                slideIndicator.getLayoutParams().width=11;
+                slideIndicator.setImageResource(R.drawable.slide_indicator_black);
+                /*slideIndicator.getLayoutParams().height=11;
+                slideIndicator.getLayoutParams().width=11;*/
                 slideIndicator.requestLayout();
                 if(pageIndex==1)
-                     slideRight.setVisibility(View.INVISIBLE);
-                if ((pageIndex+1)==4)
-                    slideLeft.setVisibility(View.VISIBLE);
+                     slideLeft.setVisibility(View.INVISIBLE);
+                if (pageIndex==3)
+                    slideRight.setVisibility(View.VISIBLE);
 
 
 
