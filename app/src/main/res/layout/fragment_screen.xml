@@ -16,7 +16,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="_______________________________"
-        android:textSize="15dp"
+        android:fontFamily="@font/snapitc"
+        android:textColor="#000"
+        android:textSize="25dp"
         android:letterSpacing="0.4"
         tools:layout_editor_absoluteX="155dp"
         tools:layout_editor_absoluteY="380dp" />
