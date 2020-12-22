@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.app.battle_word.adapters.ScreenAdapter;
 import com.app.battle_word.objects.Letter;
+import com.app.battle_word.subscribers.WordFoundSubscriber;
+import com.app.battle_word.subscribers.WordTimeCompletedSubscriber;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
@@ -24,11 +26,11 @@ import java.util.List;
  * Use the {@link ScreenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScreenFragment extends Fragment {
+public class ScreenFragment extends Fragment implements WordFoundSubscriber, WordTimeCompletedSubscriber {
     private GridView gridView;
     private ScreenAdapter screenAdapter;
     private TextView screenTextView ;
-    private String gameText ="constitution";
+    private String gameText ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,8 +38,10 @@ public class ScreenFragment extends Fragment {
         View v =inflater.inflate(R.layout.fragment_screen, container, false);
         screenAdapter = new ScreenAdapter(getContext(),R.layout.screen_items,builtLetters());
         screenTextView=v.findViewById(R.id.screen_text);
+        gameText = Utils.getRandomWord();
         String iniText = Utils.initScreemFromText(gameText);
         screenTextView.setText(iniText);
+
 
        // gridView = v.findViewById(R.id.screen_grid);
 //        gridView.setAdapter(screenAdapter);
@@ -71,4 +75,19 @@ public class ScreenFragment extends Fragment {
         return result;
     }
 
+    @Override
+    public void onWordFound() {
+        resetScreenForNewWord();
+    }
+
+    @Override
+    public void onTimeCompleted() {
+        resetScreenForNewWord();
+    }
+
+    private void resetScreenForNewWord(){
+        gameText = Utils.getRandomWord();
+        String iniText = Utils.initScreemFromText(gameText);
+        screenTextView.setText(iniText);
+    }
 }

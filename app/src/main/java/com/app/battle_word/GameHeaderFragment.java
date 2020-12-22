@@ -13,8 +13,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.app.battle_word.publishers.WordTimeCompletedPublisher;
+import com.app.battle_word.subscribers.WordFoundSubscriber;
+import com.app.battle_word.subscribers.WordTimeCompletedSubscriber;
 
-public class GameHeaderFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber, WordTimeCompletedPublisher {
     private ImageView life1;
     private ImageView life2;
     private ImageView life3;
@@ -43,6 +50,8 @@ public class GameHeaderFragment extends Fragment {
     private ImageView[] leds;
     private ImageView[] lifes;
     private CountDownTimer countDownTimer;
+    private List<WordTimeCompletedSubscriber> subscibers = new ArrayList<>();
+    private  int currentWordNum=1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,10 +138,39 @@ public class GameHeaderFragment extends Fragment {
 
             @Override
             public void onFinish() {
+                notifyTimeCompleted();
                 timeProgressBar.setProgress(0);
             }
         }.start();
     }
+
+
+    @Override
+    public void subscribe(WordTimeCompletedSubscriber subscriber) {
+        subscibers.add(subscriber);
+
+    }
+
+    @Override
+    public void notifyTimeCompleted() {
+        if (subscibers.size() > 0){
+            for(int i = 0; i< subscibers.size(); i++){
+                subscibers.get(i).onTimeCompleted();
+            }
+        }
+    }
+
+    @Override
+    public void onWordFound() {
+        leds[currentWordNum].setImageResource(R.drawable.word_found_led);
+        leds[currentWordNum].setVisibility(View.VISIBLE);
+
+    }
+
+    private  void startNewGame(){
+
+    }
+
 
 
 

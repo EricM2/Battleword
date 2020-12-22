@@ -18,14 +18,17 @@ import androidx.fragment.app.Fragment;
 import com.app.battle_word.R;
 import com.app.battle_word.ScreenFragment;
 import com.app.battle_word.objects.Letter;
+import com.app.battle_word.publishers.WordFoundPublisher;
+import com.app.battle_word.subscribers.WordFoundSubscriber;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class KeyBoardAdapter extends ArrayAdapter {
+public class KeyBoardAdapter extends ArrayAdapter  implements WordFoundPublisher {
 
+    List<WordFoundSubscriber> subscribers = new ArrayList<>();
     List<Letter> letters = new ArrayList<>();
     ScreenFragment screen = null;
     Map<Integer,String> keys = Utils.getKeyString();
@@ -109,5 +112,17 @@ public class KeyBoardAdapter extends ArrayAdapter {
 
     private String getPressedCharacter(int position){
         return keys.get(position);
+    }
+
+    @Override
+    public void publishWordFound() {
+        for( int i=0 ; i<subscribers.size(); i++){
+            subscribers.get(i).onWordFound();
+        }
+    }
+
+    @Override
+    public void subscribe(WordFoundSubscriber subscriber) {
+        subscribers.add(subscriber);
     }
 }

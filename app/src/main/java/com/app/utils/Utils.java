@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Utils {
 
@@ -96,5 +97,12 @@ public class Utils {
             }
         }
         return res;
+    }
+
+
+    public static  String getRandomWord(){
+        Random r = new Random();
+        int v = r.nextInt(EnWords.english.length);
+        return  EnWords.english[v];
     }
 }
