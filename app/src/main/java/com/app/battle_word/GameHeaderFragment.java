@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class GameHeaderFragment extends Fragment {
     private int  numLifes= 5;
     private ImageView[] leds;
     private ImageView[] lifes;
+    private CountDownTimer countDownTimer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +75,66 @@ public class GameHeaderFragment extends Fragment {
         settingsButton = v.findViewById(R.id.settings_button);
         scoreTextView  = v.findViewById(R.id.score);
         stageTextView = v.findViewById(R.id.stage_value);
+        timeProgressBar.setProgress(0);
+        setAllLedInvisible();
+        startGame();
         return  v;
     }
+
+
+    private void setAllLedInvisible(){
+        if (leds!=null) {
+            for (int i = 0; i < 10; i++) {
+                leds[i].setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+    private void setLedVisible(int wordIndex){
+        if(wordIndex >0 && wordIndex<=10 && leds != null)
+        {
+
+                leds[wordIndex+1].setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    private void incrementSlifeLife(){
+        if( numLifes < 10 ){
+            lifes[numLifes].setImageResource(R.drawable.diamond_life);
+            numLifes++;
+        }
+
+
+    }
+    private void decrementSlifeLife(){
+        if( numLifes > 0 ){
+            lifes[numLifes].setImageResource(R.drawable.diamond_no_life);
+            numLifes--;
+        }
+
+
+    }
+
+    private  void startGame(){
+        final long currentTime = 0;
+        final long max = 45000;
+        countDownTimer = new CountDownTimer(max,10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long time = max -millisUntilFinished;
+                long progressValue = time*100/max;
+                timeProgressBar.setProgress((int) progressValue);
+
+            }
+
+            @Override
+            public void onFinish() {
+                timeProgressBar.setProgress(0);
+            }
+        }.start();
+    }
+
+
+
+
 }

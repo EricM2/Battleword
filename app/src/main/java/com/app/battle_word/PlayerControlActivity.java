@@ -16,7 +16,5 @@ public class PlayerControlActivity extends AppCompatActivity {
 
     }
 
-    public FragmentManager getFm() {
-        return fm;
-    }
+
 }
