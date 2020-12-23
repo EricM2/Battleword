@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.GridView;
 
 import com.app.battle_word.adapters.KeyBoardAdapter;
 import com.app.battle_word.objects.Letter;
+import com.app.battle_word.viewmodels.ScreenTextViewModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,16 +34,20 @@ public class KeyBoardFragment extends Fragment {
     private KeyBoardAdapter keyBoardAdapter;
     private ScreenFragment screenFragment;
     private FragmentManager fm;
+    private ScreenTextViewModel screenTextViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_key_board, container, false);
         gridView = v.findViewById(R.id.grid);
         List<Letter> letters = builtLetters();
         fm = getFragmentManager();
         screenFragment = (ScreenFragment) fm.findFragmentById(R.id.screen_fragment);
-        keyBoardAdapter = new KeyBoardAdapter(v.getContext(),R.layout.keyboard_items,letters,screenFragment);
+        screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
+        keyBoardAdapter = new KeyBoardAdapter(v.getContext(),R.layout.keyboard_items,letters,screenTextViewModel);
         gridView.setAdapter(keyBoardAdapter);
         return v;
     }

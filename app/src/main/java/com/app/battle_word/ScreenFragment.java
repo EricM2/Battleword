@@ -3,6 +3,8 @@ package com.app.battle_word;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import com.app.battle_word.adapters.ScreenAdapter;
 import com.app.battle_word.objects.Letter;
 import com.app.battle_word.subscribers.WordFoundSubscriber;
 import com.app.battle_word.subscribers.WordTimeCompletedSubscriber;
+import com.app.battle_word.viewmodels.ScreenTextViewModel;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
@@ -26,11 +29,13 @@ import java.util.List;
  * Use the {@link ScreenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScreenFragment extends Fragment implements WordFoundSubscriber, WordTimeCompletedSubscriber {
+public class ScreenFragment extends Fragment  {
     private GridView gridView;
     private ScreenAdapter screenAdapter;
     private TextView screenTextView ;
+    private TextView secondaryTextView;
     private String gameText ;
+    private ScreenTextViewModel screenTextViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,9 +43,30 @@ public class ScreenFragment extends Fragment implements WordFoundSubscriber, Wor
         View v =inflater.inflate(R.layout.fragment_screen, container, false);
         screenAdapter = new ScreenAdapter(getContext(),R.layout.screen_items,builtLetters());
         screenTextView=v.findViewById(R.id.screen_text);
+        secondaryTextView = v.findViewById(R.id.segondary_screen_text);
+        secondaryTextView.setVisibility(View.INVISIBLE);
         gameText = Utils.getRandomWord();
-        String iniText = Utils.initScreemFromText(gameText);
-        screenTextView.setText(iniText);
+       // String iniText = Utils.initScreemFromText(gameText);
+        //screenTextView.setText(iniText);
+        screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
+        screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                screenTextView.setText(s);
+            }
+        }
+
+    );
+
+        screenTextViewModel.getSecondScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        secondaryTextView.setText(s);
+                        secondaryTextView.setVisibility(View.VISIBLE);
+
+                    }
+                }
+        );
 
 
        // gridView = v.findViewById(R.id.screen_grid);
@@ -75,7 +101,7 @@ public class ScreenFragment extends Fragment implements WordFoundSubscriber, Wor
         return result;
     }
 
-    @Override
+   /* @Override
     public void onWordFound() {
         resetScreenForNewWord();
     }
@@ -89,5 +115,5 @@ public class ScreenFragment extends Fragment implements WordFoundSubscriber, Wor
         gameText = Utils.getRandomWord();
         String iniText = Utils.initScreemFromText(gameText);
         screenTextView.setText(iniText);
-    }
+    }*/
 }

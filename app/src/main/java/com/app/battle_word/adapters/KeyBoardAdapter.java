@@ -20,22 +20,23 @@ import com.app.battle_word.ScreenFragment;
 import com.app.battle_word.objects.Letter;
 import com.app.battle_word.publishers.WordFoundPublisher;
 import com.app.battle_word.subscribers.WordFoundSubscriber;
+import com.app.battle_word.viewmodels.ScreenTextViewModel;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class KeyBoardAdapter extends ArrayAdapter  implements WordFoundPublisher {
+public class KeyBoardAdapter extends ArrayAdapter   {
 
     List<WordFoundSubscriber> subscribers = new ArrayList<>();
     List<Letter> letters = new ArrayList<>();
-    ScreenFragment screen = null;
+    ScreenTextViewModel screen = null;
     Map<Integer,String> keys = Utils.getKeyString();
-    public KeyBoardAdapter(@NonNull Context context, int resource, List<Letter> keyLetters, ScreenFragment screenFragment) {
+    public KeyBoardAdapter(@NonNull Context context, int resource, List<Letter> keyLetters, ScreenTextViewModel screenTextViewModel) {
         super(context, resource);
         letters = keyLetters;
-        screen = screenFragment;
+        screen = screenTextViewModel;
     }
 
 
@@ -94,19 +95,15 @@ public class KeyBoardAdapter extends ArrayAdapter  implements WordFoundPublisher
     }
 
 
-    private void updateScreen(ScreenFragment screen, Button button, int position){
-        TextView txt =  screen.getView().findViewById(R.id.screen_text);
-        String screenText= txt.getText().toString();
+    private void updateScreen(ScreenTextViewModel screen, Button button, int position){
+       String screenText =  screen.getScreenText().getValue();
         String l = getPressedCharacter(position);
         if(!l.isEmpty() && !Utils.isSreenTextComplete(screenText)) {
             Log.d("KEY_PRESSED", l);
-            Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
-            String newString = Utils.putCharInScreenText(l,"constitution",screenText);
+            //Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
+            String newString = Utils.putCharInScreenText(l,screen.getRequiredText(),screenText);
             Log.d("NEW_STRING", newString);
-            txt.setText(newString);
-
-
-
+            screen.updateScreenText(newString);
         }
     }
 
@@ -114,7 +111,7 @@ public class KeyBoardAdapter extends ArrayAdapter  implements WordFoundPublisher
         return keys.get(position);
     }
 
-    @Override
+   /* @Override
     public void publishWordFound() {
         for( int i=0 ; i<subscribers.size(); i++){
             subscribers.get(i).onWordFound();
@@ -124,5 +121,5 @@ public class KeyBoardAdapter extends ArrayAdapter  implements WordFoundPublisher
     @Override
     public void subscribe(WordFoundSubscriber subscriber) {
         subscribers.add(subscriber);
-    }
+    }*/
 }

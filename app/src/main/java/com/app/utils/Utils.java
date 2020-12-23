@@ -1,5 +1,8 @@
 package com.app.utils;
 
+import android.os.CountDownTimer;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -104,5 +107,18 @@ public class Utils {
         Random r = new Random();
         int v = r.nextInt(EnWords.english.length);
         return  EnWords.english[v];
+    }
+    public  static void waitFor(long milliseconds) {
+        CountDownTimer countDownTimer = new CountDownTimer(milliseconds, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("waitting", "onTick: ");
+            }
+
+            @Override
+            public void onFinish() {
+                Log.d("waitting", "finish: ");
+            }
+        }.start();
     }
 }

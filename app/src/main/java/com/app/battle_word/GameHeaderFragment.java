@@ -3,6 +3,8 @@ package com.app.battle_word;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -16,12 +18,14 @@ import android.widget.TextView;
 import com.app.battle_word.publishers.WordTimeCompletedPublisher;
 import com.app.battle_word.subscribers.WordFoundSubscriber;
 import com.app.battle_word.subscribers.WordTimeCompletedSubscriber;
+import com.app.battle_word.viewmodels.ScreenTextViewModel;
+import com.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber, WordTimeCompletedPublisher {
+public class GameHeaderFragment extends Fragment   {
     private ImageView life1;
     private ImageView life2;
     private ImageView life3;
@@ -52,6 +56,8 @@ public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber
     private CountDownTimer countDownTimer;
     private List<WordTimeCompletedSubscriber> subscibers = new ArrayList<>();
     private  int currentWordNum=1;
+    private ScreenTextViewModel screenTextViewModel;
+    private String currentScreenText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +91,19 @@ public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber
         scoreTextView  = v.findViewById(R.id.score);
         stageTextView = v.findViewById(R.id.stage_value);
         timeProgressBar.setProgress(0);
+        screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
+        screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                currentScreenText = s;
+                if(Utils.isSreenTextComplete(s) && timeProgressBar.getProgress()<100){
+                    if(countDownTimer!=null)
+                        countDownTimer.cancel();
+                    findNewWord(true);
+
+                }
+            }
+        });
         setAllLedInvisible();
         startGame();
         return  v;
@@ -108,16 +127,16 @@ public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber
     }
 
     private void incrementSlifeLife(){
-        if( numLifes < 10 ){
-            lifes[numLifes].setImageResource(R.drawable.diamond_life);
+        if( numLifes < 10 && numLifes > 0 ){
+            lifes[numLifes-1].setImageResource(R.drawable.diamond_life);
             numLifes++;
         }
 
 
     }
-    private void decrementSlifeLife(){
+    private void decrementlifeLife(){
         if( numLifes > 0 ){
-            lifes[numLifes].setImageResource(R.drawable.diamond_no_life);
+            lifes[numLifes-1].setImageResource(R.drawable.diamond_no_life);
             numLifes--;
         }
 
@@ -125,27 +144,33 @@ public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber
     }
 
     private  void startGame(){
-        final long currentTime = 0;
         final long max = 45000;
         countDownTimer = new CountDownTimer(max,10) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long time = max -millisUntilFinished;
-                long progressValue = time*100/max;
-                timeProgressBar.setProgress((int) progressValue);
+
+                    long time = max -millisUntilFinished;
+                    long progressValue = time*100/max;
+                    timeProgressBar.setProgress((int) progressValue);
 
             }
 
             @Override
             public void onFinish() {
-                notifyTimeCompleted();
-                timeProgressBar.setProgress(0);
+                if(currentScreenText!=null && !Utils.isSreenTextComplete(currentScreenText)){
+                    findNewWord(false);
+                }
+
+
+
+                //notifyTimeCompleted();
+                //timeProgressBar.setProgress(0);
             }
         }.start();
     }
 
 
-    @Override
+   /* @Override
     public void subscribe(WordTimeCompletedSubscriber subscriber) {
         subscibers.add(subscriber);
 
@@ -169,7 +194,35 @@ public class GameHeaderFragment extends Fragment  implements WordFoundSubscriber
 
     private  void startNewGame(){
 
-    }
+    }*/
+
+   private void findNewWord(Boolean foundPrev){
+       screenTextViewModel.wordFoundBluPrint(foundPrev);
+       timeProgressBar.setProgress(0);
+       screenTextViewModel.updateCurrentTime(timeProgressBar.getProgress());
+       screenTextViewModel.wordFoundBluPrint(foundPrev);
+       if(!foundPrev)
+            screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
+       Utils.waitFor(4200);
+
+       String newWord = Utils.getRandomWord();
+       String newInitWord = Utils.initScreemFromText(newWord);
+       // screenTextViewModel.initText(newInitWord);
+       screenTextViewModel.updateScreenText(newInitWord);
+       screenTextViewModel.setRequiredText(newWord);
+       if (foundPrev)
+           leds[currentWordNum].setImageResource(R.drawable.word_found_led);
+       else{
+           leds[currentWordNum].setImageResource(R.drawable.word_not_found_led);
+           decrementlifeLife();
+       }
+       leds[currentWordNum].setVisibility(View.VISIBLE);
+       if(currentWordNum<10) {
+           currentWordNum++;
+           startGame();
+       }
+   }
+
 
 
 
