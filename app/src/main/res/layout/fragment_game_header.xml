@@ -15,99 +15,119 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/lifes_container_background"
         android:orientation="horizontal"
-        app:layout_constraintHorizontal_weight="0.6"
+        app:layout_constraintHorizontal_weight="0.7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/score_container">
 
         <ImageView
             android:id="@+id/life_1"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="5dp"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_2"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_3"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_4"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_5"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_6"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_7"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_8"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_9"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_10"
-            android:layout_width="22dp"
+            android:layout_width="20dp"
             android:layout_height="17dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/score"
+    <LinearLayout
+        android:id="@+id/score_container"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/score_textview_background"
-        android:gravity="center"
-        android:text="256456"
-        android:textColor="@color/colorSegondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="0.3"
         app:layout_constraintStart_toEndOf="@id/lifes_container"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        
+        <ImageView
+            android:id="@+id/score_icon"
+            android:layout_width="33dp"
+            android:layout_height="50dp"
+            android:src="@drawable/scrore_icon"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="256456"
+            android:textColor="@color/colorSegondary"
+             />
+        
+    </LinearLayout>
+        
+    
 
     <ProgressBar
         android:id="@+id/time_progressbar"
@@ -233,6 +253,8 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/snapitc"
+            android:textStyle="bold"
             android:text="5" />
     </LinearLayout>
 

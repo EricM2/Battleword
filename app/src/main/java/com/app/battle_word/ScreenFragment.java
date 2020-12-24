@@ -67,6 +67,15 @@ public class ScreenFragment extends Fragment  {
                     }
                 }
         );
+        screenTextViewModel.getTurnOffSecondScreenText().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean)
+                    secondaryTextView.setVisibility(View.INVISIBLE);
+                else
+                    secondaryTextView.setVisibility(View.VISIBLE);
+            }
+        });
 
 
        // gridView = v.findViewById(R.id.screen_grid);

@@ -44,13 +44,13 @@ public class GameScenarioActivity extends AppCompatActivity {
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                slidePrev();
+                slideNext();
             }
 
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
-                slideNext();
+                slidePrev();
             }
         });
 
