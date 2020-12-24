@@ -1,13 +1,16 @@
 package com.app.battle_word;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +61,7 @@ public class GameHeaderFragment extends Fragment   {
     private List<WordTimeCompletedSubscriber> subscibers = new ArrayList<>();
     private  int currentWordNum=1;
     private int currentStage = 1;
+    private String score = "0";
     private ScreenTextViewModel screenTextViewModel;
     private String currentScreenText;
 
@@ -92,8 +96,30 @@ public class GameHeaderFragment extends Fragment   {
         settingsButton = v.findViewById(R.id.settings_button);
         scoreTextView  = v.findViewById(R.id.score);
         stageTextView = v.findViewById(R.id.stage_value);
+
+        if(savedInstanceState!=null){
+            if (savedInstanceState != null) {
+                Log.d("onCreateView", "onCreateView: ");
+
+                currentStage = savedInstanceState.getInt("stage");
+                numLifes = savedInstanceState.getInt("lives");
+                currentWordNum = savedInstanceState.getInt("words");
+                score = savedInstanceState.getString("score");
+                setLives(numLifes);
+            }
+        }
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("my_prefs", 0);
+        if (prefs.contains("stage")) {
+            currentStage = prefs.getInt("stage",1);
+        }
+        if (prefs.contains("my_state")) {
+            // modify your fragment's starting state with the saved info
+        }
+
+
         stageTextView.setText(String.valueOf(currentStage));
-        scoreTextView.setText("0");
+        scoreTextView.setText(score);
         timeProgressBar.setProgress(0);
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
         screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -126,6 +152,51 @@ public class GameHeaderFragment extends Fragment   {
         return  v;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+
+        if (savedInstanceState != null) {
+            currentStage = savedInstanceState.getInt("stage");
+            numLifes = savedInstanceState.getInt("lives");
+            currentWordNum = savedInstanceState.getInt("words");
+            scoreTextView.setText(savedInstanceState.getString("score"));
+            stageTextView.setText(String.valueOf(currentStage));
+            setLives(numLifes);
+
+            Log.d("onActivityCreated", "onActivityCreated: ");
+
+
+
+        }
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("stage", currentStage);
+        outState.putInt("lives", numLifes);
+        outState.putInt("words",currentWordNum);
+        outState.putString("score",scoreTextView.getText().toString());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("my_prefs", 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("stage", currentStage);
+        editor.putString("score", score);
+        editor.putInt("lives", numLifes);
+        editor.putInt("words", currentWordNum);
+
+        editor.commit();
+    }
+
 
     private void setAllLedInvisible(){
         if (leds!=null) {
@@ -149,6 +220,12 @@ public class GameHeaderFragment extends Fragment   {
             numLifes++;
         }
 
+
+    }
+
+    public void setLives(int num){
+        for(int i =0 ; i<numLifes ; i++)
+            lifes[num-1].setImageResource(R.drawable.diamond_life);
 
     }
     private void decrementlifeLife(){
