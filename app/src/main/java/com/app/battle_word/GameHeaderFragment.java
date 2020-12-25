@@ -1,5 +1,6 @@
 package com.app.battle_word;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import com.app.battle_word.viewmodels.ScreenTextViewModel;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -64,6 +66,10 @@ public class GameHeaderFragment extends Fragment   {
     private String score = "0";
     private ScreenTextViewModel screenTextViewModel;
     private String currentScreenText;
+    private boolean[] wordsMask = new boolean[]{};
+    private int lastStageLifes = 5;
+    private int currenTime = 0;
+    public  static String PREFERENCES_NAME = "game_state_pref";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +102,21 @@ public class GameHeaderFragment extends Fragment   {
         settingsButton = v.findViewById(R.id.settings_button);
         scoreTextView  = v.findViewById(R.id.score);
         stageTextView = v.findViewById(R.id.stage_value);
+        setAllLedInvisible();
+        timeProgressBar.setProgress(currenTime);
 
-        if(savedInstanceState!=null){
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_NAME, 0);
+        if (prefs.contains("stage")) {
+            currentStage = prefs.getInt("stage",1);
+        }
+        if (prefs.contains("lives")) {
+            lastStageLifes =  prefs.getInt("lives",5);
+        }
+        if (prefs.contains("score")) {
+            score =  prefs.getString("score","5");
+        }
+
+
             if (savedInstanceState != null) {
                 Log.d("onCreateView", "onCreateView: ");
 
@@ -105,17 +124,17 @@ public class GameHeaderFragment extends Fragment   {
                 numLifes = savedInstanceState.getInt("lives");
                 currentWordNum = savedInstanceState.getInt("words");
                 score = savedInstanceState.getString("score");
+                wordsMask = savedInstanceState.getBooleanArray("wordmask");
+                currenTime = savedInstanceState.getInt("time");
+
+                redrawLeds(wordsMask);
                 setLives(numLifes);
             }
-        }
+            else {
+                numLifes = lastStageLifes;
+                setLives(lastStageLifes);
+            }
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("my_prefs", 0);
-        if (prefs.contains("stage")) {
-            currentStage = prefs.getInt("stage",1);
-        }
-        if (prefs.contains("my_state")) {
-            // modify your fragment's starting state with the saved info
-        }
 
 
         stageTextView.setText(String.valueOf(currentStage));
@@ -147,13 +166,14 @@ public class GameHeaderFragment extends Fragment   {
                 stageTextView.setText(s);
             }
         });
-        setAllLedInvisible();
+
+
         startGame();
         return  v;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    //@Override
+    /*public void onActivityCreated(Bundle savedInstanceState) {
 
 
         if (savedInstanceState != null) {
@@ -171,7 +191,7 @@ public class GameHeaderFragment extends Fragment   {
         }
         super.onActivityCreated(savedInstanceState);
 
-    }
+    }*/
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -179,6 +199,9 @@ public class GameHeaderFragment extends Fragment   {
         outState.putInt("lives", numLifes);
         outState.putInt("words",currentWordNum);
         outState.putString("score",scoreTextView.getText().toString());
+        outState.putInt("time",timeProgressBar.getProgress());
+
+        outState.putBooleanArray("wordmask",wordsMask);
 
         super.onSaveInstanceState(outState);
     }
@@ -187,12 +210,13 @@ public class GameHeaderFragment extends Fragment   {
     public void onPause() {
         super.onPause();
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("my_prefs", 0);
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_NAME, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("stage", currentStage);
         editor.putString("score", score);
-        editor.putInt("lives", numLifes);
         editor.putInt("words", currentWordNum);
+        editor.putInt("lives",lastStageLifes);
+
 
         editor.commit();
     }
@@ -204,12 +228,14 @@ public class GameHeaderFragment extends Fragment   {
                 leds[i].setVisibility(View.INVISIBLE);
             }
         }
+        wordsMask = new boolean[]{};
     }
     private void setLedVisible(int wordIndex){
         if(wordIndex >0 && wordIndex<=10 && leds != null)
         {
 
                 leds[wordIndex+1].setVisibility(View.VISIBLE);
+
 
         }
     }
@@ -224,8 +250,12 @@ public class GameHeaderFragment extends Fragment   {
     }
 
     public void setLives(int num){
-        for(int i =0 ; i<numLifes ; i++)
-            lifes[num-1].setImageResource(R.drawable.diamond_life);
+        for(int i =0 ; i<10 ; i++) {
+            if(i< num)
+                lifes[i].setImageResource(R.drawable.diamond_life);
+            else
+                lifes[i].setImageResource(R.drawable.diamond_no_life);
+        }
 
     }
     private void decrementlifeLife(){
@@ -239,12 +269,12 @@ public class GameHeaderFragment extends Fragment   {
 
     private  void startGame(){
 
-        final long max = 5000;
+        final long max = 30000;
         countDownTimer = new CountDownTimer(max,10) {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                    long time = max -millisUntilFinished;
+                    long time = max - millisUntilFinished;
                     long progressValue = time*100/max;
                     timeProgressBar.setProgress((int) progressValue);
 
@@ -314,11 +344,19 @@ public class GameHeaderFragment extends Fragment   {
            // screenTextViewModel.initText(newInitWord);
            screenTextViewModel.updateScreenText(newInitWord);
            screenTextViewModel.setRequiredText(newWord);
-           if (foundPrev)
+           if (foundPrev){
                leds[ledIndex].setImageResource(R.drawable.word_found_led);
+               int index = wordsMask.length;
+               wordsMask = Arrays.copyOf(wordsMask,wordsMask.length+1);
+               wordsMask[index] = true;
+
+           }
            else {
                leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
                decrementlifeLife();
+               int index = wordsMask.length;
+               wordsMask = Arrays.copyOf(wordsMask,wordsMask.length+1);
+               wordsMask[index] = false;
            }
            leds[ledIndex].setVisibility(View.VISIBLE);
 
@@ -327,14 +365,19 @@ public class GameHeaderFragment extends Fragment   {
        }
        if (currentWordNum == 11) {
            currentWordNum = 1;
+           lastStageLifes = numLifes;
            if (currentStage < 5) {
                currentStage = currentStage + 1;
                screenTextViewModel.updateStage(String.valueOf(currentStage));
+
                setAllLedInvisible();
            }
 
        }
-       startGame();
+       if(numLifes > 0)
+           startGame();
+       else
+           gameOver();
    }
 
    private void updatScore(int score){
@@ -353,10 +396,36 @@ public class GameHeaderFragment extends Fragment   {
        }.start();
    }
 
+   private void redrawLeds(boolean[] mask){
+       if (mask != null && mask.length> 0){
+           for (int i=0; i<mask.length ;i++){
+               if(mask[i]){
+                   leds[i].setVisibility(View.VISIBLE);
+                   leds[i].setImageResource(R.drawable.word_found_led);
+               }
+               else {
+                   leds[i].setVisibility(View.VISIBLE);
+                   leds[i].setImageResource(R.drawable.word_not_found_led);
+               }
+               }
 
+           }
+       if(mask!=null && mask.length==0)
+           setAllLedInvisible();
+       }
 
+       public void gameOver(){
+           Intent intent = new Intent(getContext(),GameOverActivity.class);
+           startActivity(intent);
 
-
-
+       }
 
    }
+
+
+
+
+
+
+
+
