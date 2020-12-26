@@ -11,4 +11,9 @@
     <color name="dark_transparent">#80000000</color>
     <color name="primary_dark_transparent">#66c88719</color>
     <color name="primary_light_transparent">#f6ffe97d</color>
+    <color name="colorStage1">#E69892</color>
+    <color name="colorStage2">#F0EA40</color>
+    <color name="colorStage3">#4AFDBB</color>
+    <color name="colorStage4">#D370EB</color>
+    <color name="colorStage5">#B1AE5B</color>
 </resources>
