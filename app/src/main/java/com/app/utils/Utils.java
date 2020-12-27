@@ -12,6 +12,8 @@ import java.util.Random;
 
 public class Utils {
 
+    public static double[] stageWeight = new double[]{40d,55d,70d,80d};
+
     public static boolean testIfStrIsInt(String str){
         try {
             int v = Integer.valueOf(str);
@@ -58,10 +60,41 @@ public class Utils {
         return res;
 
     }
-    public static String initScreemFromText(String text){
+    public static int roundNumber(double number){
+        int dec = (int)number;
+        double fl = number - dec;
+        if(fl >= 0.5f)
+            return  dec + 1;
+        else
+            return dec;
+
+    }
+    public static String initScreemFromText(String text, int stage){
+
+        double centile =  (stageWeight[stage-1]/100d);
+
+        int numWord = roundNumber(((double) text.length())*centile);
+
+        numWord = numWord<1? 1:numWord;
+        List<Integer> indexes = new ArrayList<>();
+        for (int i =0; i<numWord;i++)
+            indexes.add((new Random()).nextInt(text.length()));
+
+
         String ini = "";
-        for (int i =0; i< text.length();i++)
-            ini+="_";
+        for (int i =0; i< text.length();i++){
+            if(indexes.contains(i)){
+                ini+="_";
+
+            }
+            else {
+                ini+=text.charAt(i);
+            }
+
+
+        }
+
+
         return ini;
     }
 

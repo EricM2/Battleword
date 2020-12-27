@@ -135,7 +135,7 @@ public class GameHeaderFragment extends Fragment   {
                 setLives(lastStageLifes);
             }
 
-
+          String gameText =Utils.getRandomWord();
 
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
@@ -160,6 +160,8 @@ public class GameHeaderFragment extends Fragment   {
                 }
             }
         });
+
+
         screenTextViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -174,6 +176,9 @@ public class GameHeaderFragment extends Fragment   {
             }
         });
 
+        String iniText = Utils.initScreemFromText(gameText,currentStage);
+        screenTextViewModel.setRequiredText(gameText);
+        screenTextViewModel.initText(iniText);
 
         startGame();
         return  v;
@@ -347,7 +352,8 @@ public class GameHeaderFragment extends Fragment   {
            //Utils.waitFor(4200);
 
            String newWord = Utils.getRandomWord();
-           String newInitWord = Utils.initScreemFromText(newWord);
+           int stage = Integer.valueOf(stageTextView.getText().toString());
+           String newInitWord = Utils.initScreemFromText(newWord,stage);
            // screenTextViewModel.initText(newInitWord);
            screenTextViewModel.updateScreenText(newInitWord);
            screenTextViewModel.setRequiredText(newWord);
