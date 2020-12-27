@@ -11,6 +11,7 @@ public class ScreenTextViewModel extends ViewModel {
    private String requiredText ;
 
     private  MutableLiveData<String> screenText = new MutableLiveData<String>();
+    private MutableLiveData<String> gameScore = new MutableLiveData<>();
     private  MutableLiveData<String> secondScreenText = new MutableLiveData<String>();
     private MutableLiveData<List<Boolean>>  wordFoundBluPrint = new MutableLiveData<>();
     private MutableLiveData<Integer> numLives = new MutableLiveData<>();
@@ -25,6 +26,10 @@ public class ScreenTextViewModel extends ViewModel {
     }
     public void updateSecondScreenText(String str){
         secondScreenText.setValue(str);
+    }
+
+    public void updateScore(String score){
+        gameScore.setValue(score);
     }
     public  void updateTurnOffSecondScreenText(Boolean turnOff){
         turnOffSecondScreenText.setValue(turnOff);
@@ -83,5 +88,9 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getTurnOffSecondScreenText() {
         return turnOffSecondScreenText;
+    }
+
+    public MutableLiveData<String> getGameScore() {
+        return gameScore;
     }
 }

@@ -113,7 +113,7 @@ public class GameHeaderFragment extends Fragment   {
             lastStageLifes =  prefs.getInt("lives",5);
         }
         if (prefs.contains("score")) {
-            score =  prefs.getString("score","5");
+            score =  prefs.getString("score","0");
         }
 
 
@@ -166,6 +166,13 @@ public class GameHeaderFragment extends Fragment   {
                 stageTextView.setText(s);
             }
         });
+        screenTextViewModel.getGameScore().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                score = s;
+                scoreTextView.setText(s);
+            }
+        });
 
 
         startGame();
@@ -209,7 +216,7 @@ public class GameHeaderFragment extends Fragment   {
     @Override
     public void onPause() {
         super.onPause();
-
+        score = scoreTextView.getText().toString();
         SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_NAME, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("stage", currentStage);
@@ -368,8 +375,9 @@ public class GameHeaderFragment extends Fragment   {
            lastStageLifes = numLifes;
            if (currentStage < 5) {
                currentStage = currentStage + 1;
-               screenTextViewModel.updateStage(String.valueOf(currentStage));
 
+               startNextStageActivity();
+               screenTextViewModel.updateStage(String.valueOf(currentStage));
                setAllLedInvisible();
            }
 
@@ -380,7 +388,7 @@ public class GameHeaderFragment extends Fragment   {
            gameOver();
    }
 
-   private void updatScore(int score){
+   private void updatScore(final int score){
        final int currentScore = Integer.valueOf(scoreTextView.getText().toString());
        CountDownTimer cd = new CountDownTimer(1500,1500/score) {
            @Override
@@ -418,6 +426,12 @@ public class GameHeaderFragment extends Fragment   {
            Intent intent = new Intent(getContext(),GameOverActivity.class);
            startActivity(intent);
 
+       }
+       private void startNextStageActivity(){
+           Intent intent = new Intent(getContext(),NextStageActivity.class);
+           intent.putExtra("mode","solitare");
+           intent.putExtra("nextStage",currentStage);
+           startActivity(intent);
        }
 
    }

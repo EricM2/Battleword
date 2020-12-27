@@ -3,6 +3,7 @@ package com.app.battle_word;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -77,11 +78,16 @@ public class GameSetupActivity extends AppCompatActivity {
       return  intent;
     }
     private Intent gameScenarioIntent(){
+        int nextStage = 1;
+        SharedPreferences prefs = this.getSharedPreferences(GameHeaderFragment.PREFERENCES_NAME, 0);
+        if (prefs.contains("stage")) {
+             nextStage= prefs.getInt("stage",1);
+        }
 
         //Intent intent = new Intent(this,GameScenarioActivity.class);
         Intent intent = new Intent(this,NextStageActivity.class);
         intent.putExtra(MODE,"solitare");
-        intent.putExtra("nextStage",2);
+        intent.putExtra("nextStage",nextStage);
         return  intent;
     }
 
