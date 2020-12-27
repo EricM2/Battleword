@@ -86,6 +86,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
+        android:id="@+id/lock_stage_2"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
@@ -147,6 +148,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
+        android:id="@+id/lock_stage_3"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
@@ -159,6 +161,7 @@
          />
 
     <ImageView
+        android:id="@+id/lock_stage_4"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
@@ -171,6 +174,7 @@
         app:layout_constraintVertical_bias="0.4" />
 
     <ImageView
+        android:id="@+id/lock_stage_5"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
@@ -199,6 +203,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
+        android:id="@+id/lock_stage_1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
@@ -228,6 +233,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
+
         android:id="@+id/circular_progress_stage2"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="50dp"

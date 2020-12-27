@@ -81,6 +81,7 @@ public class GameSetupActivity extends AppCompatActivity {
         //Intent intent = new Intent(this,GameScenarioActivity.class);
         Intent intent = new Intent(this,NextStageActivity.class);
         intent.putExtra(MODE,"solitare");
+        intent.putExtra("nextStage",2);
         return  intent;
     }
 
