@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,6 +41,9 @@ public class stageProgressFragment extends Fragment {
     private int[] locksBackgrounds;
     private int[] unlocksBackgrounds;
     private TextView stageTitleTextView;
+    private Animation zoomin;
+    private Animation zoomout;
+    private AnimationSet animationSet;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +55,21 @@ public class stageProgressFragment extends Fragment {
         Log.d("NEXTSTAGE", String.valueOf(stage));
         gotoNextStage(stage);
         stageTitleTextView.setText("STAGE "+ String.valueOf(stage));
+         zoomin = AnimationUtils.loadAnimation(getContext(), R.anim.zoomin);
+        zoomout = AnimationUtils.loadAnimation(getContext(), R.anim.zoomout);
+        animationSet = new AnimationSet(true);
+        animationSet.addAnimation(zoomin);
+        animationSet.addAnimation(zoomout);
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+       stageTitleTextView.startAnimation(animationSet);
+
     }
 
     private void initViews(View parent){

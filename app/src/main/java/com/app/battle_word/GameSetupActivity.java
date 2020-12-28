@@ -21,12 +21,20 @@ public class GameSetupActivity extends AppCompatActivity {
     private final  static  String MODE="mode";
     private final static String LEVEL = "leevel";
     private String selectedGameLevel;
+    private Button settingsBut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_setup);
         selectedGameLevel = null;
         solitaireButton = findViewById(R.id.play_solitaire);
+        settingsBut = findViewById(R.id.settings_button_setup);
+        settingsBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(getSettingsIntent());
+            }
+        });
         //gameLevelSpinner = findViewById(R.id.select_game_level_spinner);
         String[] gameLevels = getResources().getStringArray(R.array.game_levels);
         //gameLevelSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,gameLevels));
@@ -89,6 +97,11 @@ public class GameSetupActivity extends AppCompatActivity {
         intent.putExtra(MODE,"solitare");
         intent.putExtra("nextStage",nextStage);
         return  intent;
+    }
+
+    private Intent getSettingsIntent(){
+        Intent i = new Intent(this,SettingsActivity.class);
+        return i;
     }
 
     private boolean isFirstTime(){
