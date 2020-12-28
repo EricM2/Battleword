@@ -13,10 +13,8 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.app.battle_word.adapters.ScreenAdapter;
+import com.app.battle_word.adapters.LanguageSpinnerAdapter;
 import com.app.battle_word.objects.Letter;
-import com.app.battle_word.subscribers.WordFoundSubscriber;
-import com.app.battle_word.subscribers.WordTimeCompletedSubscriber;
 import com.app.battle_word.viewmodels.ScreenTextViewModel;
 import com.app.utils.Utils;
 
@@ -31,7 +29,7 @@ import java.util.List;
  */
 public class ScreenFragment extends Fragment  {
     private GridView gridView;
-    private ScreenAdapter screenAdapter;
+    private LanguageSpinnerAdapter screenAdapter;
     private TextView screenTextView ;
     private TextView secondaryTextView;
     private String gameText ;
@@ -41,7 +39,6 @@ public class ScreenFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_screen, container, false);
-        screenAdapter = new ScreenAdapter(getContext(),R.layout.screen_items,builtLetters());
         screenTextView=v.findViewById(R.id.screen_text);
         secondaryTextView = v.findViewById(R.id.segondary_screen_text);
         secondaryTextView.setVisibility(View.INVISIBLE);
