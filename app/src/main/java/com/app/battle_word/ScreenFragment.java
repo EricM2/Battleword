@@ -49,7 +49,7 @@ public class ScreenFragment extends Fragment  {
         tipButton = v.findViewById(R.id.tip_button);
         tipTextView = v.findViewById(R.id.tip_text);
         tipTextView.setVisibility(View.INVISIBLE);
-        gameText = Utils.getRandomWord();
+        //gameText = Utils.getRandomWord();
        // String iniText = Utils.initScreemFromText(gameText);
         //screenTextView.setText(iniText);
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
@@ -85,7 +85,7 @@ public class ScreenFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 tipTextView.setVisibility(View.VISIBLE);
-                closeTipAfter(2000);
+                closeTipAfter(4000);
             }
         });
 

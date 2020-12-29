@@ -16,7 +16,7 @@ import com.app.utils.Utils;
 
 public class PlayerControlActivity extends AppCompatActivity {
     private ScreenTextViewModel   screenTextViewModel;
-    private  String gameText =Utils.getRandomWord();
+    //private  String gameText =Utils.getRandomWord();
     //String iniText = Utils.initScreemFromText(gameText);
 
     private  GameHeaderFragment gameHeaderFragment;

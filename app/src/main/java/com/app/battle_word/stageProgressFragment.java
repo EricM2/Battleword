@@ -184,7 +184,7 @@ public class stageProgressFragment extends Fragment {
 
             @Override
             public void onFinish() {
-
+                p.setProgress(100);
             }
         }.start();
     }
@@ -201,6 +201,7 @@ public class stageProgressFragment extends Fragment {
 
             @Override
             public void onFinish() {
+                p.setProgress(100);
                 lockArray[index].setImageResource(unlocksBackgrounds[index]);
             }
         }.start();

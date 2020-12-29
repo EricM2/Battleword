@@ -71,6 +71,8 @@ public class GameHeaderFragment extends Fragment   {
     private int currenTime = 0;
     public  static String PREFERENCES_NAME = "game_state_pref";
 
+    private String gameLanguage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,7 +106,7 @@ public class GameHeaderFragment extends Fragment   {
         stageTextView = v.findViewById(R.id.stage_value);
         setAllLedInvisible();
         timeProgressBar.setProgress(currenTime);
-
+        gameLanguage = Utils.getGameLanguage(getActivity().getApplicationContext(),SettingsActivity.GAME_LANGUAGE_PREF,SettingsActivity.LANGUAGE_PREF);
         SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_NAME, 0);
         if (prefs.contains("stage")) {
             currentStage = prefs.getInt("stage",1);
@@ -135,7 +137,7 @@ public class GameHeaderFragment extends Fragment   {
                 setLives(lastStageLifes);
             }
 
-          String gameText =Utils.getRandomWord();
+          String gameText =Utils.getRandomWord(gameLanguage, currentStage);
 
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
@@ -148,7 +150,7 @@ public class GameHeaderFragment extends Fragment   {
                 if(Utils.isSreenTextComplete(s) && timeProgressBar.getProgress()<100){
                     if(countDownTimer!=null)
                         countDownTimer.cancel();
-                    updatScore(10);
+                    updatScore(100);
                     (new Handler()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -281,7 +283,7 @@ public class GameHeaderFragment extends Fragment   {
 
     private  void startGame(){
 
-        final long max = 30000;
+        final long max = 60000;
         countDownTimer = new CountDownTimer(max,10) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -351,7 +353,7 @@ public class GameHeaderFragment extends Fragment   {
            screenTextViewModel.wordFoundBluPrint(foundPrev);
            //Utils.waitFor(4200);
 
-           String newWord = Utils.getRandomWord();
+           String newWord = Utils.getRandomWord(gameLanguage,currentStage);
            int stage = Integer.valueOf(stageTextView.getText().toString());
            String newInitWord = Utils.initScreemFromText(newWord,stage);
            // screenTextViewModel.initText(newInitWord);
@@ -396,16 +398,26 @@ public class GameHeaderFragment extends Fragment   {
 
    private void updatScore(final int score){
        final int currentScore = Integer.valueOf(scoreTextView.getText().toString());
-       CountDownTimer cd = new CountDownTimer(1500,1500/score) {
+       long cscore = 0;
+       CountDownTimer cd = new CountDownTimer(3000,3000/score) {
            @Override
            public void onTick(long millisUntilFinished) {
-               scoreTextView.setText(String.valueOf(currentScore+1500/millisUntilFinished));
+               long cscore =  currentScore+score*(3000-millisUntilFinished)/3000;
+               if(cscore>= 1000) {
+                   int numlifes = (int)(cscore/1000);
+                   for (int i=0; i< numlifes; i++)
+                        incrementSlifeLife();
+                   cscore = cscore - numlifes*1000;
+               }
+               scoreTextView.setText(String.valueOf(cscore));
 
            }
 
            @Override
            public void onFinish() {
-
+               int finScore= currentScore+score;
+               int res =   finScore - 1000*(finScore/1000);
+               scoreTextView.setText(String.valueOf(res));
            }
        }.start();
    }

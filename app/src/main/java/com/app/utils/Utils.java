@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -138,7 +139,7 @@ public class Utils {
     }
 
 
-    public static  String getRandomWord(){
+    public static  String getRandomWord(String language, int stage){
         Random r = new Random();
         int v = r.nextInt(EnWords.english.length);
         return  EnWords.english[v];
@@ -169,6 +170,34 @@ public class Utils {
         editor.putString(prefKey, prevefVale);
         editor.commit();
     }
+    public static int getIntSharedPreferences(Context context,String prefName,String prefKey){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+        if (prefs.contains(prefKey)) {
+            return prefs.getInt(prefKey,-1);
+        }
+        else {
+            return -1;
+        }
+
+    }
+    public static String getStringSharedPreferences(Context context,String prefName,String prefKey,String defaultValue){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+        String defaultL = Locale.getDefault().getLanguage().trim()+"-"+Locale.getDefault().getCountry().trim();
+        if (prefs.contains(prefKey)) {
+            return prefs.getString(prefKey,defaultValue);
+        }
+        else {
+            return defaultValue;
+        }
+
+    }
+
+    public static String getGameLanguage(Context context,String prefName,String prefKey){
+        String defaultL = Locale.getDefault().getLanguage().trim()+"-"+Locale.getDefault().getCountry().trim();
+        return getStringSharedPreferences(context,prefName,prefKey,defaultL);
+
+    }
+
 
 
 }
