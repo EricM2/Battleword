@@ -3,10 +3,12 @@ package com.app.battle_word.objects;
 public class Language {
     private int flagImageResourceId;
     private String language;
+    private  String code;
 
-    public Language(int flagImageResourceId, String language) {
+    public Language(int flagImageResourceId, String language,String code) {
         this.flagImageResourceId = flagImageResourceId;
         this.language = language;
+        this.code = code;
     }
 
     public int getFlagImageResourceId() {
@@ -23,5 +25,13 @@ public class Language {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

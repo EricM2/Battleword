@@ -1,5 +1,7 @@
 package com.app.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -12,7 +14,7 @@ import java.util.Random;
 
 public class Utils {
 
-    public static double[] stageWeight = new double[]{40d,55d,70d,80d};
+    public static double[] stageWeight = new double[]{40d,55d,70d,80d,90d};
 
     public static boolean testIfStrIsInt(String str){
         try {
@@ -154,4 +156,19 @@ public class Utils {
             }
         }.start();
     }
+
+    public static void saveIntSharedPreferences(Context context,String prefName,String prefKey, int prevefVale ){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(prefKey, prevefVale);
+        editor.commit();
+    }
+    public static void saveStringSharedPreferences(Context context,String prefName,String prefKey, String prevefVale ){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(prefKey, prevefVale);
+        editor.commit();
+    }
+
+
 }

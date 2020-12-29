@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class ScreenFragment extends Fragment  {
     private TextView secondaryTextView;
     private String gameText ;
     private ScreenTextViewModel screenTextViewModel;
+    private Button tipButton;
+    private TextView tipTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +46,9 @@ public class ScreenFragment extends Fragment  {
         screenTextView=v.findViewById(R.id.screen_text);
         secondaryTextView = v.findViewById(R.id.segondary_screen_text);
         secondaryTextView.setVisibility(View.INVISIBLE);
+        tipButton = v.findViewById(R.id.tip_button);
+        tipTextView = v.findViewById(R.id.tip_text);
+        tipTextView.setVisibility(View.INVISIBLE);
         gameText = Utils.getRandomWord();
        // String iniText = Utils.initScreemFromText(gameText);
         //screenTextView.setText(iniText);
@@ -71,6 +78,14 @@ public class ScreenFragment extends Fragment  {
                     secondaryTextView.setVisibility(View.INVISIBLE);
                 else
                     secondaryTextView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        tipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tipTextView.setVisibility(View.VISIBLE);
+                closeTipAfter(2000);
             }
         });
 
@@ -105,6 +120,15 @@ public class ScreenFragment extends Fragment  {
         }
 
         return result;
+    }
+
+    private void closeTipAfter(long millis){
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tipTextView.setVisibility(View.INVISIBLE);
+            }
+        },millis);
     }
 
    /* @Override
