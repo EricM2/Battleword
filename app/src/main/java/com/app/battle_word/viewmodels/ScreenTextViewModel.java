@@ -10,6 +10,7 @@ import java.util.List;
 public class ScreenTextViewModel extends ViewModel {
    private String requiredText ;
 
+   private MutableLiveData<String> gameLanguage = new MutableLiveData<>();
     private  MutableLiveData<String> screenText = new MutableLiveData<String>();
     private MutableLiveData<String> gameScore = new MutableLiveData<>();
     private  MutableLiveData<String> secondScreenText = new MutableLiveData<String>();
@@ -26,6 +27,10 @@ public class ScreenTextViewModel extends ViewModel {
     }
     public void updateSecondScreenText(String str){
         secondScreenText.setValue(str);
+    }
+
+    public void updateGameLanguage(String language){
+        this.gameLanguage.setValue(language);
     }
 
     public void updateScore(String score){
@@ -92,5 +97,9 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<String> getGameScore() {
         return gameScore;
+    }
+
+    public MutableLiveData<String> getGameLanguage() {
+        return gameLanguage;
     }
 }
