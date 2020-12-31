@@ -3,7 +3,10 @@ package com.app.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +15,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Utils {
 
@@ -229,6 +234,37 @@ public class Utils {
     public  static void setStageFirstTime(Context c, int stage){
         String prefKey = "stage"+String.valueOf(stage);
         saveBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,true);
+
+    }
+
+
+    public static void setTextViewText(final TextView scenario, final String text, final int duration){
+        final int length =  text.length();
+        final int[] i = new int[1];
+        i[0] = 0;
+        final Handler handler = new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                char c= text.charAt(i[0]);
+                //Log.d("Strange",""+c);
+                scenario.append(String.valueOf(c));
+                i[0]++;
+            }
+        };
+
+        final Timer timer = new Timer();
+        TimerTask taskEverySplitSecond = new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(0);
+                if (i[0] == length - 1) {
+                    timer.cancel();
+                }
+            }
+        };
+        timer.schedule(taskEverySplitSecond, 1, duration);
 
     }
 

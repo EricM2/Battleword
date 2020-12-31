@@ -13,8 +13,8 @@
     <string name="play_from_scratch">New Game</string>
     <string name="play">Play</string>
     <string name="stage">STAGE</string>
-
-
+    <string name="text_scenario_sample">Win points by finding words ... be quick as possible , you only have 20 second
+    to find the word.... Lets go ...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.battle_word">
+    package="com.app.battleword">
 
     <application
         android:allowBackup="true"
@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
-        <activity android:name=".NextStageActivity" />
-        <activity android:name=".GameOverActivity" />
-        <activity android:name=".NewGameActivity" />
-        <activity android:name=".GameScenarioActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".PlayerControlActivity" />
-        <activity android:name=".CountDownActivity" />
-        <activity android:name=".GameSetupActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.app.battleword.SettingsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity android:name="com.app.battleword.NextStageActivity" />
+        <activity android:name="com.app.battleword.GameOverActivity" />
+        <activity android:name="com.app.battleword.NewGameActivity" />
+        <activity android:name="com.app.battleword.GameScenarioActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.app.battleword.PlayerControlActivity" />
+        <activity android:name="com.app.battleword.CountDownActivity" />
+        <activity android:name="com.app.battleword.GameSetupActivity" />
+        <activity android:name="com.app.battleword.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
