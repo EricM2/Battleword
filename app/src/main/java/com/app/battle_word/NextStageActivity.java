@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.app.utils.Utils;
+
 public class NextStageActivity extends AppCompatActivity {
     private int stage;
     private final static String MODE = "mode";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +20,12 @@ public class NextStageActivity extends AppCompatActivity {
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(gameScenarioIntent());
+                if(true/*Utils.isStageFirstTime(getApplicationContext(),stage)*/)
+                    startActivity(gameScenarioIntent());
+                else{
+                    Intent intent = countDownIntent();
+                    startActivity(intent);
+                }
             }
         },5000);
     }
@@ -28,6 +36,13 @@ public class NextStageActivity extends AppCompatActivity {
 
         intent.putExtra(MODE,"solitare");
         intent.putExtra("nextStage",stage);
+        return  intent;
+    }
+
+    private Intent countDownIntent(){
+        Intent intent = new Intent(this,CountDownActivity.class);
+        intent.putExtra("mode","solitare");
+        //intent.putExtra(LEVEL, selectedGameLevel);
         return  intent;
     }
 }

@@ -13,7 +13,7 @@
         <activity android:name=".NextStageActivity" />
         <activity android:name=".GameOverActivity" />
         <activity android:name=".NewGameActivity" />
-        <activity android:name=".GameScenarioActivity" />
+        <activity android:name=".GameScenarioActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".PlayerControlActivity" />
         <activity android:name=".CountDownActivity" />
         <activity android:name=".GameSetupActivity" />

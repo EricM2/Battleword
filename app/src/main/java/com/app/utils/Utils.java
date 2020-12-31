@@ -182,7 +182,6 @@ public class Utils {
     }
     public static String getStringSharedPreferences(Context context,String prefName,String prefKey,String defaultValue){
         SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
-        String defaultL = Locale.getDefault().getLanguage().trim()+"-"+Locale.getDefault().getCountry().trim();
         if (prefs.contains(prefKey)) {
             return prefs.getString(prefKey,defaultValue);
         }
@@ -191,12 +190,48 @@ public class Utils {
         }
 
     }
+    public static boolean getBooleanSharedPreferences(Context context,String prefName,String prefKey,boolean defaultValue){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+
+        if (prefs.contains(prefKey)) {
+            return prefs.getBoolean(prefKey,defaultValue);
+        }
+        else {
+            return defaultValue;
+        }
+
+    }
+
+    public static void saveBooleanSharedPreferences(Context context,String prefName,String prefKey, boolean prefValue ){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(prefKey, prefValue);
+        editor.commit();
+    }
+
 
     public static String getGameLanguage(Context context,String prefName,String prefKey){
         String defaultL = Locale.getDefault().getLanguage().trim()+"-"+Locale.getDefault().getCountry().trim();
         return getStringSharedPreferences(context,prefName,prefKey,defaultL);
 
     }
+
+   public static void resetGameStatePreferences(Context context, String prefName){
+        SharedPreferences pref = context.getSharedPreferences(prefName,0);
+        pref.edit().clear().commit();
+    }
+
+    public  static boolean isStageFirstTime(Context c, int stage){
+        String prefKey = "stage"+String.valueOf(stage);
+        boolean res = getBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,false);
+        return res;
+    }
+    public  static void setStageFirstTime(Context c, int stage){
+        String prefKey = "stage"+String.valueOf(stage);
+        saveBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,true);
+
+    }
+
 
 
 

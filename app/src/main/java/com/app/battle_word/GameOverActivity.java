@@ -2,11 +2,14 @@ package com.app.battle_word;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.app.utils.Utils;
 
 public class GameOverActivity extends AppCompatActivity {
 
@@ -41,7 +44,6 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
     private void resetGameStatePreferences(){
-        SharedPreferences pref = getSharedPreferences(GameHeaderFragment.PREFERENCES_NAME,0);
-        pref.edit().clear().commit();
+        Utils.resetGameStatePreferences(getApplicationContext(),GameHeaderFragment.PREFERENCES_NAME);
     }
 }

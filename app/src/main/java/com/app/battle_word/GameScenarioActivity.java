@@ -2,16 +2,19 @@ package com.app.battle_word;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.app.battle_word.listeners.OnSwipeListener;
+import com.app.utils.Utils;
 
-public class GameScenarioActivity extends AppCompatActivity {
+public class GameScenarioActivity extends Activity {
 
     private Button playNow;
     private ImageView rollPaper;
@@ -21,7 +24,10 @@ public class GameScenarioActivity extends AppCompatActivity {
     private ImageView slideIndicator2;
     private ImageView slideIndicator3;
     private ImageView slideIndicator4;
+    private TextView stageTitleTextView;
+    private TextView stageMessageTextView;
     private int pageIndex =1;
+    private int stage;
 
 
 
@@ -34,13 +40,16 @@ public class GameScenarioActivity extends AppCompatActivity {
         slideLeft = findViewById(R.id.slide_left);
         slideLeft.setVisibility(View.INVISIBLE);
         slideRight = findViewById(R.id.slide_right);
-        rollPaper = findViewById(R.id.roll_message_paper);
+        //rollPaper = findViewById(R.id.roll_message_paper);
         slideIndicator1 = findViewById(R.id.slide_indicator_1);
         slideIndicator2 = findViewById(R.id.slide_indicator_2);
         slideIndicator3 = findViewById(R.id.slide_indicator_3);
         slideIndicator4 = findViewById(R.id.slide_indicator_4);
+        stageTitleTextView = findViewById(R.id.stage_title);
+        stage = getIntent().getIntExtra("nextStage",1);
+        stageTitleTextView.setText(getString(R.string.stage)+" "+ String.valueOf(stage));
 
-        rollPaper.setOnTouchListener(new OnSwipeListener(GameScenarioActivity.this){
+        /*rollPaper.setOnTouchListener(new OnSwipeListener(GameScenarioActivity.this){
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
@@ -52,12 +61,13 @@ public class GameScenarioActivity extends AppCompatActivity {
                 super.onSwipeRight();
                 slidePrev();
             }
-        });
+        });*/
 
         playNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = solitaireIntent();
+                Utils.setStageFirstTime(getApplicationContext(),stage);
                 startActivity(intent);
             }
         });
@@ -135,7 +145,7 @@ public class GameScenarioActivity extends AppCompatActivity {
                 /*slideIndicator.getLayoutParams().height=11;
                 slideIndicator.getLayoutParams().width=11;
                 slideIndicator.requestLayout();*/
-                rollPaper.setImageResource(rollMessageBackground);
+                //rollPaper.setImageResource(rollMessageBackground);
                 if(pageIndex==4)
                     slideRight.setVisibility(View.INVISIBLE);
                 if (pageIndex==2)
@@ -164,7 +174,7 @@ public class GameScenarioActivity extends AppCompatActivity {
 
                 pageIndex -=1;
                 int rollMessageBackground = getPageId(pageIndex);
-                rollPaper.setImageResource(rollMessageBackground);
+                //rollPaper.setImageResource(rollMessageBackground);
                 int id = getPageId(pageIndex);
 
                 ImageView slideIndicator = getIndicatorView(pageIndex);
