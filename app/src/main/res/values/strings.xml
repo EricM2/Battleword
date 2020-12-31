@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Battle-Word</string>
+    <string name="app_name">BATTLEWORD</string>
     <string-array name="game_levels">
         <item>Select Game Level</item>
         <item>1</item>
