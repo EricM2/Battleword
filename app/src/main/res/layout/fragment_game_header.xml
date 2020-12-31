@@ -120,6 +120,8 @@
             android:layout_height="44dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/snapitc"
+            android:textSize="13dp"
             android:layout_gravity="center_vertical"
             android:text="256456"
             android:textColor="@color/colorSegondary"
@@ -245,7 +247,8 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="STAGE"
+            android:text="@string/stage"
+            android:fontFamily="@font/snapitc"
             android:textColor="@color/colorSegondary" />
 
         <TextView

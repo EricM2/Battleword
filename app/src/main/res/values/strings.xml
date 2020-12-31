@@ -8,6 +8,13 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <string name="you_loosed_message">You loosed</string>
+    <string name="play_from_last_stage">Play Again</string>
+    <string name="play_from_scratch">New Game</string>
+    <string name="play">Play</string>
+    <string name="stage">STAGE</string>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

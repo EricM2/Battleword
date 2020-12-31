@@ -283,7 +283,7 @@ public class GameHeaderFragment extends Fragment   {
 
     private  void startGame(){
 
-        final long max = 60000;
+        final long max = 4000;
         countDownTimer = new CountDownTimer(max,10) {
             @Override
             public void onTick(long millisUntilFinished) {
