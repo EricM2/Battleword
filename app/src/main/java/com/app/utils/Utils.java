@@ -2,11 +2,14 @@ package com.app.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.app.battleword.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,7 +111,7 @@ public class Utils {
 
 
 
-    public static  String putCharInScreenText(String c,String requiredString,String currentScreenText){
+    public static  String putCharInScreenText(String c,String requiredString,String currentScreenText,Context context){
 
         if(requiredString.contains(c)) {
             char[] list = currentScreenText.toCharArray();
@@ -121,11 +124,15 @@ public class Utils {
 
                 }
             }
+
             String res = String.copyValueOf(list);
+            playSound(context, R.raw.word_found_sound,false);
             return res;
         }
-        else
+        else {
+            playSound(context, R.raw.word_not_found_sound,false);
             return currentScreenText;
+        }
     }
 
     public static boolean isSreenTextComplete(String screenText){
@@ -265,6 +272,19 @@ public class Utils {
             }
         };
         timer.schedule(taskEverySplitSecond, 1, duration);
+
+    }
+
+    public static  void playSound(Context c, int rawid, boolean loop){
+        MediaPlayer p = MediaPlayer.create(c, rawid);
+        p.setLooping(loop);
+        p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+        p.start();
 
     }
 

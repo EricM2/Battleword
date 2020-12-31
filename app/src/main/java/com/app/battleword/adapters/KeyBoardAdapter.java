@@ -25,6 +25,7 @@ import java.util.Map;
 public class KeyBoardAdapter extends ArrayAdapter   {
 
     List<WordFoundSubscriber> subscribers = new ArrayList<>();
+    private Context context;
     List<Letter> letters = new ArrayList<>();
     ScreenTextViewModel screen = null;
     Map<Integer,String> keys = Utils.getKeyString();
@@ -32,6 +33,7 @@ public class KeyBoardAdapter extends ArrayAdapter   {
         super(context, resource);
         letters = keyLetters;
         screen = screenTextViewModel;
+        this.context = context;
     }
 
 
@@ -81,7 +83,7 @@ public class KeyBoardAdapter extends ArrayAdapter   {
         keyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateScreen(screen,(Button)v,position);
+                updateScreen(screen,(Button)v,position,context);
             }
 
         });
@@ -90,13 +92,13 @@ public class KeyBoardAdapter extends ArrayAdapter   {
     }
 
 
-    private void updateScreen(ScreenTextViewModel screen, Button button, int position){
+    private void updateScreen(ScreenTextViewModel screen, Button button, int position, Context c){
        String screenText =  screen.getScreenText().getValue();
         String l = getPressedCharacter(position);
         if(!l.isEmpty() && !Utils.isSreenTextComplete(screenText)) {
             Log.d("KEY_PRESSED", l);
             //Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
-            String newString = Utils.putCharInScreenText(l,screen.getRequiredText(),screenText);
+            String newString = Utils.putCharInScreenText(l,screen.getRequiredText(),screenText,c);
             Log.d("NEW_STRING", newString);
             screen.updateScreenText(newString);
         }

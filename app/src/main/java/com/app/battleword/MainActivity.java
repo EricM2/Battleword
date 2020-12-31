@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 
+import com.app.utils.Utils;
+
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,5 +46,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
        countDownTimer.start();
+        Utils.playSound(this,R.raw.game_generic,true);
     }
 }

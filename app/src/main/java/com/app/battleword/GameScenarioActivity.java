@@ -73,6 +73,7 @@ public class GameScenarioActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = solitaireIntent();
                 Utils.setStageFirstTime(getApplicationContext(),stage);
+                Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
                 startActivity(intent);
             }
         });

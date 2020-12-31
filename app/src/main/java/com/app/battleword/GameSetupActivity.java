@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.app.utils.Utils;
+
 public class GameSetupActivity extends AppCompatActivity {
     private Spinner gameLevelSpinner;
     private Button battleButton;
@@ -27,6 +29,7 @@ public class GameSetupActivity extends AppCompatActivity {
         settingsBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
                 startActivity(getSettingsIntent());
             }
         });
