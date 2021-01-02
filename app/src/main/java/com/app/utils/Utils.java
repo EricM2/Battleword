@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Callable;
 
 public class Utils {
 
@@ -308,6 +309,19 @@ public class Utils {
         p.start();
         return p;
 
+    }
+
+    public static void doAfter(long wait, final Callable func){
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    func.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        },wait);
     }
 
 

@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.app.utils.Utils;
+
+import java.util.concurrent.Callable;
 
 public class GameSetupActivity extends AppCompatActivity {
     private Spinner gameLevelSpinner;
@@ -19,11 +22,13 @@ public class GameSetupActivity extends AppCompatActivity {
     private final static String LEVEL = "leevel";
     private String selectedGameLevel;
     private Button settingsBut;
+    private MediaPlayer dingle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_setup);
         selectedGameLevel = null;
+        dingle = null;
         solitaireButton = findViewById(R.id.play_solitaire);
         settingsBut = findViewById(R.id.settings_button_setup);
         settingsBut.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +85,14 @@ public class GameSetupActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Utils.playSound(this,R.raw.new_activity_sound,false);
+        Callable v = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                playDingle();
+                return null;
+            }
+        };
+        Utils.doAfter(200,v);
     }
 
     private Intent solitaireIntent(){
@@ -110,5 +123,28 @@ public class GameSetupActivity extends AppCompatActivity {
 
     private boolean isFirstTime(){
         return  true;
+    }
+
+
+
+    private void playDingle(){
+        dingle = Utils.playSound(this,R.raw.battleword_generic,true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            if(dingle!=null){
+                dingle.pause();
+                dingle.stop();
+                dingle.release();
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
 }

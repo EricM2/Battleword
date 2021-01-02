@@ -73,7 +73,7 @@ public class GameHeaderFragment extends Fragment   {
     private String gameLanguage;
     private boolean fiveSecLeft;
     private MediaPlayer fiveSecLeftPlayer;
-
+    private MediaPlayer stageWinPlayer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +81,7 @@ public class GameHeaderFragment extends Fragment   {
         View v =inflater.inflate(R.layout.fragment_game_header, container, false);
         fiveSecLeft = false;
         fiveSecLeftPlayer = null;
+        stageWinPlayer = null;
         life1 = v.findViewById(R.id.life_1);
         life2 = v.findViewById(R.id.life_2);
         life3 = v.findViewById(R.id.life_3);
@@ -318,23 +319,7 @@ public class GameHeaderFragment extends Fragment   {
                     }, 2000);
 
                 }
-                if ( fiveSecLeftPlayer!= null) {
-                    try {
-                        if(fiveSecLeftPlayer.isPlaying()){
-                            fiveSecLeftPlayer.pause();
-                            fiveSecLeftPlayer.stop();
-                            fiveSecLeftPlayer.release();
-                        }
-                    }
-                    catch (Exception e){
-
-                    }
-
-
-                    fiveSecLeftPlayer= null;
-                }
-                fiveSecLeft= false;
-
+                stopFiveSecLeftSound();
 
 
                 //notifyTimeCompleted();
@@ -371,8 +356,9 @@ public class GameHeaderFragment extends Fragment   {
     }*/
 
    private void findNewWord(Boolean foundPrev) {
+       stopFiveSecLeftSound();
        if (currentWordNum <= 10) {
-           int ledIndex = currentWordNum -1;
+           int ledIndex = currentWordNum - 1;
            screenTextViewModel.wordFoundBluPrint(foundPrev);
            timeProgressBar.setProgress(0);
            screenTextViewModel.updateCurrentTime(timeProgressBar.getProgress());
@@ -400,19 +386,32 @@ public class GameHeaderFragment extends Fragment   {
                wordsMask[index] = false;
            }
            leds[ledIndex].setVisibility(View.VISIBLE);
-
            currentWordNum++;
+           if(numLifes > 0 && currentWordNum <= 10)
+               startGame();
+           else{
+               if (numLifes<=0)
+                   gameOver();
+           }
+
+
 
        }
-       if (currentWordNum == 11) {
-           currentWordNum = 1;
+
+       if(currentWordNum==11)  {
+
            lastStageLifes = numLifes;
+           stageWinPlayer = Utils.playSound(getActivity(),R.raw.stage_win_sound,true);
+
            if (currentStage < 5) {
+
                (new Handler()).postDelayed(new Runnable() {
                    @Override
                    public void run() {
-                       currentStage = currentStage + 1;
 
+                       currentWordNum = 1;
+                       currentStage = currentStage + 1;
+                       stopStageWinSound();
                        startNextStageActivity();
                        screenTextViewModel.updateStage(String.valueOf(currentStage));
                        setAllLedInvisible();
@@ -422,10 +421,9 @@ public class GameHeaderFragment extends Fragment   {
            }
 
        }
-       if(numLifes > 0)
-           startGame();
-       else
-           gameOver();
+
+
+
    }
 
    private void updatScore(final int score){
@@ -492,6 +490,46 @@ public class GameHeaderFragment extends Fragment   {
                 countDownTimer = null;
             }
        }
+
+       private void stopFiveSecLeftSound(){
+           if ( fiveSecLeftPlayer!= null) {
+               try {
+                   if(fiveSecLeftPlayer.isPlaying()){
+                       fiveSecLeftPlayer.pause();
+                       fiveSecLeftPlayer.stop();
+                       fiveSecLeftPlayer.release();
+                   }
+               }
+               catch (Exception e){
+
+               }
+
+
+               fiveSecLeftPlayer= null;
+           }
+           fiveSecLeft= false;
+       }
+
+    private void stopStageWinSound(){
+        if ( stageWinPlayer!= null) {
+            try {
+                if(stageWinPlayer.isPlaying()){
+                    stageWinPlayer.pause();
+                    stageWinPlayer.stop();
+                    stageWinPlayer.release();
+                }
+            }
+            catch (Exception e){
+
+            }
+
+
+            stageWinPlayer= null;
+        }
+
+    }
+
+
 
    }
 

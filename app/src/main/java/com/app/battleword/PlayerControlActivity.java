@@ -12,6 +12,8 @@ import android.os.PersistableBundle;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
 import com.app.utils.Utils;
 
+import java.util.concurrent.Callable;
+
 public class PlayerControlActivity extends AppCompatActivity {
     private ScreenTextViewModel   screenTextViewModel;
     //private  String gameText =Utils.getRandomWord();
@@ -43,7 +45,20 @@ public class PlayerControlActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        dingle = Utils.playSound(this,R.raw.game_genericwav,true);
+        Callable v = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                 playDingle();
+                 return null;
+            }
+        };
+        Utils.doAfter(200,v);
+    }
+
+
+
+    private void playDingle(){
+        dingle = Utils.playSound(this,R.raw.battleword_generic,true);
     }
 
     @Override

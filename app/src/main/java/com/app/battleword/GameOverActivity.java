@@ -13,6 +13,8 @@ import android.widget.ImageView;
 
 import com.app.utils.Utils;
 
+import java.util.concurrent.Callable;
+
 public class GameOverActivity extends AppCompatActivity {
 
     private Button playFromZeroButton;
@@ -67,6 +69,19 @@ public class GameOverActivity extends AppCompatActivity {
         v.setAnimation(fadeIn);
         v.setAnimation(fadeOut);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Callable c = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Utils.playSound(GameOverActivity.this,R.raw.loose_sound,false);
+                return null;
+            }
+        };
+        Utils.doAfter(200,c);
     }
 
     @Override

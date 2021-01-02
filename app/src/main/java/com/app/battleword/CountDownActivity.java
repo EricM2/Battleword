@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.widget.TextView;
 
 import com.app.utils.Utils;
@@ -27,12 +28,19 @@ public class CountDownActivity extends AppCompatActivity {
                     Utils.playSound(CountDownActivity.this,R.raw.word_not_found_sound,false);
                 else
                     Utils.playSound(CountDownActivity.this,R.raw.last_count_down_sound,false);
+
             }
 
             @Override
             public void onFinish() {
+                Utils.playSound(CountDownActivity.this,R.raw.last_count_down_sound,false);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startGameActivity();
+                    }
+                },500);
 
-                startGameActivity();
             }
         };
     }
