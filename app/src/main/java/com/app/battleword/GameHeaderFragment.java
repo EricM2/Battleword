@@ -408,11 +408,17 @@ public class GameHeaderFragment extends Fragment   {
            currentWordNum = 1;
            lastStageLifes = numLifes;
            if (currentStage < 5) {
-               currentStage = currentStage + 1;
+               (new Handler()).postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       currentStage = currentStage + 1;
 
-               startNextStageActivity();
-               screenTextViewModel.updateStage(String.valueOf(currentStage));
-               setAllLedInvisible();
+                       startNextStageActivity();
+                       screenTextViewModel.updateStage(String.valueOf(currentStage));
+                       setAllLedInvisible();
+                   }
+               },5000);
+
            }
 
        }
@@ -467,15 +473,24 @@ public class GameHeaderFragment extends Fragment   {
        }
 
        public void gameOver(){
+           stopGame();
            Intent intent = new Intent(getContext(),GameOverActivity.class);
            startActivity(intent);
 
        }
        private void startNextStageActivity(){
+           stopGame();
            Intent intent = new Intent(getContext(),NextStageActivity.class);
            intent.putExtra("mode","solitare");
            intent.putExtra("nextStage",currentStage);
            startActivity(intent);
+       }
+
+       private void stopGame(){
+            if (countDownTimer!=null) {
+                countDownTimer.cancel();
+                countDownTimer = null;
+            }
        }
 
    }

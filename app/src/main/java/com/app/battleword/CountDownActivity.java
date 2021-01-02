@@ -23,7 +23,10 @@ public class CountDownActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 countDownTextView.setText(String.valueOf(millisUntilFinished/1000));
-                Utils.playSound(CountDownActivity.this,R.raw.click,false);
+                if(millisUntilFinished > 0)
+                    Utils.playSound(CountDownActivity.this,R.raw.word_not_found_sound,false);
+                else
+                    Utils.playSound(CountDownActivity.this,R.raw.last_count_down_sound,false);
             }
 
             @Override

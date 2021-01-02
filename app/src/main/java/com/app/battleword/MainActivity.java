@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         };
        countDownTimer.start();
 
-       Intent i = new Intent(this, BackgroundSoundService.class);
-        startService(i);
+       /*Intent i = new Intent(this, BackgroundSoundService.class);
+        startService(i);*/
 
     }
 
