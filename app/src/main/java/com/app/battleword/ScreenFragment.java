@@ -24,11 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScreenFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ScreenFragment extends Fragment  {
     private GridView gridView;
     private LanguageSpinnerAdapter screenAdapter;
@@ -38,6 +34,7 @@ public class ScreenFragment extends Fragment  {
     private ScreenTextViewModel screenTextViewModel;
     private Button tipButton;
     private TextView tipTextView;
+    private boolean isHintOn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +46,7 @@ public class ScreenFragment extends Fragment  {
         tipButton = v.findViewById(R.id.tip_button);
         tipTextView = v.findViewById(R.id.tip_text);
         tipTextView.setVisibility(View.INVISIBLE);
+        isHintOn = false;
         //gameText = Utils.getRandomWord();
        // String iniText = Utils.initScreemFromText(gameText);
         //screenTextView.setText(iniText);
@@ -67,7 +65,7 @@ public class ScreenFragment extends Fragment  {
                     public void onChanged(String s) {
 
                         secondaryTextView.setVisibility(View.VISIBLE);
-                        Utils.setTextViewText(secondaryTextView,s,30);
+                        Utils.setTextViewText(getActivity(),secondaryTextView,s,30,-1);
 
 
                     }
@@ -88,8 +86,15 @@ public class ScreenFragment extends Fragment  {
         tipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tipTextView.setVisibility(View.VISIBLE);
-                closeTipAfter(4000);
+                if(isHintOn)
+                    tipTextView.setVisibility(View.INVISIBLE);
+                else{
+
+                    tipTextView.setVisibility(View.VISIBLE);
+                    closeTipAfter(4000);
+                    Utils.playSound(getActivity(),R.raw.hint_sound,false);
+                }
+                isHintOn = !isHintOn;
             }
         });
 

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
+import com.app.utils.Utils;
+
 public class CountDownActivity extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
@@ -21,10 +23,12 @@ public class CountDownActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 countDownTextView.setText(String.valueOf(millisUntilFinished/1000));
+                Utils.playSound(CountDownActivity.this,R.raw.click,false);
             }
 
             @Override
             public void onFinish() {
+
                 startGameActivity();
             }
         };

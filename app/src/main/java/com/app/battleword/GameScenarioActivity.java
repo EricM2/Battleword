@@ -90,7 +90,7 @@ public class GameScenarioActivity extends Activity {
             }
         });
 
-        Utils.setTextViewText(stageMessageTextView,getString(R.string.text_scenario_sample),50);
+        Utils.setTextViewText(this,stageMessageTextView, getString(R.string.text_scenario_sample),50,R.raw.click);
     }
 
     private Intent solitaireIntent(){

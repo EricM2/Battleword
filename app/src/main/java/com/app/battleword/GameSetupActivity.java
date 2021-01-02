@@ -29,7 +29,6 @@ public class GameSetupActivity extends AppCompatActivity {
         settingsBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
                 startActivity(getSettingsIntent());
             }
         });
@@ -61,6 +60,7 @@ public class GameSetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     Intent intent;
+                    Utils.playSound(GameSetupActivity.this, R.raw.play_button_sound,false);
                     if(isFirstTime()){
                        intent = gameScenarioIntent();
 
@@ -74,6 +74,12 @@ public class GameSetupActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.playSound(this,R.raw.new_activity_sound,false);
     }
 
     private Intent solitaireIntent(){

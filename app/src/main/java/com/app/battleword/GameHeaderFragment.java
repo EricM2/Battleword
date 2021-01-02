@@ -2,6 +2,7 @@ package com.app.battleword;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -70,12 +71,16 @@ public class GameHeaderFragment extends Fragment   {
     public  static String PREFERENCES_NAME = "game_state_pref";
 
     private String gameLanguage;
+    private boolean fiveSecLeft;
+    private MediaPlayer fiveSecLeftPlayer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_game_header, container, false);
+        fiveSecLeft = false;
+        fiveSecLeftPlayer = null;
         life1 = v.findViewById(R.id.life_1);
         life2 = v.findViewById(R.id.life_2);
         life3 = v.findViewById(R.id.life_3);
@@ -256,6 +261,7 @@ public class GameHeaderFragment extends Fragment   {
         if( numLifes < 10 && numLifes > 0 ){
             lifes[numLifes-1].setImageResource(R.drawable.diamond_life);
             numLifes++;
+            Utils.playSound(getActivity(),R.raw.new_life_sound,false);
         }
 
 
@@ -281,7 +287,8 @@ public class GameHeaderFragment extends Fragment   {
 
     private  void startGame(){
 
-        final long max = 4000;
+        final long max = 15000;
+
         countDownTimer = new CountDownTimer(max,10) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -289,6 +296,11 @@ public class GameHeaderFragment extends Fragment   {
                     long time = max - millisUntilFinished;
                     long progressValue = time*100/max;
                     timeProgressBar.setProgress((int) progressValue);
+                    if((millisUntilFinished <= 5000) && !fiveSecLeft){
+                        fiveSecLeftPlayer = Utils.playSound(getActivity(),R.raw.fivesec_left_sound,false);
+                        fiveSecLeft= true;
+                    }
+
 
             }
 
@@ -306,6 +318,22 @@ public class GameHeaderFragment extends Fragment   {
                     }, 2000);
 
                 }
+                if ( fiveSecLeftPlayer!= null) {
+                    try {
+                        if(fiveSecLeftPlayer.isPlaying()){
+                            fiveSecLeftPlayer.pause();
+                            fiveSecLeftPlayer.stop();
+                            fiveSecLeftPlayer.release();
+                        }
+                    }
+                    catch (Exception e){
+
+                    }
+
+
+                    fiveSecLeftPlayer= null;
+                }
+                fiveSecLeft= false;
 
 
 

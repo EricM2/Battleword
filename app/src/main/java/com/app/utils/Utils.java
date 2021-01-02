@@ -245,10 +245,13 @@ public class Utils {
     }
 
 
-    public static void setTextViewText(final TextView scenario, final String text, final int duration){
+    public static void setTextViewText(final Context context, final TextView scenario, final String text, final int duration, final int soundId){
         final int length =  text.length();
         final int[] i = new int[1];
         i[0] = 0;
+
+
+
         final Handler handler = new Handler()
         {
             @Override
@@ -263,21 +266,39 @@ public class Utils {
 
         final Timer timer = new Timer();
         TimerTask taskEverySplitSecond = new TimerTask() {
+            int count = 0;
             @Override
             public void run() {
+
+
                 handler.sendEmptyMessage(0);
+
                 if (i[0] == length - 1) {
                     timer.cancel();
+
                 }
+                else{
+                    if(soundId !=-1 && count==2 ){
+                        MediaPlayer p = Utils.playSound(context,soundId,false);
+                        count = 0;
+                    }
+                    else{
+                        if(soundId != -1)
+                            count++;
+                    }
+                }
+
             }
         };
         timer.schedule(taskEverySplitSecond, 1, duration);
 
     }
 
-    public static  void playSound(Context c, int rawid, boolean loop){
+    public static  MediaPlayer playSound(Context c, int rawid, boolean loop){
         MediaPlayer p = MediaPlayer.create(c, rawid);
+
         p.setLooping(loop);
+        p.setVolume(100,100);
         p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -285,6 +306,7 @@ public class Utils {
             }
         });
         p.start();
+        return p;
 
     }
 
