@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.battle_word">
+    package="com.app.battleword">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        android:theme="@style/AppTheme"
+        >
+        <service
+            android:name="com.app.battle_word.BackgroundSoundService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".NextStageActivity" />
         <activity android:name=".GameOverActivity" />
         <activity android:name=".NewGameActivity" />
-        <activity android:name=".GameScenarioActivity" />
+        <activity
+            android:name=".GameScenarioActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".PlayerControlActivity" />
         <activity android:name=".CountDownActivity" />
         <activity android:name=".GameSetupActivity" />

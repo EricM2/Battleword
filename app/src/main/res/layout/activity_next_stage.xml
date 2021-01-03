@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/game_progress_fragment"
-        android:name="com.app.battle_word.stageProgressFragment"
+        android:name="com.app.battleword.stageProgressFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
 

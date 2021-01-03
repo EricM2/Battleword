@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/game_header_fragment"
-        android:name="com.app.battle_word.GameHeaderFragment"
+        android:name="com.app.battleword.GameHeaderFragment"
         android:layout_width="0dp"
         android:layout_height="125dp"
         android:layout_marginLeft="0dp"
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/screen_fragment"
-        android:name="com.app.battle_word.ScreenFragment"
+        android:name="com.app.battleword.ScreenFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -55,7 +55,7 @@
     <fragment
 
         android:id="@+id/keyboad_fragment"
-        android:name="com.app.battle_word.KeyBoardFragment"
+        android:name="com.app.battleword.KeyBoardFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"

@@ -4,35 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="@color/dark_transparent"
     tools:context=".GameScenarioActivity">
 
-    <ImageView
-        android:id="@+id/logo"
+
+    <TextView
+        android:id="@+id/scenario_text"
         android:layout_width="0dp"
-        android:layout_height="73dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/battleword"
+        android:layout_height="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="200dp"
+        android:padding="30dp"
+        android:gravity="center"
+        android:background="@drawable/settings_background"
+        android:text=""
+        android:textAlignment="center"
+        android:fontFamily="@font/snapitc"
+        android:textColor="@color/colorPrimaryLight"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/rounded_background"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/transparent_key"
-        app:layout_constraintBottom_toTopOf="@id/play_now"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintVertical_weight="0.5" />
+
+
+
+
+
+
 
     <Button
         android:id="@+id/slide_left"
@@ -40,22 +41,12 @@
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/slide_left_background"
-        app:layout_constraintBottom_toBottomOf="@id/roll_message_paper"
-        app:layout_constraintEnd_toStartOf="@id/roll_message_paper"
-        app:layout_constraintStart_toStartOf="@id/roll_message_paper"
-        app:layout_constraintTop_toTopOf="@id/roll_message_paper" />
+        app:layout_constraintBottom_toBottomOf="@id/scenario_text"
+        app:layout_constraintEnd_toStartOf="@id/scenario_text"
+        app:layout_constraintStart_toStartOf="@id/scenario_text"
+        app:layout_constraintTop_toTopOf="@id/scenario_text" />
 
-    <ImageView
-        android:id="@+id/roll_message_paper"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/roll_message_background_1"
-        app:layout_constraintBottom_toBottomOf="@id/rounded_background"
-        app:layout_constraintStart_toStartOf="@id/rounded_background"
-        app:layout_constraintEnd_toEndOf="@id/rounded_background"
-        app:layout_constraintTop_toTopOf="@id/rounded_background" />
+
 
     <Button
         android:id="@+id/slide_right"
@@ -64,91 +55,94 @@
 
         android:layout_marginRight="10dp"
         android:background="@drawable/slide_right_background"
-        app:layout_constraintBottom_toBottomOf="@id/roll_message_paper"
-        app:layout_constraintEnd_toEndOf="@id/roll_message_paper"
-        app:layout_constraintStart_toEndOf="@id/roll_message_paper"
-        app:layout_constraintTop_toTopOf="@id/roll_message_paper" />
+        app:layout_constraintBottom_toBottomOf="@id/scenario_text"
+        app:layout_constraintEnd_toEndOf="@id/scenario_text"
+        app:layout_constraintStart_toEndOf="@id/scenario_text"
+        app:layout_constraintTop_toTopOf="@id/scenario_text" />
 
 
 
 
-    <TextView
-        android:id="@+id/scenrio_text"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:gravity="center"
-        android:text="Win points by finding wordsbbbbbbsbbbbbbb
-        ggggggggggggggggggggggggggggggggggggggggggggggggggggu
-        nnhbbbbbbbbbbbbbbb"
-        android:textAlignment="center"
-        android:textColor="#000"
-        app:layout_constraintBottom_toBottomOf="@id/roll_message_paper"
-        app:layout_constraintEnd_toEndOf="@id/roll_message_paper"
-        app:layout_constraintStart_toStartOf="@id/roll_message_paper"
-        app:layout_constraintTop_toTopOf="@id/roll_message_paper" />
+
 
     <Button
         android:id="@+id/play_now"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background_1"
-        android:text="PLAY"
+        android:textSize="@dimen/play_button_text_size"
+        android:background="@drawable/game_button_background"
+        android:text="@string/play"
+        android:fontFamily="@font/snapitc"
+
         android:textColor="@color/colorSegondary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rounded_background"
-        app:layout_constraintVertical_weight="0.2" />
+        app:layout_constraintTop_toBottomOf="@id/slide_indicater_container" />
+
     <LinearLayout
 
-        android:orientation="horizontal"
+        android:id="@+id/slide_indicater_container"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:id="@+id/slide_indicater_container"
-        app:layout_constraintStart_toStartOf="@id/roll_message_paper"
-        app:layout_constraintEnd_toEndOf="@id/roll_message_paper"
-        app:layout_constraintBottom_toBottomOf="@id/roll_message_paper">
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/scenario_text"
+        app:layout_constraintStart_toStartOf="@id/scenario_text"
+        app:layout_constraintTop_toBottomOf="@id/scenario_text">
 
         <ImageView
-            android:layout_margin="2dp"
             android:id="@+id/slide_indicator_1"
             android:layout_width="11dp"
             android:layout_height="11dp"
-            android:src="@drawable/slide_indicator_black"
-            android:layout_gravity="center_vertical"/>
-        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_margin="2dp"
+            android:src="@drawable/slide_indicator_black" />
+
+        <ImageView
             android:id="@+id/slide_indicator_2"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/slide_indicator_transparent"
-            android:layout_gravity="center_vertical"/>
-        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_margin="2dp"
+            android:src="@drawable/slide_indicator_transparent" />
+
+        <ImageView
             android:id="@+id/slide_indicator_3"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/slide_indicator_transparent"
-            android:layout_gravity="center_vertical"/>
-        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_margin="2dp"
+            android:src="@drawable/slide_indicator_transparent" />
+
+        <ImageView
             android:id="@+id/slide_indicator_4"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/slide_indicator_transparent"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:layout_margin="2dp"
+            android:src="@drawable/slide_indicator_transparent" />
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/stage_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="STAGE 1"
+        android:fontFamily="@font/snapitc"
+        android:textSize="@dimen/play_button_text_size"
+        app:layout_constraintStart_toStartOf="@id/scenario_text"
+        app:layout_constraintEnd_toEndOf="@id/scenario_text"
+        app:layout_constraintTop_toTopOf="@id/scenario_text"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/colorPrimaryLight"
+        android:gravity="center"/>
 
 
 

@@ -1,9 +1,18 @@
 package com.app.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.app.battleword.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +21,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
 
 public class Utils {
 
@@ -103,7 +115,7 @@ public class Utils {
 
 
 
-    public static  String putCharInScreenText(String c,String requiredString,String currentScreenText){
+    public static  String putCharInScreenText(String c,String requiredString,String currentScreenText,Context context){
 
         if(requiredString.contains(c)) {
             char[] list = currentScreenText.toCharArray();
@@ -116,11 +128,15 @@ public class Utils {
 
                 }
             }
+
             String res = String.copyValueOf(list);
+            playSound(context, R.raw.word_found_sound,false);
             return res;
         }
-        else
+        else {
+            playSound(context, R.raw.word_not_found_sound,false);
             return currentScreenText;
+        }
     }
 
     public static boolean isSreenTextComplete(String screenText){
@@ -182,7 +198,6 @@ public class Utils {
     }
     public static String getStringSharedPreferences(Context context,String prefName,String prefKey,String defaultValue){
         SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
-        String defaultL = Locale.getDefault().getLanguage().trim()+"-"+Locale.getDefault().getCountry().trim();
         if (prefs.contains(prefKey)) {
             return prefs.getString(prefKey,defaultValue);
         }
@@ -191,12 +206,131 @@ public class Utils {
         }
 
     }
+    public static boolean getBooleanSharedPreferences(Context context,String prefName,String prefKey,boolean defaultValue){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+
+        if (prefs.contains(prefKey)) {
+            return prefs.getBoolean(prefKey,defaultValue);
+        }
+        else {
+            return defaultValue;
+        }
+
+    }
+
+    public static void saveBooleanSharedPreferences(Context context,String prefName,String prefKey, boolean prefValue ){
+        SharedPreferences prefs = context.getSharedPreferences(prefName, 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(prefKey, prefValue);
+        editor.commit();
+    }
+
 
     public static String getGameLanguage(Context context,String prefName,String prefKey){
         String defaultL = Locale.getDefault().getLanguage().trim()+"-"+Locale.getDefault().getCountry().trim();
         return getStringSharedPreferences(context,prefName,prefKey,defaultL);
 
     }
+
+   public static void resetGameStatePreferences(Context context, String prefName){
+        SharedPreferences pref = context.getSharedPreferences(prefName,0);
+        pref.edit().clear().commit();
+    }
+
+    public  static boolean isStageFirstTime(Context c, int stage){
+        String prefKey = "stage"+String.valueOf(stage);
+        boolean res = getBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,false);
+        return res;
+    }
+    public  static void setStageFirstTime(Context c, int stage){
+        String prefKey = "stage"+String.valueOf(stage);
+        saveBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,true);
+
+    }
+
+
+    public static void setTextViewText(final Context context, final TextView scenario, final String text, final int duration, final int soundId,final Timer t){
+        final int length =  text.length();
+        final int[] i = new int[1];
+        i[0] = 0;
+
+
+
+        final Handler handler = new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                char c= text.charAt(i[0]);
+                //Log.d("Strange",""+c);
+                scenario.append(String.valueOf(c));
+                i[0]++;
+            }
+        };
+
+
+        TimerTask taskEverySplitSecond = new TimerTask() {
+
+            int count = 0;
+
+
+            @Override
+            public void run() {
+
+
+                handler.sendEmptyMessage(0);
+
+                if (i[0] == length - 1) {
+                    t.cancel();
+
+                }
+                else{
+                    if(soundId !=-1 && count==2 ){
+
+                        MediaPlayer p = Utils.playSound(context,soundId,false);
+                        count = 0;
+                    }
+                    else{
+                        if(soundId != -1)
+                            count++;
+                    }
+                }
+
+            }
+        };
+        t.schedule(taskEverySplitSecond, 1, duration);
+
+    }
+
+    public static  MediaPlayer playSound(Context c, int rawid, boolean loop){
+        MediaPlayer p = MediaPlayer.create(c, rawid);
+
+        p.setLooping(loop);
+        p.setVolume(100,100);
+        p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+        p.start();
+        return p;
+
+    }
+
+    public static void doAfter(long wait, final Callable func){
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    func.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        },wait);
+    }
+
 
 
 
