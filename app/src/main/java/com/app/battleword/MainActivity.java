@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        //Utils.resetGameStatePreferences(this,Strings.GAME_STATE_PREF);
         final Intent gameSetupIntent = new Intent(this,GameSetupActivity.class);
         countDownTimer = new CountDownTimer(5000,1000) {
             @Override

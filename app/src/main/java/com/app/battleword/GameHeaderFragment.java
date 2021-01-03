@@ -61,7 +61,7 @@ public class GameHeaderFragment extends Fragment   {
     private ImageView[] lifes;
     private CountDownTimer countDownTimer;
     private List<WordTimeCompletedSubscriber> subscibers = new ArrayList<>();
-    private  int currentWordNum=1;
+    private  int currentWordNum=0;
     private int currentStage = 1;
     private String score = "0";
     private ScreenTextViewModel screenTextViewModel;
@@ -164,7 +164,8 @@ public class GameHeaderFragment extends Fragment   {
                     (new Handler()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            findNewWord(true);
+                            updateWorFoundStatus(true,currentWordNum);
+                            findNewWord();
                         }
                     }, 2000);
 
@@ -192,7 +193,7 @@ public class GameHeaderFragment extends Fragment   {
         screenTextViewModel.setRequiredText(gameText);
         screenTextViewModel.initText(iniText);
 
-        findNewWord(false);
+        findNewWord();
         return  v;
     }
 
@@ -320,7 +321,9 @@ public class GameHeaderFragment extends Fragment   {
                         @Override
                         public void run() {
                             screenTextViewModel.updateTurnOffSecondScreenText(true);
-                            findNewWord(false);
+
+                            updateWorFoundStatus(false,currentWordNum);
+                            findNewWord();
                         }
                     }, 2000);
 
@@ -361,14 +364,13 @@ public class GameHeaderFragment extends Fragment   {
 
     }*/
 
-   private void findNewWord(Boolean foundPrev) {
+   private void findNewWord() {
        stopFiveSecLeftSound();
+       currentWordNum++;
        if (currentWordNum <= 10) {
-           int ledIndex = currentWordNum - 1;
-           screenTextViewModel.wordFoundBluPrint(foundPrev);
            timeProgressBar.setProgress(0);
            screenTextViewModel.updateCurrentTime(timeProgressBar.getProgress());
-           screenTextViewModel.wordFoundBluPrint(foundPrev);
+
            //Utils.waitFor(4200);
 
            String newWord = Utils.getRandomWord(gameLanguage,currentStage);
@@ -377,29 +379,8 @@ public class GameHeaderFragment extends Fragment   {
            // screenTextViewModel.initText(newInitWord);
            screenTextViewModel.updateScreenText(newInitWord);
            screenTextViewModel.setRequiredText(newWord);
-           if (foundPrev && ledIndex >=0){
-               leds[ledIndex].setImageResource(R.drawable.word_found_led);
-               int index = wordsMask.length;
-               wordsMask = Arrays.copyOf(wordsMask,wordsMask.length+1);
-               wordsMask[index] = true;
-               words +="1";
-
-           }
-           else {
-               if(ledIndex >= 0) {
-                   leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
-                   decrementlifeLife();
-                   int index = wordsMask.length;
-                   wordsMask = Arrays.copyOf(wordsMask, wordsMask.length + 1);
-                   wordsMask[index] = false;
-                   words += "0";
-               }
-           }
-           leds[ledIndex].setVisibility(View.VISIBLE);
-
-           if(numLifes > 0 && currentWordNum <= 10) {
+           if(numLifes > 0) {
                startGame();
-               currentWordNum++;
            }
            else{
                if (numLifes<=0)
@@ -445,19 +426,17 @@ public class GameHeaderFragment extends Fragment   {
            @Override
            public void onTick(long millisUntilFinished) {
                long cscore =  currentScore+score*(3000-millisUntilFinished)/3000;
-               if(cscore>= 1000) {
-                   int numlifes = (int)(cscore/1000);
-                   for (int i=0; i< numlifes; i++)
-                        incrementSlifeLife();
-                   cscore = cscore - numlifes*1000;
-               }
                scoreTextView.setText(String.valueOf(cscore));
-
            }
 
            @Override
            public void onFinish() {
                int finScore= currentScore+score;
+               if(finScore>= 1000) {
+                   int numlifes = (int)(finScore/1000);
+                   for (int i=0; i< numlifes; i++)
+                       incrementSlifeLife();
+               }
                int res =   finScore - 1000*(finScore/1000);
                scoreTextView.setText(String.valueOf(res));
            }
@@ -563,6 +542,32 @@ public class GameHeaderFragment extends Fragment   {
 
         }
     }
+
+    private void updateWorFoundStatus(boolean wordfound, int wordIndex){
+        int ledIndex = wordIndex -1;
+        if(wordfound)
+        {
+            leds[ledIndex].setImageResource(R.drawable.word_found_led);
+            words +="1";
+            screenTextViewModel.wordFoundBluPrint(true);
+            int index = wordsMask.length;
+            wordsMask = Arrays.copyOf(wordsMask,wordsMask.length+1);
+            wordsMask[index] = true;
+        }
+        else {
+            leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
+            words +="0";
+            screenTextViewModel.wordFoundBluPrint(false);
+            decrementlifeLife();
+            int index = wordsMask.length;
+            wordsMask = Arrays.copyOf(wordsMask, wordsMask.length + 1);
+            wordsMask[index] = false;
+        }
+
+        leds[ledIndex].setVisibility(View.VISIBLE);
+    }
+
+
 
 
 
