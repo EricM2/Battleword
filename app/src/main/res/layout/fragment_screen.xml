@@ -19,7 +19,7 @@
         android:fontFamily="@font/snapitc"
         android:textColor="#000"
         android:textSize="25dp"
-        android:letterSpacing="0.4"
+        android:letterSpacing="0.1"
         tools:layout_editor_absoluteX="155dp"
         tools:layout_editor_absoluteY="380dp" />
     <TextView

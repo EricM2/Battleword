@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.app.battleword.R;
+
 public class LeaveGameActivity extends AppCompatActivity {
 
     @Override

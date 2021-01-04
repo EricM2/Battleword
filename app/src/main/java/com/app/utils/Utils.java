@@ -13,7 +13,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.battleword.R;
+import com.app.battleword.objects.Word;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -158,7 +161,7 @@ public class Utils {
     public static  String getRandomWord(String language, int stage){
         Random r = new Random();
         int v = r.nextInt(EnWords.english.length);
-        return  EnWords.english[v];
+        return  "anticonstitutionel" /*EnWords.english[v]*/;
     }
     public  static void waitFor(long milliseconds) {
         CountDownTimer countDownTimer = new CountDownTimer(milliseconds, 1000) {
@@ -330,6 +333,34 @@ public class Utils {
             }
         },wait);
     }
+
+   public static List<Word> getWordForStage(Context c, int stage, String language) throws Exception{
+       List<Word> words = new ArrayList<>();
+        if(!(language.equalsIgnoreCase("fr")|| language.equalsIgnoreCase("en")
+                || language.equalsIgnoreCase("es"))){
+            throw new Exception("bad language parameter: "+ language);
+        }
+        else{
+            String fileName = "stage_"+String.valueOf(stage)+"_"+language+".csv";
+            InputStreamReader is = new InputStreamReader(c.getAssets()
+                    .open(fileName));
+
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";");
+                if(parts.length!=3)
+                    throw new Exception("bad line in "+ fileName);
+                else
+                    words.add(new Word(parts[0],parts[1],parts[2]));
+
+            }
+
+        }
+
+        return  words;
+   }
 
 
 
