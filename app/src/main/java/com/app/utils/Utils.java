@@ -120,10 +120,11 @@ public class Utils {
 
 
     public static  String putCharInScreenText(String c,String requiredString,String currentScreenText,Context context){
-
-        if(requiredString.contains(c)) {
+        List<Integer> indexes = getCharPosition(c,requiredString);
+        List<Integer> indexesFound = getCharPosition(c,currentScreenText);
+        if(requiredString.contains(c) && indexes.size()>indexesFound.size()) {
             char[] list = currentScreenText.toCharArray();
-            List<Integer> indexes = getCharPosition(c,requiredString);
+
             if (!indexes.isEmpty()){
                 Iterator<Integer> it = indexes.iterator();
                 while (it.hasNext()){
@@ -370,6 +371,8 @@ public class Utils {
         String key = "stage"+String.valueOf(s);
         return words.get(key).get(wordIndex);
    }
+
+
 
 
 
