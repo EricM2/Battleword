@@ -7,8 +7,13 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.app.battleword.objects.Word;
+import com.app.utils.Strings;
 import com.app.utils.Utils;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class NextStageActivity extends AppCompatActivity {
@@ -26,22 +31,22 @@ public class NextStageActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(true/*Utils.isStageFirstTime(getApplicationContext(),stage)*/)
-                    startActivity(gameScenarioIntent());
+                    startActivity(nextActivityIntent(GameScenarioActivity.class));
                 else{
-                    Intent intent = countDownIntent();
-                    stopNextSagePlayer();
-                    startActivity(intent);
+                    startActivity(nextActivityIntent(CountDownActivity.class));
                 }
             }
         },5000);
     }
 
-    private Intent gameScenarioIntent(){
+    private Intent nextActivityIntent(Class nextActivityClass){
 
-        Intent intent = new Intent(this,GameScenarioActivity.class);
+        Intent intent = new Intent(this,nextActivityClass);
 
         intent.putExtra(MODE,"solitare");
         intent.putExtra("nextStage",stage);
+        Map<String,List<Word>> gameWords = (Map<String, List<Word>>) getIntent().getSerializableExtra(Strings.GAMEWORDS);
+        intent.putExtra(Strings.GAMEWORDS,(Serializable) gameWords);
         return  intent;
     }
 
@@ -62,6 +67,7 @@ public class NextStageActivity extends AppCompatActivity {
                 return null;
             }
         };
+
         Utils.doAfter(200,c);
     }
 

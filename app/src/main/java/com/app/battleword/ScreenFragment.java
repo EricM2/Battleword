@@ -58,7 +58,17 @@ public class ScreenFragment extends Fragment  {
             }
         }
 
+
+
     );
+
+        screenTextViewModel.getWordHint().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                tipTextView.setText(s);
+            }
+        });
+
 
         screenTextViewModel.getSecondScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
                     @Override

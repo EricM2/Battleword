@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.app.battle_word.LoadWordsActivity;
+import com.app.battleword.objects.Word;
 import com.app.battleword.subscribers.WordTimeCompletedSubscriber;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
 import com.app.utils.Strings;
@@ -29,6 +31,7 @@ import com.app.utils.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 public class GameHeaderFragment extends Fragment   {
@@ -74,6 +77,9 @@ public class GameHeaderFragment extends Fragment   {
     private MediaPlayer fiveSecLeftPlayer;
     private MediaPlayer stageWinPlayer;
     private String words;
+    private Word currentWord;
+    private String currentWordHint;
+    private Map<String, List<Word>> gameWords;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class GameHeaderFragment extends Fragment   {
         fiveSecLeft = false;
         fiveSecLeftPlayer = null;
         stageWinPlayer = null;
+        currentWordHint = "";
         life1 = v.findViewById(R.id.life_1);
         life2 = v.findViewById(R.id.life_2);
         life3 = v.findViewById(R.id.life_3);
@@ -109,6 +116,7 @@ public class GameHeaderFragment extends Fragment   {
         scoreTextView  = v.findViewById(R.id.score);
         stageTextView = v.findViewById(R.id.stage_value);
         words = "";
+        currentWord = null;
         setAllLedInvisible();
         timeProgressBar.setProgress(currenTime);
         gameLanguage = Utils.getGameLanguage(getActivity().getApplicationContext(),SettingsActivity.GAME_LANGUAGE_PREF,SettingsActivity.LANGUAGE_PREF);
@@ -147,12 +155,16 @@ public class GameHeaderFragment extends Fragment   {
                 setLives(numLifes);
             }
 
-          String gameText =Utils.getRandomWord(gameLanguage, currentStage);
+
 
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
         timeProgressBar.setProgress(0);
+        gameWords =  (Map<String,List<Word>>)getActivity().getIntent().getSerializableExtra(Strings.GAMEWORDS);
+
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
+        screenTextViewModel.updateGameWords(gameWords);
+
         screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -189,14 +201,20 @@ public class GameHeaderFragment extends Fragment   {
             }
         });
 
-        String iniText = Utils.initScreemFromText(gameText,currentStage);
+        /*String iniText = Utils.initScreemFromText(gameText,currentStage);
         screenTextViewModel.setRequiredText(gameText);
-        screenTextViewModel.initText(iniText);
+        screenTextViewModel.initText(iniText);*/
+
 
         findNewWord();
         return  v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
     //@Override
     /*public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -371,14 +389,15 @@ public class GameHeaderFragment extends Fragment   {
            timeProgressBar.setProgress(0);
            screenTextViewModel.updateCurrentTime(timeProgressBar.getProgress());
 
-           //Utils.waitFor(4200);
-
-           String newWord = Utils.getRandomWord(gameLanguage,currentStage);
+           currentWord = Utils.getNewWord(gameWords,currentStage,currentWordNum-1);
+           String gameText =currentWord.getWord();
+           currentWordHint = currentWord.getTip();
+           screenTextViewModel.updateWordHint(currentWordHint);
            int stage = Integer.valueOf(stageTextView.getText().toString());
-           String newInitWord = Utils.initScreemFromText(newWord,stage);
+           String newInitWord = Utils.initScreemFromText(gameText,stage);
            // screenTextViewModel.initText(newInitWord);
            screenTextViewModel.updateScreenText(newInitWord);
-           screenTextViewModel.setRequiredText(newWord);
+           screenTextViewModel.setRequiredText(gameText);
            if(numLifes > 0) {
                startGame();
            }
@@ -403,6 +422,7 @@ public class GameHeaderFragment extends Fragment   {
 
                        currentWordNum = 1;
                        currentStage = currentStage + 1;
+                       Utils.saveIntSharedPreferences(getActivity().getApplicationContext(),Strings.GAME_STATE_PREF,"laststagelives",numLifes);
                        words="";
                        stopStageWinSound();
                        startNextStageActivity();
@@ -469,7 +489,7 @@ public class GameHeaderFragment extends Fragment   {
        }
        private void startNextStageActivity(){
            stopGame();
-           Intent intent = new Intent(getContext(),NextStageActivity.class);
+           Intent intent = new Intent(getContext(), LoadWordsActivity.class);
            intent.putExtra("mode","solitare");
            intent.putExtra("nextStage",currentStage);
            startActivity(intent);

@@ -2,6 +2,7 @@ package com.app.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
@@ -353,7 +354,7 @@ public class Utils {
                 if(parts.length!=3)
                     throw new Exception("bad line in "+ fileName);
                 else
-                    words.add(new Word(parts[0],parts[1],parts[2]));
+                    words.add(new Word(parts[0],Integer.valueOf(parts[1]),parts[2]));
 
             }
 
@@ -363,6 +364,10 @@ public class Utils {
    }
 
 
+   public static Word getNewWord(Map<String,List<Word>> words,int stage,int wordIndex){
+        String key = "stage"+String.valueOf(stage);
+        return words.get(key).get(wordIndex);
+   }
 
 
 

@@ -8,7 +8,13 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.TextView;
 
+import com.app.battleword.objects.Word;
+import com.app.utils.Strings;
 import com.app.utils.Utils;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 public class CountDownActivity extends AppCompatActivity {
 
@@ -52,7 +58,16 @@ public class CountDownActivity extends AppCompatActivity {
     }
 
     private void startGameActivity(){
-        Intent i = new Intent(this,PlayerControlActivity.class);
+        Intent i = nextActivityIntent(PlayerControlActivity.class);
         startActivity(i);
     }
+    private Intent nextActivityIntent(Class nextActivityClass){
+
+        Intent intent = new Intent(this,nextActivityClass);
+        intent.putExtra(Strings.MODE,"solitare");
+        Map<String, List<Word>> gameWords = (Map<String, List<Word>>) getIntent().getSerializableExtra(Strings.GAMEWORDS);
+        intent.putExtra(Strings.GAMEWORDS,(Serializable) gameWords);
+        return  intent;
+    }
+
 }

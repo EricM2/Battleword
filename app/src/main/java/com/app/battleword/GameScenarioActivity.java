@@ -12,8 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.battleword.objects.Word;
+import com.app.utils.Strings;
 import com.app.utils.Utils;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -73,7 +78,7 @@ public class GameScenarioActivity extends Activity {
         playNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = solitaireIntent();
+                Intent intent = nextActivityIntent(CountDownActivity.class);
                 Utils.setStageFirstTime(getApplicationContext(),stage);
                 Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
                 startActivity(intent);
@@ -214,6 +219,17 @@ public class GameScenarioActivity extends Activity {
 
 
 
+    }
+
+    private Intent nextActivityIntent(Class nextActivityClass){
+
+        Intent intent = new Intent(this,nextActivityClass);
+
+        intent.putExtra(Strings.MODE,"solitare");
+        intent.putExtra("nextStage",stage);
+        Map<String, List<Word>> gameWords = (Map<String, List<Word>>) getIntent().getSerializableExtra(Strings.GAMEWORDS);
+        intent.putExtra(Strings.GAMEWORDS,(Serializable) gameWords);
+        return  intent;
     }
 
 

@@ -1,6 +1,8 @@
 package com.app.battleword.objects;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
     String word;
     String tip;
     int stage;

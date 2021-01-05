@@ -9,13 +9,19 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
+import com.app.battleword.objects.Word;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.utils.Strings;
 import com.app.utils.Utils;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
+
 
 public class PlayerControlActivity extends AppCompatActivity {
     private ScreenTextViewModel   screenTextViewModel;
+
     //private  String gameText =Utils.getRandomWord();
     //String iniText = Utils.initScreemFromText(gameText);
     private MediaPlayer dingle;
@@ -31,6 +37,9 @@ public class PlayerControlActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_player_control);
         screenTextViewModel =  ViewModelProviders.of(this).get(ScreenTextViewModel.class);
+
+        String v = "";
+
         /*screenTextViewModel.setRequiredText(gameText);
         screenTextViewModel.initText(iniText);*/
 

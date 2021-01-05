@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.app.battle_word.LoadWordsActivity;
+import com.app.battleword.objects.Word;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public class GameSetupActivity extends AppCompatActivity {
@@ -67,14 +70,11 @@ public class GameSetupActivity extends AppCompatActivity {
             public void onClick(View v) {
                     Intent intent;
                     Utils.playSound(GameSetupActivity.this, R.raw.play_button_sound,false);
-                    if(isFirstTime()){
-                       intent = gameScenarioIntent();
 
-                    }
-                    else{
-                        intent = solitaireIntent();
 
-                    }
+                intent = new Intent(GameSetupActivity.this, LoadWordsActivity.class);
+
+
                 startActivity(intent);
 
 
@@ -93,6 +93,11 @@ public class GameSetupActivity extends AppCompatActivity {
                 return null;
             }
         };
+        try {
+            List<Word> w = Utils.getWordForStage(this,1,"fr");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Utils.doAfter(200,v);
     }
 

@@ -4,12 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.app.battleword.objects.Word;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ScreenTextViewModel extends ViewModel {
    private String requiredText ;
-
+    private MutableLiveData<String> wordHint = new MutableLiveData<>();
+   private MutableLiveData<Map<String,List<Word>>> gameWords = new MutableLiveData<>();
    private MutableLiveData<String> gameLanguage = new MutableLiveData<>();
     private  MutableLiveData<String> screenText = new MutableLiveData<String>();
     private MutableLiveData<String> gameScore = new MutableLiveData<>();
@@ -27,6 +31,10 @@ public class ScreenTextViewModel extends ViewModel {
     }
     public void updateSecondScreenText(String str){
         secondScreenText.setValue(str);
+    }
+
+    public  void  updateWordHint(String hint){
+        wordHint.setValue(hint);
     }
 
     public void updateGameLanguage(String language){
@@ -57,6 +65,9 @@ public class ScreenTextViewModel extends ViewModel {
     }
     public void updateStage(String stage){
         gameStage.setValue(stage);
+    }
+    public  void updateGameWords(Map<String,List<Word>> words){
+        gameWords.setValue(words);
     }
 
     public String getRequiredText() {
@@ -101,5 +112,13 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<String> getGameLanguage() {
         return gameLanguage;
+    }
+
+    public MutableLiveData<Map<String, List<Word>>> getGameWords() {
+        return gameWords;
+    }
+
+    public MutableLiveData<String> getWordHint() {
+        return wordHint;
     }
 }

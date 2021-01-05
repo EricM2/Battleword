@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.app.battle_word.LeaveGameActivity"></activity>
+        <activity android:name="com.app.battle_word.LoadWordsActivity"></activity>
+        <activity android:name="com.app.battle_word.LeaveGameActivity" />
 
         <service
             android:name="com.app.battle_word.BackgroundSoundService"

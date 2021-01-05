@@ -11,6 +11,7 @@ import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.app.battle_word.LoadWordsActivity;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
@@ -43,14 +44,19 @@ public class GameOverActivity extends AppCompatActivity {
         playFromLastStageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startNewGame();
+
+                int numLifes = Utils.getIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"laststagelives");
+               if (numLifes!=-1)
+                    Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"lives",numLifes);
+               Utils.saveStringSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"words","");
+               startNewGame();
             }
         });
         animate(deadHead);
     }
 
     private void startNewGame(){
-        Intent i = new Intent(this,CountDownActivity.class);
+        Intent i = new Intent(this, LoadWordsActivity.class);
         startActivity(i);
     }
 
