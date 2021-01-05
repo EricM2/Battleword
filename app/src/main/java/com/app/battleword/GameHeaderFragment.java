@@ -25,6 +25,7 @@ import com.app.battle_word.LoadWordsActivity;
 import com.app.battleword.objects.Word;
 import com.app.battleword.subscribers.WordTimeCompletedSubscriber;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.utils.GameTime;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
@@ -311,9 +312,9 @@ public class GameHeaderFragment extends Fragment   {
 
     }
 
-    private  void startGame(){
+    private  void startGame() throws Exception {
 
-        final long max = 15000;
+        final long max = GameTime.getTime(currentStage);
 
         countDownTimer = new CountDownTimer(max,10) {
             @Override
@@ -399,7 +400,13 @@ public class GameHeaderFragment extends Fragment   {
            screenTextViewModel.updateScreenText(newInitWord);
            screenTextViewModel.setRequiredText(gameText);
            if(numLifes > 0) {
-               startGame();
+               try {
+                   startGame();
+               }
+               catch (Exception e){
+                   Log.d("Exception", e.getMessage());
+               }
+
            }
            else{
                if (numLifes<=0)
@@ -489,7 +496,7 @@ public class GameHeaderFragment extends Fragment   {
        }
        private void startNextStageActivity(){
            stopGame();
-           Intent intent = new Intent(getContext(), LoadWordsActivity.class);
+           Intent intent = new Intent(getActivity(), LoadWordsActivity.class);
            intent.putExtra("mode","solitare");
            intent.putExtra("nextStage",currentStage);
            startActivity(intent);

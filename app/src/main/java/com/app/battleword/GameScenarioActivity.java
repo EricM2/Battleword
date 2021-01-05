@@ -100,12 +100,7 @@ public class GameScenarioActivity extends Activity {
         Utils.setTextViewText(this,stageMessageTextView, getString(R.string.text_scenario_sample),50,R.raw.click,setTextViewTimer);
     }
 
-    private Intent solitaireIntent(){
-        Intent intent = new Intent(this,CountDownActivity.class);
-        intent.putExtra("mode","solitare");
-        //intent.putExtra(LEVEL, selectedGameLevel);
-        return  intent;
-    }
+
 
     private int getPageId(int currentPageIndex) throws Exception{
         switch (currentPageIndex){

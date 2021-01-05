@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.app.battleword.NextStageActivity;
 import com.app.battleword.R;
@@ -40,9 +41,11 @@ public class LoadWordsActivity extends AppCompatActivity {
                 for(int i=1;i<=5; i++){
                     String key = "stage"+String.valueOf(i);
                     try {
-                        words.put(key, Utils.getWordForStage(LoadWordsActivity.this,1,"fr"));
+                        words.put(key, Utils.getWordForStage(LoadWordsActivity.this,i,"fr"));
                     }
-                    catch (Exception e){}
+                    catch (Exception e){
+                        Log.d("Exception", e.getMessage());
+                    }
 
 
                 }

@@ -72,7 +72,7 @@ public class GameSetupActivity extends AppCompatActivity {
                     Utils.playSound(GameSetupActivity.this, R.raw.play_button_sound,false);
 
 
-                intent = new Intent(GameSetupActivity.this, LoadWordsActivity.class);
+                     intent = new Intent(GameSetupActivity.this, LoadWordsActivity.class);
 
 
                 startActivity(intent);
@@ -93,11 +93,6 @@ public class GameSetupActivity extends AppCompatActivity {
                 return null;
             }
         };
-        try {
-            List<Word> w = Utils.getWordForStage(this,1,"fr");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         Utils.doAfter(200,v);
     }
 

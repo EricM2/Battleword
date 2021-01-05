@@ -342,7 +342,8 @@ public class Utils {
             throw new Exception("bad language parameter: "+ language);
         }
         else{
-            String fileName = "stage_"+String.valueOf(stage)+"_"+language+".csv";
+            int st = stage > 3 ? 3 : stage;
+            String fileName = "stage_"+String.valueOf(st)+"_"+language+".csv";
             InputStreamReader is = new InputStreamReader(c.getAssets()
                     .open(fileName));
 
@@ -365,9 +366,12 @@ public class Utils {
 
 
    public static Word getNewWord(Map<String,List<Word>> words,int stage,int wordIndex){
-        String key = "stage"+String.valueOf(stage);
+        int s = stage > 3 ? 3 : stage;
+        String key = "stage"+String.valueOf(s);
         return words.get(key).get(wordIndex);
    }
+
+
 
 
 
