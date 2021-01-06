@@ -383,7 +383,7 @@ public class Utils {
             case 4:
                 return context.getString(R.string.text_scenario_sample_stage_4);
             case 5:
-                return context.getString(R.string.text_scenario_sample_stage_1);
+                return context.getString(R.string.text_scenario_sample_stage_5);
             default:
                 return "";
         }
