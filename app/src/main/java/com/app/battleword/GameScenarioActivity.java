@@ -97,7 +97,7 @@ public class GameScenarioActivity extends Activity {
             }
         });
         setTextViewTimer = new Timer();
-        Utils.setTextViewText(this,stageMessageTextView, getString(R.string.text_scenario_sample),50,R.raw.click,setTextViewTimer);
+        Utils.setTextViewText(this,stageMessageTextView, Utils.getTextScenarioForStage(this,stage),50,R.raw.click,setTextViewTimer);
     }
 
 

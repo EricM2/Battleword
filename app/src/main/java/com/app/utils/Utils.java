@@ -372,6 +372,24 @@ public class Utils {
         return words.get(key).get(wordIndex);
    }
 
+   public static String getTextScenarioForStage(Context context,int stage){
+        switch (stage){
+            case 1:
+                return context.getString(R.string.text_scenario_sample_stage_1);
+            case 2:
+                return context.getString(R.string.text_scenario_sample_stage_2);
+            case 3:
+                return context.getString(R.string.text_scenario_sample_stage_3);
+            case 4:
+                return context.getString(R.string.text_scenario_sample_stage_4);
+            case 5:
+                return context.getString(R.string.text_scenario_sample_stage_1);
+            default:
+                return "";
+        }
+
+   }
+
 
 
 
