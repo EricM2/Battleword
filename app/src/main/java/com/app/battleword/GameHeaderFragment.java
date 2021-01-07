@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.app.battle_word.LoadWordsActivity;
 import com.app.battleword.objects.Word;
 import com.app.battleword.subscribers.WordTimeCompletedSubscriber;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
@@ -81,6 +80,8 @@ public class GameHeaderFragment extends Fragment   {
     private Word currentWord;
     private String currentWordHint;
     private Map<String, List<Word>> gameWords;
+    private int lastTimeValue =0;
+    private boolean wasPaused = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,8 +120,8 @@ public class GameHeaderFragment extends Fragment   {
         words = "";
         currentWord = null;
         setAllLedInvisible();
-        timeProgressBar.setProgress(currenTime);
-        gameLanguage = Utils.getGameLanguage(getActivity().getApplicationContext(),SettingsActivity.GAME_LANGUAGE_PREF,SettingsActivity.LANGUAGE_PREF);
+
+        gameLanguage = Utils.getGameLanguage(getActivity().getApplicationContext(),Strings.GAME_LANGUAGE_PREF,Strings.LANGUAGE_PREF);
         SharedPreferences prefs = getActivity().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
         if (prefs.contains("stage")) {
             currentStage = prefs.getInt("stage",1);
@@ -130,6 +131,11 @@ public class GameHeaderFragment extends Fragment   {
         }
         if (prefs.contains("score")) {
             score =  prefs.getString("score","0");
+        }
+        if (prefs.contains("paused_time")) {
+            currenTime =  prefs.getInt("paused_time",0);
+            if(currenTime==100)
+                currenTime =0;
         }
         if(prefs.contains("words")){
             words = prefs.getString("words","");
@@ -157,7 +163,7 @@ public class GameHeaderFragment extends Fragment   {
             }
 
 
-
+        timeProgressBar.setProgress(currenTime);
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
         timeProgressBar.setProgress(0);
@@ -171,8 +177,10 @@ public class GameHeaderFragment extends Fragment   {
             public void onChanged(String s) {
                 currentScreenText = s;
                 if(Utils.isSreenTextComplete(s) && timeProgressBar.getProgress()<100){
-                    if(countDownTimer!=null)
+                    if(countDownTimer!=null) {
                         countDownTimer.cancel();
+                        lastTimeValue = 0;
+                    }
                     updatScore(100);
                     (new Handler()).postDelayed(new Runnable() {
                         @Override
@@ -184,6 +192,13 @@ public class GameHeaderFragment extends Fragment   {
 
 
                 }
+            }
+        });
+
+        screenTextViewModel.getPauseGame().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                pauseGame(aBoolean);
             }
         });
 
@@ -214,6 +229,14 @@ public class GameHeaderFragment extends Fragment   {
     @Override
     public void onResume() {
         super.onResume();
+        if(wasPaused){
+            try {
+                startGame();
+                wasPaused = false;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     //@Override
@@ -260,6 +283,7 @@ public class GameHeaderFragment extends Fragment   {
         editor.putString("score", score);
         editor.putString("words", words);
         editor.putInt("lives",numLifes);
+        editor.putInt("paused_time",timeProgressBar.getProgress());
 
 
         editor.commit();
@@ -313,15 +337,16 @@ public class GameHeaderFragment extends Fragment   {
     }
 
     private  void startGame() throws Exception {
-
-        final long max = GameTime.getTime(currentStage);
+        timeProgressBar.setProgress(lastTimeValue);
+        final long max1= GameTime.getTime(currentStage);
+        final long max = max1-lastTimeValue*max1/100;
 
         countDownTimer = new CountDownTimer(max,10) {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                    long time = max - millisUntilFinished;
-                    long progressValue = time*100/max;
+                    long time = max1 - millisUntilFinished;
+                    long progressValue = time*100/max1;
                     timeProgressBar.setProgress((int) progressValue);
                     if((millisUntilFinished <= 5000) && !fiveSecLeft){
                         fiveSecLeftPlayer = Utils.playSound(getActivity(),R.raw.fivesec_left_sound,false);
@@ -340,7 +365,7 @@ public class GameHeaderFragment extends Fragment   {
                         @Override
                         public void run() {
                             screenTextViewModel.updateTurnOffSecondScreenText(true);
-
+                            lastTimeValue = 0;
                             updateWorFoundStatus(false,currentWordNum);
                             findNewWord();
                         }
@@ -592,6 +617,15 @@ public class GameHeaderFragment extends Fragment   {
         }
 
         leds[ledIndex].setVisibility(View.VISIBLE);
+    }
+
+    private  void pauseGame(boolean pause){
+        if(pause){
+            lastTimeValue =timeProgressBar.getProgress();
+            countDownTimer.cancel();
+            wasPaused = true;
+
+        }
     }
 
 

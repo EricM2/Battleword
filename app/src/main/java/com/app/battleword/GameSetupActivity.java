@@ -10,12 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.app.battle_word.LoadWordsActivity;
-import com.app.battleword.objects.Word;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 public class GameSetupActivity extends AppCompatActivity {
@@ -35,6 +32,15 @@ public class GameSetupActivity extends AppCompatActivity {
         dingle = null;
         solitaireButton = findViewById(R.id.play_solitaire);
         settingsBut = findViewById(R.id.settings_button_setup);
+        Utils.playSound(this,R.raw.new_activity_sound,false);
+        Callable v = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                playDingle();
+                return null;
+            }
+        };
+        Utils.doAfter(200,v);
         settingsBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +82,7 @@ public class GameSetupActivity extends AppCompatActivity {
 
 
                 startActivity(intent);
+                finish();
 
 
             }
@@ -85,15 +92,7 @@ public class GameSetupActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Utils.playSound(this,R.raw.new_activity_sound,false);
-        Callable v = new Callable() {
-            @Override
-            public Object call() throws Exception {
-                playDingle();
-                return null;
-            }
-        };
-        Utils.doAfter(200,v);
+
     }
 
     private Intent solitaireIntent(){
@@ -132,9 +131,12 @@ public class GameSetupActivity extends AppCompatActivity {
         dingle = Utils.playSound(this,R.raw.battleword_generic,true);
     }
 
+
+
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         try {
             if(dingle!=null){
                 dingle.pause();
@@ -146,6 +148,17 @@ public class GameSetupActivity extends AppCompatActivity {
         {
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 }

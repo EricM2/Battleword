@@ -1,9 +1,9 @@
 package com.app.utils;
 
 public class GameTime {
-    public static long TIME_STAGE_1=60000;
-    public static long TIME_STAGE_2=60000;
-    public static long TIME_STAGE_3=50000;
+    public static long TIME_STAGE_1=50000;
+    public static long TIME_STAGE_2=40000;
+    public static long TIME_STAGE_3=30000;
     public static long TIME_STAGE_4=40000;
     public  static long TIME_STAGE_5=30000;
 

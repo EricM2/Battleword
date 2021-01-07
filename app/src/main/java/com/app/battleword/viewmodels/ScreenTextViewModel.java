@@ -22,6 +22,7 @@ public class ScreenTextViewModel extends ViewModel {
     private MutableLiveData<Integer> numLives = new MutableLiveData<>();
     private MutableLiveData<Integer> currentTime = new MutableLiveData<>();
     private MutableLiveData<String>  gameStage = new MutableLiveData<>();
+    private MutableLiveData<Boolean> pauseGame = new MutableLiveData<>();
     private MutableLiveData<Boolean> turnOffSecondScreenText = new MutableLiveData<>();
     public  void  initStage(String stage){
         gameStage.setValue(stage);
@@ -29,9 +30,15 @@ public class ScreenTextViewModel extends ViewModel {
     public void  initText(String text){
         screenText.setValue(text);
     }
+
+
+    public void updatePauseGame(Boolean pause){
+        pauseGame.setValue(pause);
+    }
     public void updateSecondScreenText(String str){
         secondScreenText.setValue(str);
     }
+
 
     public  void  updateWordHint(String hint){
         wordHint.setValue(hint);
@@ -120,5 +127,9 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<String> getWordHint() {
         return wordHint;
+    }
+
+    public MutableLiveData<Boolean> getPauseGame() {
+        return pauseGame;
     }
 }

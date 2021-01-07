@@ -227,6 +227,8 @@ public class GameScenarioActivity extends Activity {
         return  intent;
     }
 
+    @Override
+    public void onBackPressed() {
 
-
+    }
 }

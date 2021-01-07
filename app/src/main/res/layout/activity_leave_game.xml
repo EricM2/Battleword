@@ -4,6 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_transparent"
     tools:context=".LeaveGameActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <Button
+            android:id="@+id/start_new_game"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/game_button_background"
+            android:fontFamily="@font/snapitc"
+            android:text="@string/play_from_scratch"
+            android:textColor="@color/colorSegondary"
+            android:textSize="@dimen/play_button_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <Button
+            android:id="@+id/continue_game"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/game_button_background"
+            android:text="@string/continue_playing"
+            android:fontFamily="@font/snapitc"
+            android:textSize="@dimen/play_button_text_size"
+            android:textColor="@color/colorSegondary"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/start_new_game" />
+
+
+
+        <Button
+            android:id="@+id/leave_game"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/game_button_background"
+            android:text="@string/leave_the_game"
+            android:fontFamily="@font/snapitc"
+            android:textSize="@dimen/play_button_text_size"
+            android:textColor="@color/colorSegondary"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/continue_game" />
+
+
+    </LinearLayout>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

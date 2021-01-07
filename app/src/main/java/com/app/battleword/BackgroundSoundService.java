@@ -1,4 +1,4 @@
-package com.app.battle_word;
+package com.app.battleword;
 
 import android.app.Service;
 import android.content.Intent;

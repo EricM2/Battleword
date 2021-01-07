@@ -84,4 +84,9 @@ public class NextStageActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

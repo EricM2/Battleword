@@ -5,5 +5,8 @@ public class Strings {
     public static String GAME_STATE_PREF="game_state_pref";
     public static String MODE="mode";
     public static  String GAMEWORDS = "gamewords";
-
+    public static String GAME_LANGUAGE_PREF="game_language_pref";
+    public static String LANGUAGE_PREF="language_pref";
+    public static String FIRST_TIME_APP_INSTALLED_PREF= "first_time_pref";
+    public  static String FIRST_TIME_APP_KEY = "first_time";
 }

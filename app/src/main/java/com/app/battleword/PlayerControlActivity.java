@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -85,5 +86,16 @@ public class PlayerControlActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,LeaveGameActivity.class);
+        pauseGame();
+        startActivity(intent);
+    }
+
+    private void pauseGame(){
+        screenTextViewModel.updatePauseGame(true);
     }
 }

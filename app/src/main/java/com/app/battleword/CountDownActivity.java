@@ -44,6 +44,7 @@ public class CountDownActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         startGameActivity();
+                        finish();
                     }
                 },500);
 
@@ -70,4 +71,8 @@ public class CountDownActivity extends AppCompatActivity {
         return  intent;
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }

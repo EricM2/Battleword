@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dark_transparent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FirstTimeGameFragment">
+
+    <ImageView
+        android:id="@+id/settings_background"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/settings_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/close_but"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="@id/settings_background"
+        app:layout_constraintTop_toTopOf="@id/settings_background"
+        app:layout_constraintEnd_toEndOf="@id/settings_background"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/snapitc"
+        android:textColor="@color/colorSegondary"
+        android:text="@string/select_game_language"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        />
+
+    <Spinner
+        android:id="@+id/game_language_spinner"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="@id/settings_background"
+        app:layout_constraintEnd_toEndOf="@id/settings_background"
+        app:layout_constraintBottom_toBottomOf="@id/settings_background"
+        app:layout_constraintTop_toTopOf="@id/settings_background"
+        android:layout_marginLeft="30dp"
+        android:background="@color/dark_transparent"
+        android:layout_marginRight="30dp" />
+
+
+    <Button
+        android:id="@+id/close_settings"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:text="Ok"
+        android:textColor="@color/colorSegondary"
+        android:fontFamily="@font/snapitc"
+        app:layout_constraintEnd_toEndOf="@id/settings_background"
+        app:layout_constraintStart_toStartOf="@id/settings_background"
+        android:background="@drawable/score_textview_background"
+        app:layout_constraintBottom_toBottomOf="@id/settings_background"
+        android:layout_marginBottom="60dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

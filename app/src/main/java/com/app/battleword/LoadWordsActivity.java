@@ -1,4 +1,4 @@
-package com.app.battle_word;
+package com.app.battleword;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.app.battleword.NextStageActivity;
-import com.app.battleword.R;
 import com.app.battleword.objects.Word;
 import com.app.utils.Strings;
 import com.app.utils.Utils;

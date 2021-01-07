@@ -23,5 +23,11 @@
         app:layout_constraintVertical_bias="0.5
 " />
 
+    <fragment
+        android:id="@+id/first_time_app_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.app.battleword.FirstTimeGameFragment"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

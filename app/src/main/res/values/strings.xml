@@ -10,6 +10,8 @@
     </string-array>
     <string name="you_loosed_message">You loosed</string>
     <string name="play_from_last_stage">Play Again</string>
+    <string name="continue_playing">Continue Playing</string>
+    <string name="leave_the_game">Leave The Game</string>
     <string name="play_from_scratch">New Game</string>
     <string name="play">Play</string>
     <string name="stage">STAGE</string>
@@ -17,15 +19,15 @@
     Find the words as quickly as possible and accumulate lives.
     Each word gives you 100 points and each 1500 points grants you one more life.
 
-    \nWarning : you only have 1 munites per word.
+    \nWarning : you only have 5 secongs per word.
     Let\'s go !!</string>
     <string name="text_scenario_sample_stage_2">
     accumulate more lives by finding words quickly.
 
-     \nWarning : you only have 50 seconds per word</string>
+     \nWarning : you only have 40 seconds per word</string>
     <string name="text_scenario_sample_stage_3">
         Gain even more points in this stage , because rudes batlles are coming.
-    \nwarning: you only have 40 seconds per word</string>
+    \nwarning: you only have 30 seconds per word</string>
     <string name="text_scenario_sample_stage_4">
 
         Congratulations!
@@ -39,6 +41,5 @@
     \nWarning: you only have 20 touches per word.
     </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_game_language">Choose Your Game Language</string>
 </resources>

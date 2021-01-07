@@ -3,6 +3,7 @@ package com.app.battleword;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -11,7 +12,6 @@ import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.app.battle_word.LoadWordsActivity;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
@@ -23,6 +23,7 @@ public class GameOverActivity extends AppCompatActivity {
     private Button playFromLastStageButton;
     private ImageView deadHead;
     private AnimationSet as;
+    private MediaPlayer flutMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,32 @@ public class GameOverActivity extends AppCompatActivity {
                 return null;
             }
         };
+        Callable c1 = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Utils.playSound(GameOverActivity.this,R.raw.flute_sound,true);
+                return null;
+            }
+        };
         Utils.doAfter(200,c);
+        Utils.doAfter(400,c1);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (flutMediaPlayer!=null){
+            try {
+                if(flutMediaPlayer.isPlaying()){
+                    flutMediaPlayer.stop();
+                    flutMediaPlayer.pause();
+                    flutMediaPlayer.release();
+                }
+
+            }
+            catch (Exception e){}
+        }
     }
 
     @Override
