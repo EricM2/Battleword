@@ -15,27 +15,27 @@
     <ProgressBar
         android:id="@+id/linear_progress_stage5"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="70dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/next_stage_linear_progress_width"
+        android:layout_height="@dimen/next_stage_linear_progress_heigth"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="412dp"
+        android:layout_marginBottom="410dp"
         android:max="100"
         android:min="0"
         android:progress="100"
-
+        android:translationZ="-1dp"
         android:progressDrawable="@drawable/linear_shape_progressbar_stage_5"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintHorizontal_bias="0.610"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
 
         android:id="@+id/linear_progress_stage1"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="70dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/next_stage_linear_progress_width"
+        android:layout_height="@dimen/next_stage_linear_progress_heigth"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="128dp"
         android:max="100"
@@ -53,10 +53,10 @@
     <ProgressBar
         android:id="@+id/circular_progress_stage3"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/next_stage_circular_progress_width"
+        android:layout_height="@dimen/next_stage_circular_progress_heigth"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="395dp"
+        android:layout_marginBottom="394dp"
         android:max="100"
         android:min="0"
         android:progress="100"
@@ -87,8 +87,8 @@
 
     <ImageView
         android:id="@+id/lock_stage_2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/stage_lock_width"
+        android:layout_height="@dimen/stage_lock_height"
         android:layout_gravity="center_vertical"
         android:src="@drawable/stage_2_lock"
         app:layout_constraintBottom_toBottomOf="@id/circular_progress_stage2"
@@ -115,42 +115,43 @@
     <ProgressBar
         android:id="@+id/linear_progress_stage4"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="70dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/next_stage_linear_progress_width"
+        android:layout_height="@dimen/next_stage_linear_progress_heigth"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="412dp"
+        android:layout_marginBottom="410dp"
         android:max="100"
         android:min="0"
+        android:translationZ="-1dp"
         android:progress="100"
         android:progressDrawable="@drawable/linear_shape_progressbar_stage_4"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/circular_progress_stage4"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/next_stage_circular_progress_width"
+        android:layout_height="@dimen/next_stage_circular_progress_heigth"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="396dp"
+        android:layout_marginBottom="394dp"
         android:max="100"
-
+        android:translationZ="-1dp"
         android:min="0"
         android:progress="100"
         android:progressDrawable="@drawable/circular_shape_progressbar_stage_4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintHorizontal_bias="0.450"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/lock_stage_3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/stage_lock_width"
+        android:layout_height="@dimen/stage_lock_width"
         android:layout_gravity="center_vertical"
         android:src="@drawable/stage_3_lock"
         app:layout_constraintBottom_toBottomOf="@id/circular_progress_stage3"
@@ -162,8 +163,8 @@
 
     <ImageView
         android:id="@+id/lock_stage_4"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/stage_lock_width"
+        android:layout_height="@dimen/stage_lock_height"
         android:layout_gravity="center_vertical"
         android:src="@drawable/stage_4_lock"
         app:layout_constraintBottom_toBottomOf="@id/circular_progress_stage4"
@@ -175,8 +176,8 @@
 
     <ImageView
         android:id="@+id/lock_stage_5"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/stage_lock_width"
+        android:layout_height="@dimen/stage_lock_height"
         android:layout_gravity="center_vertical"
         android:src="@drawable/stage_5_lock"
         app:layout_constraintBottom_toBottomOf="@id/circular_progress_stage5"
@@ -188,8 +189,8 @@
     <ProgressBar
         android:id="@+id/circular_progress_stage1"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/next_stage_circular_progress_width"
+        android:layout_height="@dimen/next_stage_circular_progress_heigth"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="168dp"
         android:max="100"
@@ -204,8 +205,8 @@
 
     <ImageView
         android:id="@+id/lock_stage_1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/stage_lock_width"
+        android:layout_height="@dimen/stage_lock_height"
         android:layout_gravity="center_vertical"
         android:src="@drawable/stage_1_lock"
         app:layout_constraintBottom_toBottomOf="@id/circular_progress_stage1"
@@ -219,25 +220,26 @@
     <ProgressBar
         android:id="@+id/circular_progress_stage5"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/next_stage_circular_progress_width"
+        android:layout_height="@dimen/next_stage_circular_progress_heigth"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="396dp"
+        android:layout_marginBottom="394dp"
+        android:translationZ="5dp"
         android:max="100"
         android:min="0"
         android:progress="100"
         android:progressDrawable="@drawable/circular_shape_progressbar_stage_5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.795"
+        app:layout_constraintHorizontal_bias="0.758"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
 
         android:id="@+id/circular_progress_stage2"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/next_stage_circular_progress_width"
+        android:layout_height="@dimen/next_stage_circular_progress_width"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="280dp"
         android:max="100"
@@ -253,12 +255,12 @@
     <ProgressBar
         android:id="@+id/linear_progress_stage2"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="70dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/next_stage_linear_progress_width"
+        android:layout_height="@dimen/next_stage_linear_progress_heigth"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="240dp"
+        android:layout_marginBottom="241dp"
         android:max="100"
-
+        android:translationZ="-1dp"
         android:min="0"
         android:progress="100"
         android:progressDrawable="@drawable/linear_shape_progressbar_stage_2"

@@ -8,4 +8,21 @@
     <dimen name="diamond_life_width_land">27dp</dimen>
     <dimen name="word_led_size">17dp</dimen>
     <dimen name="word_led_size_land">22dp</dimen>
+
+    <dimen name="next_stage_linear_progress_width_land">91dp</dimen>
+    <dimen name="next_stage_linear_progress_heigth_land">20dp</dimen>
+    <dimen name="next_stage_linear_progress_width">70dp</dimen>
+    <dimen name="next_stage_linear_progress_heigth">20dp</dimen>
+    <dimen name="next_stage_circular_progress_width_land">82dp</dimen>
+    <dimen name="next_stage_circular_progress_heigth_land">75dp</dimen>
+    <dimen name="next_stage_circular_progress_width">50dp</dimen>
+    <dimen name="next_stage_circular_progress_heigth">50dp</dimen>
+    <dimen name="stage_lock_width">30dp</dimen>
+    <dimen name="stage_lock_height">30dp</dimen>
+
+    <dimen name="stage_lock_width_land">52dp</dimen>
+    <dimen name="stage_lock_height_land">44dp</dimen>
+
+
+
 </resources>
