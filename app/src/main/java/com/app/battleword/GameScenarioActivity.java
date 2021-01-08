@@ -46,14 +46,14 @@ public class GameScenarioActivity extends Activity {
 
         setContentView(R.layout.activity_game_scenario);
         playNow = findViewById(R.id.play_now);
-        slideLeft = findViewById(R.id.slide_left);
-        slideLeft.setVisibility(View.INVISIBLE);
-        slideRight = findViewById(R.id.slide_right);
+        //slideLeft = findViewById(R.id.slide_left);
+        //slideLeft.setVisibility(View.INVISIBLE);
+        ////slideRight = findViewById(R.id.slide_right);
         //rollPaper = findViewById(R.id.roll_message_paper);
-        slideIndicator1 = findViewById(R.id.slide_indicator_1);
+       /* slideIndicator1 = findViewById(R.id.slide_indicator_1);
         slideIndicator2 = findViewById(R.id.slide_indicator_2);
         slideIndicator3 = findViewById(R.id.slide_indicator_3);
-        slideIndicator4 = findViewById(R.id.slide_indicator_4);
+        slideIndicator4 = findViewById(R.id.slide_indicator_4);*/
         stageTitleTextView = findViewById(R.id.stage_title);
         stageMessageTextView=findViewById(R.id.scenario_text);
         stage = getIntent().getIntExtra("nextStage",1);
@@ -84,7 +84,7 @@ public class GameScenarioActivity extends Activity {
                 startActivity(intent);
             }
         });
-        slideRight.setOnClickListener(new View.OnClickListener() {
+        /*slideRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 slideNext();
@@ -95,7 +95,7 @@ public class GameScenarioActivity extends Activity {
             public void onClick(View v) {
                 slidePrev();
             }
-        });
+        });*/
         setTextViewTimer = new Timer();
         Utils.setTextViewText(this,stageMessageTextView, Utils.getTextScenarioForStage(this,stage),50,R.raw.click,setTextViewTimer);
     }
@@ -178,26 +178,22 @@ public class GameScenarioActivity extends Activity {
             setTextViewTimer.cancel();
     }
 
-    private void slidePrev(){
+    /*
+  private void slidePrev(){
         try {
 
             if(pageIndex > 1){
 
                 ImageView prevIndicator = getIndicatorView(pageIndex);
                 prevIndicator.setImageResource(R.drawable.slide_indicator_transparent);
-                /*prevIndicator.getLayoutParams().height=10;
-                prevIndicator.getLayoutParams().width=10;
-                prevIndicator.requestLayout();*/
 
                 pageIndex -=1;
                 int rollMessageBackground = getPageId(pageIndex);
-                //rollPaper.setImageResource(rollMessageBackground);
+
                 int id = getPageId(pageIndex);
 
                 ImageView slideIndicator = getIndicatorView(pageIndex);
                 slideIndicator.setImageResource(R.drawable.slide_indicator_black);
-                /*slideIndicator.getLayoutParams().height=11;
-                slideIndicator.getLayoutParams().width=11;*/
                 slideIndicator.requestLayout();
                 if(pageIndex==1)
                      slideLeft.setVisibility(View.INVISIBLE);
@@ -214,7 +210,7 @@ public class GameScenarioActivity extends Activity {
 
 
 
-    }
+    }*/
 
     private Intent nextActivityIntent(Class nextActivityClass){
 

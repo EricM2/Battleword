@@ -27,6 +27,7 @@ public class PlayerControlActivity extends AppCompatActivity {
     //String iniText = Utils.initScreemFromText(gameText);
     private MediaPlayer dingle;
     private  GameHeaderFragment gameHeaderFragment;
+    private Callable dingleCallable ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,14 @@ public class PlayerControlActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_control);
         screenTextViewModel =  ViewModelProviders.of(this).get(ScreenTextViewModel.class);
 
-        String v = "";
+        dingleCallable = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                playDingle();
+                return null;
+            }
+        };
+        Utils.doAfter(200,dingleCallable);
 
         /*screenTextViewModel.setRequiredText(gameText);
         screenTextViewModel.initText(iniText);*/
@@ -54,15 +62,7 @@ public class PlayerControlActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
-        Callable v = new Callable() {
-            @Override
-            public Object call() throws Exception {
-                 playDingle();
-                 return null;
-            }
-        };
-        Utils.doAfter(200,v);
+       super.onResume();
     }
 
 
@@ -74,6 +74,13 @@ public class PlayerControlActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         try {
             if(dingle!=null){
                 dingle.pause();
@@ -85,7 +92,6 @@ public class PlayerControlActivity extends AppCompatActivity {
         {
 
         }
-
     }
 
     @Override

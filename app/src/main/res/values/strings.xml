@@ -15,6 +15,8 @@
     <string name="play_from_scratch">New Game</string>
     <string name="play">Play</string>
     <string name="stage">STAGE</string>
+    <string name="solitare">SOLITAIRE</string>
+    <string name="battle">BATTLE</string>
     <string name="text_scenario_sample_stage_1">
     Find the words as quickly as possible and accumulate lives.
     Each word gives you 100 points and each 1500 points grants you one more life.

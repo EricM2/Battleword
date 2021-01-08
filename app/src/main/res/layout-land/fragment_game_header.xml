@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:background="@drawable/transparent_key"
+    tools:context=".GameHeaderFragment">
+
+
+    <LinearLayout
+        android:id="@+id/lifes_container"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/lifes_container_background"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/life_1"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/diamond_life" />
+
+        <ImageView
+            android:id="@+id/life_2"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_life" />
+
+        <ImageView
+            android:id="@+id/life_3"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_life" />
+
+        <ImageView
+            android:id="@+id/life_4"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_life" />
+
+        <ImageView
+            android:id="@+id/life_5"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_life" />
+
+        <ImageView
+            android:id="@+id/life_6"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_no_life" />
+
+        <ImageView
+            android:id="@+id/life_7"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_no_life" />
+
+        <ImageView
+            android:id="@+id/life_8"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_no_life" />
+
+        <ImageView
+            android:id="@+id/life_9"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_no_life" />
+
+        <ImageView
+            android:id="@+id/life_10"
+            android:layout_width="@dimen/diamond_life_width_land"
+            android:layout_height="@dimen/diamond_life_height_land"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/diamond_no_life" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/score_container"
+        android:layout_width="0dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintHorizontal_weight="0.6"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/score_textview_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/stage_container"
+        app:layout_constraintTop_toBottomOf="@+id/time_progressbar">
+
+        <ImageView
+            android:id="@+id/score_icon"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/scrore_icon"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/snapitc"
+            android:text="256456"
+            android:gravity="center"
+            android:textColor="@color/colorSegondary"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/time_progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/progresbar_background"
+        android:max="100"
+        android:progress="10"
+        android:progressDrawable="@drawable/time_progessbar_progress_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifes_container" />
+
+    <LinearLayout
+        android:id="@+id/word_found_led_container"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/settings_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_container">
+
+        <ImageView
+
+            android:id="@+id/word_found_led_1"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_2"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_3"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_4"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_5"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_6"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_7"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_8"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_9"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_not_found_led" />
+
+        <ImageView
+            android:id="@+id/word_found_led_10"
+            android:layout_width="@dimen/word_led_size_land"
+            android:layout_height="@dimen/word_led_size_land"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/word_found_led" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/stage_container"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/score_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="0.4"
+        app:layout_constraintStart_toEndOf="@id/score_container"
+        app:layout_constraintTop_toTopOf="@id/score_container" >
+
+        <TextView
+            android:id="@+id/stage_label"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/snapitc"
+            android:text="@string/stage"
+            android:textColor="@color/colorSegondary" />
+
+        <TextView
+            android:id="@+id/stage_value"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/snapitc"
+            android:text="5"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/settings_icon"
+        app:layout_constraintStart_toEndOf="@id/word_found_led_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/word_found_led_container"
+        app:layout_constraintTop_toTopOf="@id/word_found_led_container" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

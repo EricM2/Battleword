@@ -25,7 +25,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".NextStageActivity" />
         <activity android:name=".GameOverActivity" />
-        <activity android:name=".NewGameActivity" />
         <activity
             android:name=".GameScenarioActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

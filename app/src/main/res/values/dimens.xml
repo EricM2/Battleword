@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="play_button_text_size">25dp</dimen>
+    <dimen name="play_button_text_size_land">35dp</dimen>
+    <dimen name="diamond_life_height">17dp</dimen>
+    <dimen name="diamond_life_height_land">20dp</dimen>
+    <dimen name="diamond_life_width">20dp</dimen>
+    <dimen name="diamond_life_width_land">27dp</dimen>
+    <dimen name="word_led_size">17dp</dimen>
+    <dimen name="word_led_size_land">22dp</dimen>
 </resources>

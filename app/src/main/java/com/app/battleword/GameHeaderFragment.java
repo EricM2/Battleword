@@ -277,7 +277,7 @@ public class GameHeaderFragment extends Fragment   {
     public void onPause() {
         super.onPause();
         score = scoreTextView.getText().toString();
-        SharedPreferences prefs = getActivity().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
+        SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("stage", currentStage);
         editor.putString("score", score);
@@ -310,7 +310,7 @@ public class GameHeaderFragment extends Fragment   {
 
     private void incrementSlifeLife(){
         if( numLifes < 10 && numLifes > 0 ){
-            lifes[numLifes-1].setImageResource(R.drawable.diamond_life);
+            lifes[numLifes].setImageResource(R.drawable.diamond_life);
             numLifes++;
             Utils.playSound(getActivity(),R.raw.new_life_sound,false);
         }
@@ -458,8 +458,10 @@ public class GameHeaderFragment extends Fragment   {
                        words="";
                        stopStageWinSound();
                        startNextStageActivity();
+
                        screenTextViewModel.updateStage(String.valueOf(currentStage));
                        setAllLedInvisible();
+                       getActivity().finish();
                    }
                },5000);
 
