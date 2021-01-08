@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="0.2" />
+        app:layout_constraintVertical_weight="0.1" />
 
     <fragment
         android:id="@+id/game_progress_fragment"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintVertical_weight="0.8" />
+        app:layout_constraintVertical_weight="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
