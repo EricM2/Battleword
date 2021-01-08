@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.app.battleword.objects.Word;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
@@ -54,11 +56,26 @@ public class GameScenarioActivity extends Activity {
         slideIndicator2 = findViewById(R.id.slide_indicator_2);
         slideIndicator3 = findViewById(R.id.slide_indicator_3);
         slideIndicator4 = findViewById(R.id.slide_indicator_4);*/
-        stageTitleTextView = findViewById(R.id.stage_title);
-        stageMessageTextView=findViewById(R.id.scenario_text);
-        stage = getIntent().getIntExtra("nextStage",1);
-        stageTitleTextView.setText(getString(R.string.stage)+" "+ String.valueOf(stage));
-        setTextViewTimer = null;
+       stageTitleTextView = findViewById(R.id.stage_title);
+       stageMessageTextView=findViewById(R.id.scenario_text);
+
+       if(savedInstanceState == null){
+                stage = getIntent().getIntExtra("nextStage",1);
+                stageTitleTextView.setText(getString(R.string.stage)+" "+ String.valueOf(stage));
+                setTextViewTimer = null;
+                setTextViewTimer = new Timer();
+
+       }
+       else{
+           setTextViewTimer = new Timer();
+           stage = savedInstanceState.getInt("nextStage");
+           stageTitleTextView.setText(getString(R.string.stage)+" "+ String.valueOf(stage));
+          String text = savedInstanceState.getString("text");
+          stageMessageTextView.setText("");
+
+
+       }
+       Utils.setTextViewText(this,stageMessageTextView, Utils.getTextScenarioForStage(this,stage),50,R.raw.click,setTextViewTimer);
 
 
         /*rollPaper.setOnTouchListener(new OnSwipeListener(GameScenarioActivity.this){
@@ -96,8 +113,7 @@ public class GameScenarioActivity extends Activity {
                 slidePrev();
             }
         });*/
-        setTextViewTimer = new Timer();
-        Utils.setTextViewText(this,stageMessageTextView, Utils.getTextScenarioForStage(this,stage),50,R.raw.click,setTextViewTimer);
+
     }
 
 
@@ -226,5 +242,14 @@ public class GameScenarioActivity extends Activity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("nextStage",stage);
+        setTextViewTimer.cancel();
+        setTextViewTimer = null;
+        outState.putString("text", stageMessageTextView.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 }
