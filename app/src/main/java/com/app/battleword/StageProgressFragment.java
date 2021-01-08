@@ -2,6 +2,7 @@ package com.app.battleword;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
@@ -17,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-public class stageProgressFragment extends Fragment {
+public class StageProgressFragment extends Fragment {
    private int stage;
   private ProgressBar linearProgressStage1;
   private ProgressBar linearProgressStage2;
@@ -43,35 +44,65 @@ public class stageProgressFragment extends Fragment {
     private Animation zoomin;
     private Animation zoomout;
     private AnimationSet animationSet;
+    private int[] lineaProgressValues;
+    private int[] circularProgressValues;
+    private boolean[] locksStates;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View v = inflater.inflate(R.layout.fragment_stage_progress, container, false);
-       initViews(v);
-       stage = getActivity().getIntent().getIntExtra("nextStage",1);
-        Log.d("NEXTSTAGE", String.valueOf(stage));
-        gotoNextStage(stage);
-        stageTitleTextView.setText("STAGE "+ String.valueOf(stage));
-         zoomin = AnimationUtils.loadAnimation(getContext(), R.anim.zoomin);
-        zoomout = AnimationUtils.loadAnimation(getContext(), R.anim.zoomout);
-        animationSet = new AnimationSet(true);
-        animationSet.addAnimation(zoomin);
-        animationSet.addAnimation(zoomout);
+       getViews(v);
+       if(savedInstanceState==null) {
+           initViews(v);
+           stage = getActivity().getIntent().getIntExtra("nextStage", 1);
+           Log.d("NEXTSTAGE", String.valueOf(stage));
+           gotoNextStage(stage);
 
+           zoomin = AnimationUtils.loadAnimation(getContext(), R.anim.zoomin);
+           zoomout = AnimationUtils.loadAnimation(getContext(), R.anim.zoomout);
+           animationSet = new AnimationSet(true);
+           animationSet.addAnimation(zoomin);
+           animationSet.addAnimation(zoomout);
+           stageTitleTextView.startAnimation(animationSet);
+       }
+       else {
+           lineaProgressValues = savedInstanceState.getIntArray("linear_progress_state");
+           circularProgressValues = savedInstanceState.getIntArray("circular_progress_state");
+           locksStates = savedInstanceState.getBooleanArray("lock_states");
+           stage = savedInstanceState.getInt("nextStage");
+           updateCircularProgress();
+           updateLinearProgress();
+           updateLock();
+
+       }
+        stageTitleTextView.setText("STAGE " + String.valueOf(stage));
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        genLinearProgressValues();
+        genCircularProgressValues();
+        genLockStateValues(stage);
+        outState.putInt("nextStage",stage);
+        outState.putIntArray("linear_progress_state",lineaProgressValues);
+        outState.putIntArray("circular_progress_state",circularProgressValues);
+        outState.putBooleanArray("lock_states",locksStates);
+        outState.putBoolean("test",true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-       stageTitleTextView.startAnimation(animationSet);
+
 
     }
 
-    private void initViews(View parent){
+    private void getViews(View parent){
         stageTitleTextView = parent.findViewById(R.id.stage_title);
         linearProgressStage1 = parent.findViewById(R.id.linear_progress_stage1);
         linearProgressStage2 = parent.findViewById(R.id.linear_progress_stage2);
@@ -88,6 +119,23 @@ public class stageProgressFragment extends Fragment {
         lockStage3 = parent.findViewById(R.id.lock_stage_3);
         lockStage4 = parent.findViewById(R.id.lock_stage_4);
         lockStage5 = parent.findViewById(R.id.lock_stage_5);
+
+        linearProgressArray = new ProgressBar[]{linearProgressStage1,linearProgressStage2,linearProgressStage3,linearProgressStage4,linearProgressStage5};
+        circularProgressArray  = new ProgressBar[]{circularProgressStage1,circularProgressStage2,circularProgressStage3,circularProgressStage4,circularProgressStage5};
+        lockArray = new ImageView[]{lockStage1,lockStage2,lockStage3,lockStage4,lockStage5};
+        locksBackgrounds = new int[]{R.drawable.stage_1_lock,R.drawable.stage_2_lock,R.drawable.stage_3_lock,R.drawable.stage_4_lock,
+                R.drawable.stage_5_lock};
+        unlocksBackgrounds = new int[]{R.drawable.stage_1_unlock,R.drawable.stage_2_unlock,R.drawable.stage_3_unlock,R.drawable.stage_4_unlock,
+                R.drawable.stage_5_unlock};
+
+    }
+
+    private void initViews(View parent){
+
+        locksStates = new boolean[]{false,false,false,false,false};
+        lineaProgressValues = new int[]{0,0,0,0,0,};
+        circularProgressValues = new int[]{0,0,0,0,0,};
+
         linearProgressStage1.setProgress(0);
         linearProgressStage2.setProgress(0);
         linearProgressStage3.setProgress(0);
@@ -98,13 +146,6 @@ public class stageProgressFragment extends Fragment {
         circularProgressStage3.setProgress(0);
         circularProgressStage4.setProgress(0);
         circularProgressStage5.setProgress(0);
-        linearProgressArray = new ProgressBar[]{linearProgressStage1,linearProgressStage2,linearProgressStage3,linearProgressStage4,linearProgressStage5};
-        circularProgressArray  = new ProgressBar[]{circularProgressStage1,circularProgressStage2,circularProgressStage3,circularProgressStage4,circularProgressStage5};
-        lockArray = new ImageView[]{lockStage1,lockStage2,lockStage3,lockStage4,lockStage5};
-        locksBackgrounds = new int[]{R.drawable.stage_1_lock,R.drawable.stage_2_lock,R.drawable.stage_3_lock,R.drawable.stage_4_lock,
-                R.drawable.stage_5_lock};
-        unlocksBackgrounds = new int[]{R.drawable.stage_1_unlock,R.drawable.stage_2_unlock,R.drawable.stage_3_unlock,R.drawable.stage_4_unlock,
-                R.drawable.stage_5_unlock};
 
 
     }
@@ -125,6 +166,7 @@ public class stageProgressFragment extends Fragment {
             //circularProgressArray[index].setProgress(100);
         }
     }
+
 
 
     private void lockStage(int stage){
@@ -205,6 +247,49 @@ public class stageProgressFragment extends Fragment {
             }
         }.start();
 
+    }
+    private  void genLinearProgressValues(){
+        for(int i =0; i<5; i++){
+            lineaProgressValues[i] = linearProgressArray[i].getProgress();
+        }
+    }
+
+    private  void genCircularProgressValues(){
+        for(int i =0; i<5; i++){
+            circularProgressValues[i] = circularProgressArray[i].getProgress();
+        }
+    }
+
+    private void genLockStateValues(int nextStage){
+        for(int i=0; i<nextStage-1; i++){
+            locksStates[i] = true;
+        }
+    }
+
+    private void updateLinearProgress(){
+        if(lineaProgressValues!=null) {
+            for (int i = 0; i < 5; i++) {
+                linearProgressArray[i].setProgress(lineaProgressValues[i]);
+            }
+        }
+    }
+
+    private void updateCircularProgress(){
+        if(circularProgressValues!=null) {
+            for (int i = 0; i < 5; i++) {
+                circularProgressArray[i].setProgress(circularProgressValues[i]);
+            }
+        }
+    }
+
+    private void  updateLock(){
+
+        if(locksStates!=null) {
+            for (int i = 0; i < 5; i++) {
+                if (locksStates[i])
+                    lockArray[i].setImageResource(unlocksBackgrounds[i]);
+            }
+        }
     }
 
 

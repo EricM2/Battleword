@@ -1,5 +1,6 @@
 package com.app.battleword;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -24,67 +25,48 @@ public class GameSetupActivity extends AppCompatActivity {
     private String selectedGameLevel;
     private Button settingsBut;
     private MediaPlayer dingle;
+    private boolean wasPlaying;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_game_setup);
-        selectedGameLevel = null;
-        dingle = null;
         solitaireButton = findViewById(R.id.play_solitaire);
         settingsBut = findViewById(R.id.settings_button_setup);
-        Utils.playSound(this,R.raw.new_activity_sound,false);
-        Callable v = new Callable() {
-            @Override
-            public Object call() throws Exception {
-                playDingle();
-                return null;
-            }
-        };
-        Utils.doAfter(200,v);
+        if(savedInstanceState==null) {
+            selectedGameLevel = null;
+            dingle = null;
+            wasPlaying = false;
+
+            Utils.playSound(this, R.raw.new_activity_sound, false);
+            Callable v = new Callable() {
+                @Override
+                public Object call() throws Exception {
+                    playDingle();
+                    return null;
+                }
+            };
+            Utils.doAfter(200, v);
+            wasPlaying = true;
+        }
         settingsBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(getSettingsIntent());
             }
         });
-        //gameLevelSpinner = findViewById(R.id.select_game_level_spinner);
-        String[] gameLevels = getResources().getStringArray(R.array.game_levels);
-        //gameLevelSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,gameLevels));
-        /*gameLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
-            {
-                String value = adapterView.getItemAtPosition(position).toString();
-                if (Utils.testIfStrIsInt(value)){
-                    selectedGameLevel = value;
-                }
-
-                Toast.makeText(adapterView.getContext(), (String) adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-                selectedGameLevel = null;
-
-            }
-        });*/
 
         solitaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     Intent intent;
-                    Utils.playSound(GameSetupActivity.this, R.raw.play_button_sound,false);
+                    Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
 
 
                      intent = new Intent(GameSetupActivity.this, LoadWordsActivity.class);
 
-
+                stopDingle();
                 startActivity(intent);
-                finish();
-
-
             }
         });
     }
@@ -132,11 +114,16 @@ public class GameSetupActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("wasPlaying",wasPlaying);
+    }
+
+
+
+
+    private void stopDingle(){
         try {
             if(dingle!=null){
                 dingle.pause();
