@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.battleword.adapters.LanguageSpinnerAdapter;
 import com.app.battleword.objects.Letter;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.utils.Touch;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
@@ -36,6 +38,10 @@ public class ScreenFragment extends Fragment  {
     private Button tipButton;
     private TextView tipTextView;
     private boolean isHintOn;
+    private int currentStage=-1;
+    private int touches;
+    private TextView touchesLeftTextView;
+    private LinearLayout touchesCountLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,7 +52,9 @@ public class ScreenFragment extends Fragment  {
         secondaryTextView.setVisibility(View.INVISIBLE);
         tipButton = v.findViewById(R.id.tip_button);
         tipTextView = v.findViewById(R.id.tip_text);
+        touchesLeftTextView = v.findViewById(R.id.touch_left_value);
         tipTextView.setVisibility(View.INVISIBLE);
+        touchesCountLayout = v.findViewById(R.id.touch_left);
         isHintOn = false;
 
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
@@ -90,6 +98,29 @@ public class ScreenFragment extends Fragment  {
                 }
                 else
                     secondaryTextView.setVisibility(View.VISIBLE);
+            }
+        });
+        screenTextViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                currentStage = Integer.valueOf(s);
+                if(currentStage >=4)
+                    touchesCountLayout.setVisibility(View.VISIBLE);
+                else
+                    touchesCountLayout.setVisibility(View.INVISIBLE);
+
+            }
+        });
+
+        screenTextViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if( (currentStage!=-1) && currentStage>=4){
+                     int v = Touch.getNumTouches(currentStage)-integer.intValue();
+                     if(v>=0)
+                        touchesLeftTextView.setText(String.valueOf(v));
+
+                }
             }
         });
 

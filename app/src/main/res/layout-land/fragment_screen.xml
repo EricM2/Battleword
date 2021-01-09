@@ -9,6 +9,34 @@
 
 
 
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/score_textview_background"
+        android:id="@+id/touch_left"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/touch_app"/>
+        <TextView
+            android:id="@+id/touch_left_value"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/snapitc"
+            android:textColor="@color/colorSegondary"
+            android:text="30"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/screen_text"

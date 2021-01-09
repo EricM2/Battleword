@@ -1,5 +1,6 @@
 package com.app.battleword;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class CountDownActivity extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
     private TextView countDownTextView;
+    private long currentCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class CountDownActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(5000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                countDownTextView.setText(String.valueOf(millisUntilFinished/1000));
+                currentCount = millisUntilFinished/1000;
+                countDownTextView.setText(String.valueOf(currentCount));
                 if(millisUntilFinished > 0)
                     Utils.playSound(CountDownActivity.this,R.raw.word_not_found_sound,false);
                 else
@@ -50,6 +53,13 @@ public class CountDownActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if(countDownTimer!=null)
+            countDownTimer.cancel();
+        super.onSaveInstanceState(outState);
     }
 
     @Override

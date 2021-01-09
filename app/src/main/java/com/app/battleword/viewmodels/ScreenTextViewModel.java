@@ -13,6 +13,7 @@ import java.util.Map;
 public class ScreenTextViewModel extends ViewModel {
    private String requiredText ;
     private MutableLiveData<String> wordHint = new MutableLiveData<>();
+    private MutableLiveData<Integer> numTouch = new MutableLiveData<>(new Integer(0));
    private MutableLiveData<Map<String,List<Word>>> gameWords = new MutableLiveData<>();
    private MutableLiveData<String> gameLanguage = new MutableLiveData<>();
     private  MutableLiveData<String> screenText = new MutableLiveData<String>();
@@ -26,7 +27,9 @@ public class ScreenTextViewModel extends ViewModel {
     private MutableLiveData<Boolean> stopDingle = new MutableLiveData<>();
     private MutableLiveData<Boolean> turnOffSecondScreenText = new MutableLiveData<>();
 
-
+    public void updateNumTouch(int num){
+        numTouch.setValue(num);
+    }
     public  void  initStage(String stage){
         gameStage.setValue(stage);
     }
@@ -140,5 +143,9 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getStopDingle() {
         return stopDingle;
+    }
+
+    public MutableLiveData<Integer> getNumTouch() {
+        return numTouch;
     }
 }

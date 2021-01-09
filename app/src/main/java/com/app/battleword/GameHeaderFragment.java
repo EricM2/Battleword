@@ -26,6 +26,7 @@ import com.app.battleword.subscribers.WordTimeCompletedSubscriber;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
 import com.app.utils.GameTime;
 import com.app.utils.Strings;
+import com.app.utils.Touch;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class GameHeaderFragment extends Fragment   {
     private Map<String, List<Word>> gameWords;
     private int lastTimeValue =0;
     private boolean wasPaused = false;
+    private Boolean settingBut;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -169,10 +171,44 @@ public class GameHeaderFragment extends Fragment   {
         timeProgressBar.setProgress(currenTime);
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((PlayerControlActivity) getActivity()).onBackPressed();
+            }
+        });
         gameWords =  (Map<String,List<Word>>)getActivity().getIntent().getSerializableExtra(Strings.GAMEWORDS);
 
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
         screenTextViewModel.updateGameWords(gameWords);
+        screenTextViewModel.updateStage(String.valueOf(currentStage));
+        screenTextViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if( Touch.getNumTouches(currentStage)!=-1 && integer >= Touch.getNumTouches(currentStage)){
+
+                    if(currentScreenText!=null && !Utils.isSreenTextComplete(currentScreenText)){
+
+                        if(countDownTimer!=null) {
+                            countDownTimer.cancel();
+                            lastTimeValue = 0;
+                        }
+                        screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
+                        (new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                screenTextViewModel.updateTurnOffSecondScreenText(true);
+                                lastTimeValue = 0;
+                                updateWorFoundStatus(false,currentWordNum);
+                                findNewWord();
+                            }
+                        }, 2000);
+
+                    }
+                }
+            }
+        });
 
         screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -437,6 +473,7 @@ public class GameHeaderFragment extends Fragment   {
            // screenTextViewModel.initText(newInitWord);
            screenTextViewModel.updateScreenText(newInitWord);
            screenTextViewModel.setRequiredText(gameText);
+           screenTextViewModel.updateNumTouch(0);
            if(numLifes > 0) {
                try {
                    startGame();
@@ -614,21 +651,23 @@ public class GameHeaderFragment extends Fragment   {
 
     private void updateWorFoundStatus(boolean wordfound, int wordIndex){
         int ledIndex = wordIndex -1;
-        if(wordfound)
-        {
-            leds[ledIndex].setImageResource(R.drawable.word_found_led);
-            words +="1";
-            screenTextViewModel.wordFoundBluPrint(true);
-        }
-        else {
-            leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
-            words +="0";
-            screenTextViewModel.wordFoundBluPrint(false);
-            decrementlifeLife();
+        if(wordIndex <=10 && wordIndex >= 1){
+            if(wordfound)
+            {
+                leds[ledIndex].setImageResource(R.drawable.word_found_led);
+                words +="1";
+                screenTextViewModel.wordFoundBluPrint(true);
+            }
+            else {
+                leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
+                words +="0";
+                screenTextViewModel.wordFoundBluPrint(false);
+                decrementlifeLife();
 
-        }
+            }
 
-        leds[ledIndex].setVisibility(View.VISIBLE);
+            leds[ledIndex].setVisibility(View.VISIBLE);
+        }
     }
 
     private  void pauseGame(boolean pause){

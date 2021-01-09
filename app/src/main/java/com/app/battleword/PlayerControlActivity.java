@@ -30,6 +30,7 @@ public class PlayerControlActivity extends AppCompatActivity {
     private  GameHeaderFragment gameHeaderFragment;
     private ScreenFragment screenFragment;
     private Callable dingleCallable ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

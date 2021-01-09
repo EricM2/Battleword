@@ -45,7 +45,8 @@ public class KeyBoardFragment extends Fragment {
         fm = getFragmentManager();
         screenFragment = (ScreenFragment) fm.findFragmentById(R.id.screen_fragment);
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
-        keyBoardAdapter = new KeyBoardAdapter(v.getContext(),R.layout.keyboard_items,letters,screenTextViewModel);
+        int stage = Integer.valueOf(screenTextViewModel.getGameStage().getValue());
+        keyBoardAdapter = new KeyBoardAdapter(v.getContext(),R.layout.keyboard_items,letters,screenTextViewModel,stage);
         gridView.setAdapter(keyBoardAdapter);
         return v;
     }
