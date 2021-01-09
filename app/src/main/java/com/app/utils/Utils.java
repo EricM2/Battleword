@@ -268,10 +268,12 @@ public class Utils {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                char c= text.charAt(i[0]);
-                //Log.d("Strange",""+c);
-                scenario.append(String.valueOf(c));
-                i[0]++;
+                if(length>i[0]) {
+                    char c = text.charAt(i[0]);
+                    //Log.d("Strange",""+c);
+                    scenario.append(String.valueOf(c));
+                    i[0]++;
+                }
             }
         };
 
@@ -310,18 +312,25 @@ public class Utils {
     }
 
     public static  MediaPlayer playSound(Context c, int rawid, boolean loop){
-        MediaPlayer p = MediaPlayer.create(c, rawid);
+        if(c==null){
+            return null;
+        }
+        else{
 
-        p.setLooping(loop);
-        p.setVolume(100,100);
-        p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-            }
-        });
-        p.start();
-        return p;
+            MediaPlayer p = MediaPlayer.create(c, rawid);
+
+
+            p.setLooping(loop);
+            p.setVolume(100,100);
+            p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                }
+            });
+            p.start();
+            return p;
+        }
 
     }
 

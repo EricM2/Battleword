@@ -69,7 +69,7 @@ public class GameHeaderFragment extends Fragment   {
     private String score = "0";
     private ScreenTextViewModel screenTextViewModel;
     private String currentScreenText;
-    private boolean[] wordsMask = new boolean[]{};
+    //private boolean[] wordsMask = new boolean[]{};
     //private int lastStageLifes = 5;
     private int currenTime = 0;
     private String gameLanguage;
@@ -151,10 +151,13 @@ public class GameHeaderFragment extends Fragment   {
                 numLifes = savedInstanceState.getInt("lives");
                 currentWordNum = savedInstanceState.getInt("wordNum");
                 score = savedInstanceState.getString("score");
-                wordsMask = savedInstanceState.getBooleanArray("wordmask");
-                currenTime = savedInstanceState.getInt("time");
-
-                redrawLeds(wordsMask);
+                //wordsMask = savedInstanceState.getBooleanArray("wordmask");
+                words = savedInstanceState.getString("words");
+                lastTimeValue = savedInstanceState.getInt("time");
+                currenTime = lastTimeValue;
+                buildWordLedsFromWord(words);
+                currentWordNum = words.length();
+                //redrawLeds(wordsMask);
                 setLives(numLifes);
             }
             else {
@@ -166,7 +169,6 @@ public class GameHeaderFragment extends Fragment   {
         timeProgressBar.setProgress(currenTime);
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
-        timeProgressBar.setProgress(0);
         gameWords =  (Map<String,List<Word>>)getActivity().getIntent().getSerializableExtra(Strings.GAMEWORDS);
 
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
@@ -221,8 +223,17 @@ public class GameHeaderFragment extends Fragment   {
         screenTextViewModel.setRequiredText(gameText);
         screenTextViewModel.initText(iniText);*/
 
+        if(savedInstanceState== null)
+            findNewWord();
+        else{
 
-        findNewWord();
+            try {
+                currentWordNum++;
+                startGame();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return  v;
     }
 
@@ -268,9 +279,11 @@ public class GameHeaderFragment extends Fragment   {
         outState.putString("score",scoreTextView.getText().toString());
         outState.putInt("time",timeProgressBar.getProgress());
 
-        outState.putBooleanArray("wordmask",wordsMask);
-
+        outState.putString("words",words);
+        stopGame();
+        stopDingle();
         super.onSaveInstanceState(outState);
+
     }
 
     @Override
@@ -296,7 +309,7 @@ public class GameHeaderFragment extends Fragment   {
                 leds[i].setVisibility(View.INVISIBLE);
             }
         }
-        wordsMask = new boolean[]{};
+        words="";
     }
     private void setLedVisible(int wordIndex){
         if(wordIndex >0 && wordIndex<=10 && leds != null)
@@ -517,7 +530,8 @@ public class GameHeaderFragment extends Fragment   {
 
        public void gameOver(){
            stopGame();
-           Intent intent = new Intent(getContext(),GameOverActivity.class);
+           Intent intent = new Intent(getActivity(),GameOverActivity.class);
+           stopDingle();
            startActivity(intent);
 
        }
@@ -526,6 +540,7 @@ public class GameHeaderFragment extends Fragment   {
            Intent intent = new Intent(getActivity(), LoadWordsActivity.class);
            intent.putExtra("mode","solitare");
            intent.putExtra("nextStage",currentStage);
+           stopDingle();
            startActivity(intent);
        }
 
@@ -604,18 +619,13 @@ public class GameHeaderFragment extends Fragment   {
             leds[ledIndex].setImageResource(R.drawable.word_found_led);
             words +="1";
             screenTextViewModel.wordFoundBluPrint(true);
-            int index = wordsMask.length;
-            wordsMask = Arrays.copyOf(wordsMask,wordsMask.length+1);
-            wordsMask[index] = true;
         }
         else {
             leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
             words +="0";
             screenTextViewModel.wordFoundBluPrint(false);
             decrementlifeLife();
-            int index = wordsMask.length;
-            wordsMask = Arrays.copyOf(wordsMask, wordsMask.length + 1);
-            wordsMask[index] = false;
+
         }
 
         leds[ledIndex].setVisibility(View.VISIBLE);
@@ -628,6 +638,10 @@ public class GameHeaderFragment extends Fragment   {
             wasPaused = true;
 
         }
+    }
+
+    private  void stopDingle(){
+        ((PlayerControlActivity)getActivity()).stopDingle();
     }
 
 

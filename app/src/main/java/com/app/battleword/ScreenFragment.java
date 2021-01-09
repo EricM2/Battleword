@@ -2,6 +2,7 @@ package com.app.battleword;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -47,9 +48,7 @@ public class ScreenFragment extends Fragment  {
         tipTextView = v.findViewById(R.id.tip_text);
         tipTextView.setVisibility(View.INVISIBLE);
         isHintOn = false;
-        //gameText = Utils.getRandomWord();
-       // String iniText = Utils.initScreemFromText(gameText);
-        //screenTextView.setText(iniText);
+
         screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
         screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -111,10 +110,19 @@ public class ScreenFragment extends Fragment  {
                 isHintOn = !isHintOn;
             }
         });
+        if(savedInstanceState!=null){
+            screenTextView.setText(savedInstanceState.getString("current_text"));
+            tipTextView.setText(savedInstanceState.getString("current_hint"));
+            isHintOn = savedInstanceState.getBoolean("is_hint_on");
+            if(isHintOn){
+                tipTextView.setVisibility(View.VISIBLE);
+                closeTipAfter(4000);
+            }
+
+        }
 
 
-       // gridView = v.findViewById(R.id.screen_grid);
-//        gridView.setAdapter(screenAdapter);
+
 
         return v;
 
@@ -154,7 +162,15 @@ public class ScreenFragment extends Fragment  {
         },millis);
     }
 
-   /* @Override
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("current_text",screenTextView.getText().toString());
+        outState.putBoolean("is_hint_on",isHintOn);
+        outState.putString("current_hint",tipTextView.getText().toString());
+    }
+
+    /* @Override
     public void onWordFound() {
         resetScreenForNewWord();
     }

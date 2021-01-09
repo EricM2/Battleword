@@ -2,6 +2,7 @@ package com.app.battleword;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 
@@ -27,19 +28,26 @@ public class PlayerControlActivity extends AppCompatActivity {
     //String iniText = Utils.initScreemFromText(gameText);
     private MediaPlayer dingle;
     private  GameHeaderFragment gameHeaderFragment;
+    private ScreenFragment screenFragment;
     private Callable dingleCallable ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dingle = null;
+        setContentView(R.layout.activity_player_control);
+
+
         if (savedInstanceState != null) {
             //Restore the fragment's instance
+            screenFragment = (ScreenFragment)getSupportFragmentManager().getFragment(savedInstanceState, "screenFragment");
             gameHeaderFragment = (GameHeaderFragment) getSupportFragmentManager().getFragment(savedInstanceState, "gameHeaderFragment");
         }
+        else {
+            gameHeaderFragment = (GameHeaderFragment)getSupportFragmentManager().findFragmentById(R.id.game_header_fragment);
+            screenFragment = (ScreenFragment) getSupportFragmentManager().findFragmentById(R.id.screen_fragment);
 
-        setContentView(R.layout.activity_player_control);
-        screenTextViewModel =  ViewModelProviders.of(this).get(ScreenTextViewModel.class);
 
+
+        }
         dingleCallable = new Callable() {
             @Override
             public Object call() throws Exception {
@@ -47,7 +55,17 @@ public class PlayerControlActivity extends AppCompatActivity {
                 return null;
             }
         };
-        Utils.doAfter(200,dingleCallable);
+        Utils.doAfter(100, dingleCallable);
+
+        screenTextViewModel =  ViewModelProviders.of(this).get(ScreenTextViewModel.class);
+
+        /*screenTextViewModel.getStopDingle().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    stopDingle();
+            }
+        });*/
 
         /*screenTextViewModel.setRequiredText(gameText);
         screenTextViewModel.initText(iniText);*/
@@ -57,6 +75,8 @@ public class PlayerControlActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         getSupportFragmentManager().putFragment(outState, "gameHeaderFragment", gameHeaderFragment);
+        getSupportFragmentManager().putFragment(outState, "screenFragment", screenFragment);
+
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
@@ -68,7 +88,7 @@ public class PlayerControlActivity extends AppCompatActivity {
 
 
     private void playDingle(){
-        dingle = Utils.playSound(this,R.raw.battleword_generic,true);
+        dingle = Utils.playSound(getApplicationContext(),R.raw.battleword_generic,true);
     }
 
     @Override
@@ -81,6 +101,10 @@ public class PlayerControlActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ///stopDingle();
+    }
+
+    public void stopDingle() {
         try {
             if(dingle!=null){
                 dingle.pause();

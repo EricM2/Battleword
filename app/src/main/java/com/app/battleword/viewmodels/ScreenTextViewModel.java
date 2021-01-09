@@ -23,14 +23,19 @@ public class ScreenTextViewModel extends ViewModel {
     private MutableLiveData<Integer> currentTime = new MutableLiveData<>();
     private MutableLiveData<String>  gameStage = new MutableLiveData<>();
     private MutableLiveData<Boolean> pauseGame = new MutableLiveData<>();
+    private MutableLiveData<Boolean> stopDingle = new MutableLiveData<>();
     private MutableLiveData<Boolean> turnOffSecondScreenText = new MutableLiveData<>();
+
+
     public  void  initStage(String stage){
         gameStage.setValue(stage);
     }
     public void  initText(String text){
         screenText.setValue(text);
     }
-
+    public void updateStopDingle(Boolean stop){
+        stopDingle.setValue(stop);
+    }
 
     public void updatePauseGame(Boolean pause){
         pauseGame.setValue(pause);
@@ -131,5 +136,9 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getPauseGame() {
         return pauseGame;
+    }
+
+    public MutableLiveData<Boolean> getStopDingle() {
+        return stopDingle;
     }
 }
