@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             final Intent gameSetupIntent = new Intent(this,GameSetupActivity.class);
 
             if (isFirstTimeAppInstall){
+                Utils.saveBooleanSharedPreferences(getApplicationContext(),Strings.FIRST_TIME_APP_INSTALLED_PREF,Strings.FIRST_TIME_APP_KEY,false);
                 c = new Callable() {
                     @Override
                     public Object call() throws Exception {

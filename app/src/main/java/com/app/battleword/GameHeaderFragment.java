@@ -25,6 +25,7 @@ import com.app.battleword.objects.Word;
 import com.app.battleword.subscribers.WordTimeCompletedSubscriber;
 import com.app.battleword.viewmodels.ScreenTextViewModel;
 import com.app.utils.GameTime;
+import com.app.utils.Limit;
 import com.app.utils.Strings;
 import com.app.utils.Touch;
 import com.app.utils.Utils;
@@ -71,7 +72,8 @@ public class GameHeaderFragment extends Fragment   {
     private ScreenTextViewModel screenTextViewModel;
     private String currentScreenText;
     //private boolean[] wordsMask = new boolean[]{};
-    //private int lastStageLifes = 5;
+    private int lastStageLifes = 5;
+    private String lastStageScore="0";
     private int currenTime = 0;
     private String gameLanguage;
     private boolean fiveSecLeft;
@@ -130,9 +132,11 @@ public class GameHeaderFragment extends Fragment   {
         }
         if (prefs.contains("lives")) {
             numLifes =  prefs.getInt("lives",5);
+            lastStageLifes = numLifes;
         }
         if (prefs.contains("score")) {
             score =  prefs.getString("score","0");
+            lastStageScore = score;
         }
         if (prefs.contains("paused_time")) {
             currenTime =  prefs.getInt("paused_time",0);
@@ -475,11 +479,14 @@ public class GameHeaderFragment extends Fragment   {
            screenTextViewModel.setRequiredText(gameText);
            screenTextViewModel.updateNumTouch(0);
            if(numLifes > 0) {
-               try {
-                   startGame();
-               }
-               catch (Exception e){
-                   Log.d("Exception", e.getMessage());
+               if ((currentStage==4 && getNumWorfound()< Limit.LIMIT_STAGE_4) || (currentStage==5 && getNumWorfound()< Limit.LIMIT_STAGE_5 ))
+                   gameOver();
+               else {
+                   try {
+                       startGame();
+                   } catch (Exception e) {
+                       Log.d("Exception", e.getMessage());
+                   }
                }
 
            }
@@ -498,22 +505,27 @@ public class GameHeaderFragment extends Fragment   {
 
            if (currentStage < 5) {
 
-               (new Handler()).postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
 
-                       currentWordNum = 1;
-                       currentStage = currentStage + 1;
-                       Utils.saveIntSharedPreferences(getActivity().getApplicationContext(),Strings.GAME_STATE_PREF,"laststagelives",numLifes);
-                       words="";
-                       stopStageWinSound();
-                       startNextStageActivity();
 
-                       screenTextViewModel.updateStage(String.valueOf(currentStage));
-                       setAllLedInvisible();
-                       getActivity().finish();
-                   }
-               },5000);
+
+
+                   (new Handler()).postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+
+                           currentWordNum = 1;
+                           currentStage = currentStage + 1;
+                           Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
+                           words = "";
+                           stopStageWinSound();
+                           startNextStageActivity();
+
+                           screenTextViewModel.updateStage(String.valueOf(currentStage));
+                           setAllLedInvisible();
+                           getActivity().finish();
+                       }
+                   }, 5000);
+
 
            }
 
@@ -567,6 +579,9 @@ public class GameHeaderFragment extends Fragment   {
 
        public void gameOver(){
            stopGame();
+           numLifes= lastStageLifes;
+           words ="";
+           score = lastStageScore;
            Intent intent = new Intent(getActivity(),GameOverActivity.class);
            stopDingle();
            startActivity(intent);
@@ -681,6 +696,18 @@ public class GameHeaderFragment extends Fragment   {
 
     private  void stopDingle(){
         ((PlayerControlActivity)getActivity()).stopDingle();
+    }
+
+    public int getNumWorfound(){
+        int res = 0;
+        if( words.length()==10){
+            String[] v = words.split("");
+            for (int i = 0; i<10; i++){
+                if(v[i].equalsIgnoreCase("1"))
+                    res++;
+            }
+        }
+        return res;
     }
 
 

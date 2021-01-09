@@ -82,6 +82,7 @@ public class ScreenFragment extends Fragment  {
                     public void onChanged(String s) {
 
                         secondaryTextView.setVisibility(View.VISIBLE);
+                        secondaryTextView.setText("");
                         Timer t = new Timer();
                         Utils.setTextViewText(getActivity(),secondaryTextView,s,30,-1,t);
 
@@ -144,6 +145,11 @@ public class ScreenFragment extends Fragment  {
         if(savedInstanceState!=null){
             screenTextView.setText(savedInstanceState.getString("current_text"));
             tipTextView.setText(savedInstanceState.getString("current_hint"));
+            secondaryTextView.setText(savedInstanceState.getString("secondary_text"));
+            if(Touch.getNumTouches(currentStage)!=-1) {
+                touchesLeftTextView.setText(savedInstanceState.getString("touches_lefts"));
+                touchesLeftTextView.setVisibility(View.VISIBLE);
+            }
             isHintOn = savedInstanceState.getBoolean("is_hint_on");
             if(isHintOn){
                 tipTextView.setVisibility(View.VISIBLE);
@@ -199,6 +205,9 @@ public class ScreenFragment extends Fragment  {
         outState.putString("current_text",screenTextView.getText().toString());
         outState.putBoolean("is_hint_on",isHintOn);
         outState.putString("current_hint",tipTextView.getText().toString());
+        outState.putString("touches_lefts",touchesLeftTextView.getText().toString());
+        outState.putString("secondary_text",secondaryTextView.getText().toString());
+
     }
 
     /* @Override
