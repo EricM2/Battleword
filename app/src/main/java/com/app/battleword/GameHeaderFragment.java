@@ -479,15 +479,14 @@ public class GameHeaderFragment extends Fragment   {
            screenTextViewModel.setRequiredText(gameText);
            screenTextViewModel.updateNumTouch(0);
            if(numLifes > 0) {
-               if ((currentStage==4 && getNumWorfound()< Limit.LIMIT_STAGE_4) || (currentStage==5 && getNumWorfound()< Limit.LIMIT_STAGE_5 ))
-                   gameOver();
-               else {
+
+
                    try {
                        startGame();
                    } catch (Exception e) {
                        Log.d("Exception", e.getMessage());
                    }
-               }
+
 
            }
            else{
@@ -499,35 +498,36 @@ public class GameHeaderFragment extends Fragment   {
 
        }
 
-       else  {
+       else {
 
-           stageWinPlayer = Utils.playSound(getActivity(),R.raw.stage_win_sound,true);
+           stageWinPlayer = Utils.playSound(getActivity(), R.raw.stage_win_sound, true);
+           if ((currentStage == 4 && getNumWorfound() < Limit.LIMIT_STAGE_4) || (currentStage == 5 && getNumWorfound() < Limit.LIMIT_STAGE_5))
+               gameOver();
 
-           if (currentStage < 5) {
+           else {
+               if (currentStage < 5) {
 
 
+               (new Handler()).postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
 
+                       currentWordNum = 1;
+                       currentStage = currentStage + 1;
+                       Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
+                       words = "";
+                       stopStageWinSound();
+                       startNextStageActivity();
 
-
-                   (new Handler()).postDelayed(new Runnable() {
-                       @Override
-                       public void run() {
-
-                           currentWordNum = 1;
-                           currentStage = currentStage + 1;
-                           Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
-                           words = "";
-                           stopStageWinSound();
-                           startNextStageActivity();
-
-                           screenTextViewModel.updateStage(String.valueOf(currentStage));
-                           setAllLedInvisible();
-                           getActivity().finish();
-                       }
-                   }, 5000);
+                       screenTextViewModel.updateStage(String.valueOf(currentStage));
+                       setAllLedInvisible();
+                       getActivity().finish();
+                   }
+               }, 5000);
 
 
            }
+            }
 
        }
 

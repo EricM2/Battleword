@@ -358,7 +358,7 @@ public class Utils {
             throw new Exception("bad language parameter: "+ language);
         }
         else{
-            int st = stage > 4 ? 4 : stage;
+            int st = stage >= 4 ? 4 : stage;
             String fileName = "stage_"+String.valueOf(st)+"_"+language+".csv";
             InputStreamReader is = new InputStreamReader(c.getAssets()
                     .open(fileName));
