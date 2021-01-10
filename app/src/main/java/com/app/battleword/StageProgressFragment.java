@@ -77,7 +77,7 @@ public class StageProgressFragment extends Fragment {
            updateLock();
 
        }
-        stageTitleTextView.setText("STAGE " + String.valueOf(stage));
+        stageTitleTextView.setText(getString(R.string.stage)+" " + String.valueOf(stage));
         return v;
     }
 
@@ -201,11 +201,11 @@ public class StageProgressFragment extends Fragment {
 
     private void animateStage(int stage){
         final int index = stage - 1;
-        CountDownTimer c = new CountDownTimer(2000,10) {
+        CountDownTimer c = new CountDownTimer(3000,10) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long t = 2000-millisUntilFinished;
-                linearProgressArray[index].setProgress((int)(t*100/2000));
+                long t = 3000-millisUntilFinished;
+                linearProgressArray[index].setProgress((int)(t*100/3000));
             }
             @Override
             public void onFinish() {

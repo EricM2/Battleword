@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">BATTLEWORD</string>
+    <string-array name="game_levels">
+        <item>Select Game Level</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="you_loosed_message">Tu As Perdu</string>
+    <string name="play_from_last_stage">Rejouer</string>
+    <string name="continue_playing">Continuer Le Jeux</string>
+    <string name="leave_the_game">Quitter</string>
+    <string name="play_from_scratch">Nouveau Jeux</string>
+    <string name="play">Jouer</string>
+    <string name="stage">ETAPE</string>
+    <string name="solitare">SOLITAIRE</string>
+    <string name="battle">COMPETITION</string>
+    <string name="text_scenario_sample_stage_1">
+    Trouve les mots le plus rapidement possible et accumule des vies.
+Chaque mot vous donne 100 points et chaque 1000 points vous donne une vie de plus.
+\nAttention: tu n\'as que 50 secondes par mot.</string>
+    <string name="text_scenario_sample_stage_2">
+    Accumule plus de vies en trouvant des mots rapidement.
+\nAttention: tu ne disposes que de 40 secondes par mot
+</string>
+    <string name="text_scenario_sample_stage_3">
+       Gagne encore plus de points à cet étape, car des batailles rudes arrivent.
+    \nAttention: tu ne disposes que de 30 secondes par mot</string>
+    <string name="text_scenario_sample_stage_4">
+Félicitations!
+        \nTu est sur le point de devenir une légende, mais il te reste encore quelques batailles.
+                Trouve au moins 7 mots sur 10 en 40 secondes et accede à la bataille ultime.
+\nAttention: Tu n\'as que 25 touches par mot</string>
+    <string name="text_scenario_sample_stage_5">
+   Bienvenue dans la bataille ultime.
+    \nDeviens une légende en trouvant 8 mots sur 10 en 30 secondes.
+    \nAttention: Tu n\'as que 20 touches par mot.
+    </string>
+
+    <string name="select_game_language">Choisir La Langue Du Jeux</string>
+</resources>

@@ -19,17 +19,17 @@
     <string name="battle">BATTLE</string>
     <string name="text_scenario_sample_stage_1">
     Find the words as quickly as possible and accumulate lives.
-    Each word gives you 100 points and each 1500 points grants you one more life.
+    Each word gives you 100 points and each 1000 points grants you one more life.
 
-    \nWarning : you only have 5 secongs per word.
+    \nWarning : you only have 50 seconds per word.
     Let\'s go !!</string>
     <string name="text_scenario_sample_stage_2">
-    accumulate more lives by finding words quickly.
+    Accumulate more lives by finding words quickly.
 
      \nWarning : you only have 40 seconds per word</string>
     <string name="text_scenario_sample_stage_3">
         Gain even more points in this stage , because rudes batlles are coming.
-    \nwarning: you only have 30 seconds per word</string>
+    \nWarning: you only have 30 seconds per word</string>
     <string name="text_scenario_sample_stage_4">
 
         Congratulations!

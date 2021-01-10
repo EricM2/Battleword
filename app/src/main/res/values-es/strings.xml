@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">BATTLEWORD</string>
+    <string-array name="game_levels">
+        <item>Select Game Level</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="you_loosed_message">Has Perdido</string>
+    <string name="play_from_last_stage">Jugar de nuevo</string>
+    <string name="continue_playing">Seguir Jugando</string>
+    <string name="leave_the_game">Cerrar el juego</string>
+    <string name="play_from_scratch">Nuevo Juego</string>
+    <string name="play">Jugar</string>
+    <string name="stage">ETAPA</string>
+    <string name="solitare">SOLITARIO</string>
+    <string name="battle">COMPETICIÓN</string>
+    <string name="text_scenario_sample_stage_1">
+   Encuentra palabras lo más rápido posible y acumula vidas.
+    Cada palabra suma 100 puntos y cada 1000 puntos otorga una vida más.
+
+    \nAtención: solo tienes 50 segundos por palabra.
+    \nVámonos !!!</string>
+    <string name="text_scenario_sample_stage_2">
+    Acumula más vidas encontrando palabras rápidamente.
+\nAtención: solo tienes 40 segundos por palabra</string>
+    <string name="text_scenario_sample_stage_3">
+       Gana aún más puntos en esta etapa, porque se acercan batallas duras.
+ \nCuidado: solo tienes 30 segundos por palabra</string>
+    <string name="text_scenario_sample_stage_4">
+
+        ¡Enhorabuena!
+\nEstás a punto de convertirte en una leyenda, pero aún te quedan algunas batallas.
+Encuentra al menos 7 palabras de 10 en 40 segundos y acceda a  la batalla última.
+\nCuidado: solo tienes 25 toques por palabra</string>
+    <string name="text_scenario_sample_stage_5">
+     Bienvenido a la batalla última.
+     \nConviértete en una leyenda encontrando 8 palabras de 10 en 30 segundos.
+     \nCuidado: solo tienes 20 toques por palabra.
+    </string>
+
+    <string name="select_game_language">Elegir Idioma Del Juego</string>
+</resources>

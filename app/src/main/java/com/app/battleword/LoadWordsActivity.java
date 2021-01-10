@@ -36,10 +36,12 @@ public class LoadWordsActivity extends AppCompatActivity {
         (new Handler()).post(new Runnable() {
             @Override
             public void run() {
+                String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
+                String lang = prefCode.split("-")[0];
                 for(int i=1;i<=5; i++){
                     String key = "stage"+String.valueOf(i);
                     try {
-                        words.put(key, Utils.getWordForStage(LoadWordsActivity.this,i,"fr"));
+                        words.put(key, Utils.getWordForStage(LoadWordsActivity.this,i,lang));
                     }
                     catch (Exception e){
                         Log.d("Exception", e.getMessage());
