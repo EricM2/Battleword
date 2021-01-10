@@ -23,11 +23,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
@@ -349,13 +351,14 @@ public class Utils {
     }
 
    public static List<Word> getWordForStage(Context c, int stage, String language) throws Exception{
+        Set<Word> uniqWords= new HashSet<>();
        List<Word> words = new ArrayList<>();
         if(!(language.equalsIgnoreCase("fr")|| language.equalsIgnoreCase("en")
                 || language.equalsIgnoreCase("es"))){
             throw new Exception("bad language parameter: "+ language);
         }
         else{
-            int st = stage > 3 ? 3 : stage;
+            int st = stage > 4 ? 4 : stage;
             String fileName = "stage_"+String.valueOf(st)+"_"+language+".csv";
             InputStreamReader is = new InputStreamReader(c.getAssets()
                     .open(fileName));
@@ -368,11 +371,12 @@ public class Utils {
                 if(parts.length!=3)
                     throw new Exception("bad line in "+ fileName);
                 else
-                    words.add(new Word(parts[0],Integer.valueOf(parts[1]),parts[2]));
+                    uniqWords.add(new Word(parts[0],Integer.valueOf(parts[1]),parts[2]));
 
             }
 
         }
+        words.addAll(uniqWords);
        Collections.shuffle(words);
         return  words;
    }
