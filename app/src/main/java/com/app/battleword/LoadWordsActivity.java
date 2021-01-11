@@ -1,6 +1,7 @@
 package com.app.battleword;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -69,5 +70,15 @@ public class LoadWordsActivity extends AppCompatActivity {
 
         intent.putExtra(Strings.GAMEWORDS, (Serializable) words);
         return  intent;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent(this, BackgroundSoundService.class);
+        stopService(intent);
+        //NotificationManager manager = getSystemService(NotificationManager.class);
+        NotificationManagerCompat.from(this).cancel(1);
+        //manager.cancel(1);
     }
 }

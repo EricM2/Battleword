@@ -125,32 +125,10 @@ public class GameHeaderFragment extends Fragment   {
         currentWord = null;
         setAllLedInvisible();
 
-        gameLanguage = Utils.getGameLanguage(getActivity().getApplicationContext(),Strings.GAME_LANGUAGE_PREF,Strings.LANGUAGE_PREF);
-        SharedPreferences prefs = getActivity().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
-        if (prefs.contains("stage")) {
-            currentStage = prefs.getInt("stage",1);
-        }
-        if (prefs.contains("lives")) {
-            numLifes =  prefs.getInt("lives",5);
-            lastStageLifes = numLifes;
-        }
-        if (prefs.contains("score")) {
-            score =  prefs.getString("score","0");
-            lastStageScore = score;
-        }
-        if (prefs.contains("paused_time")) {
-            currenTime =  prefs.getInt("paused_time",0);
-            if(currenTime==100)
-                currenTime =0;
-        }
-        if(prefs.contains("words")){
-            words = prefs.getString("words","");
-            buildWordLedsFromWord(words);
-            currentWordNum = words.length();
-        }
+        retreiveprefs();
 
 
-            if (savedInstanceState != null) {
+        if (savedInstanceState != null) {
                 Log.d("onCreateView", "onCreateView: ");
 
                 currentStage = savedInstanceState.getInt("stage");
@@ -277,11 +255,39 @@ public class GameHeaderFragment extends Fragment   {
         return  v;
     }
 
+    private void retreiveprefs() {
+        gameLanguage = Utils.getGameLanguage(getActivity().getApplicationContext(), Strings.GAME_LANGUAGE_PREF,Strings.LANGUAGE_PREF);
+        SharedPreferences prefs = getActivity().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
+        if (prefs.contains("stage")) {
+            currentStage = prefs.getInt("stage",1);
+        }
+        if (prefs.contains("lives")) {
+            numLifes =  prefs.getInt("lives",5);
+            lastStageLifes = numLifes;
+        }
+        if (prefs.contains("score")) {
+            score =  prefs.getString("score","0");
+            lastStageScore = score;
+        }
+        if (prefs.contains("paused_time")) {
+            lastTimeValue =  prefs.getInt("paused_time",0);
+            /*if(currenTime ==100)
+                currenTime =0;*/
+            currenTime  = lastTimeValue;
+        }
+        if(prefs.contains("words")){
+            words = prefs.getString("words","");
+            buildWordLedsFromWord(words);
+            currentWordNum = words.length();
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         if(wasPaused){
             try {
+                retreiveprefs();
                 startGame();
                 wasPaused = false;
             } catch (Exception e) {
@@ -321,7 +327,6 @@ public class GameHeaderFragment extends Fragment   {
 
         outState.putString("words",words);
         stopGame();
-        stopDingle();
         super.onSaveInstanceState(outState);
 
     }
@@ -337,9 +342,8 @@ public class GameHeaderFragment extends Fragment   {
         editor.putString("words", words);
         editor.putInt("lives",numLifes);
         editor.putInt("paused_time",timeProgressBar.getProgress());
-
-
         editor.commit();
+        wasPaused = true;
     }
 
 
@@ -578,12 +582,14 @@ public class GameHeaderFragment extends Fragment   {
        }
 
        public void gameOver(){
+           stopStageWinSound();
+           stopFiveSecLeftSound();
+           stopDingle();
            stopGame();
            numLifes= lastStageLifes;
            words ="";
            score = lastStageScore;
            Intent intent = new Intent(getActivity(),GameOverActivity.class);
-           stopDingle();
            startActivity(intent);
 
        }
@@ -695,7 +701,7 @@ public class GameHeaderFragment extends Fragment   {
     }
 
     private  void stopDingle(){
-        ((PlayerControlActivity)getActivity()).stopDingle();
+        ((PlayerControlActivity)getActivity()).stopGeneric();
     }
 
     public int getNumWorfound(){

@@ -44,6 +44,7 @@ public class LeaveGameActivity extends Activity {
         leaveGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopGeneric();
                 finishAffinity();
             }
         });
@@ -52,5 +53,10 @@ public class LeaveGameActivity extends Activity {
     @Override
     public void onBackPressed() {
 
+    }
+    public void stopGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.STOP);
+        sendBroadcast(i);
     }
 }

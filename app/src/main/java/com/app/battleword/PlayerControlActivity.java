@@ -1,13 +1,17 @@
 package com.app.battleword;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
@@ -45,18 +49,17 @@ public class PlayerControlActivity extends AppCompatActivity {
         else {
             gameHeaderFragment = (GameHeaderFragment)getSupportFragmentManager().findFragmentById(R.id.game_header_fragment);
             screenFragment = (ScreenFragment) getSupportFragmentManager().findFragmentById(R.id.screen_fragment);
-
-
-
+            Intent intent = new Intent(getApplicationContext(), BackgroundSoundService.class);
+            startService(intent);
         }
-        dingleCallable = new Callable() {
+        /*dingleCallable = new Callable() {
             @Override
             public Object call() throws Exception {
                 playDingle();
                 return null;
             }
         };
-        Utils.doAfter(100, dingleCallable);
+        Utils.doAfter(100, dingleCallable);*/
 
         screenTextViewModel =  ViewModelProviders.of(this).get(ScreenTextViewModel.class);
 
@@ -92,17 +95,12 @@ public class PlayerControlActivity extends AppCompatActivity {
         dingle = Utils.playSound(getApplicationContext(),R.raw.battleword_generic,true);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ///stopDingle();
+
     }
 
     public void stopDingle() {
@@ -129,4 +127,16 @@ public class PlayerControlActivity extends AppCompatActivity {
     private void pauseGame(){
         screenTextViewModel.updatePauseGame(true);
     }
+
+    public void stopGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.STOP);
+        sendBroadcast(i);
+    }
+    public void playGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.PLAY);
+        sendBroadcast(i);
+    }
+
 }
