@@ -61,7 +61,6 @@ public class GameOverActivity extends AppCompatActivity {
 
     private void startNewGame(){
         Intent i = new Intent(this, LoadWordsActivity.class);
-        stopGameOverSound();
         startActivity(i);
     }
 
