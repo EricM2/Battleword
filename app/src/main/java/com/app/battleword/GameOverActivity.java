@@ -50,6 +50,9 @@ public class GameOverActivity extends AppCompatActivity {
                if (numLifes!=-1)
                     Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"lives",numLifes);
                Utils.saveStringSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"words","");
+               Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"paused_time",0);
+
+               stopGameOverSound();
                startNewGame();
             }
         });
@@ -58,6 +61,7 @@ public class GameOverActivity extends AppCompatActivity {
 
     private void startNewGame(){
         Intent i = new Intent(this, LoadWordsActivity.class);
+        stopGameOverSound();
         startActivity(i);
     }
 
@@ -104,6 +108,17 @@ public class GameOverActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        stopGameOverSound();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        as = null;
+    }
+    private void stopGameOverSound(){
         if (flutMediaPlayer!=null){
             try {
                 if(flutMediaPlayer.isPlaying()){
@@ -115,12 +130,5 @@ public class GameOverActivity extends AppCompatActivity {
             }
             catch (Exception e){}
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        as = null;
     }
 }
