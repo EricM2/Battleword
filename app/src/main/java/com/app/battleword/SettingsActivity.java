@@ -16,6 +16,7 @@ import com.app.utils.Utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class SettingsActivity extends Activity {
     private Spinner languageSpinner;
@@ -88,5 +89,20 @@ public class SettingsActivity extends Activity {
             }
         }
         return res;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Callable c = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Utils.playSound(SettingsActivity.this,R.raw.settings_activity_sound,false);
+                return null;
+            }
+        };
+        Utils.doAfter(200,c);
+
+
     }
 }

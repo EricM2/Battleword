@@ -39,29 +39,26 @@ public class LoadWordsActivity extends AppCompatActivity {
             public void run() {
                 String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
                 String lang = prefCode.split("-")[0];
-                for(int i=1;i<=5; i++){
-                    String key = "stage"+String.valueOf(i);
+                    int nextStage = getNextStage();
+                    String key = "stage"+String.valueOf(nextStage);
                     try {
-                        words.put(key, Utils.getWordForStage(LoadWordsActivity.this,i,lang));
+                        words.put(key, Utils.getWordForStage(LoadWordsActivity.this,nextStage,lang));
                     }
                     catch (Exception e){
                         Log.d("Exception", e.getMessage());
                     }
 
 
-                }
-                startActivity(gameStageIntent());
+
+                startActivity(gameStageIntent(nextStage));
             }
         });
 
     }
 
-    private Intent gameStageIntent(){
-        int nextStage = 1;
-        SharedPreferences prefs = this.getSharedPreferences(Strings.GAME_STATE_PREF, 0);
-        if (prefs.contains("stage")) {
-            nextStage= prefs.getInt("stage",1);
-        }
+    private Intent gameStageIntent(int nextStage){
+
+
 
         //Intent intent = new Intent(this,GameScenarioActivity.class);
         Intent intent = new Intent(this,NextStageActivity.class);
@@ -70,6 +67,16 @@ public class LoadWordsActivity extends AppCompatActivity {
 
         intent.putExtra(Strings.GAMEWORDS, (Serializable) words);
         return  intent;
+    }
+
+    private int getNextStage(){
+        int nextStage = 1;
+        SharedPreferences prefs = this.getSharedPreferences(Strings.GAME_STATE_PREF, 0);
+        if (prefs.contains("stage")) {
+            nextStage= prefs.getInt("stage",1);
+            nextStage = nextStage > 5? 1 : nextStage;
+        }
+        return  nextStage;
     }
 
     @Override

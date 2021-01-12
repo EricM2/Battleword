@@ -37,6 +37,7 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resetGameStatePreferences();
+                stopGameOverSound();
                 startNewGame();
             }
         });
@@ -123,8 +124,8 @@ public class GameOverActivity extends AppCompatActivity {
                 if(flutMediaPlayer.isPlaying()){
                     flutMediaPlayer.stop();
                     flutMediaPlayer.pause();
-                    flutMediaPlayer.release();
                 }
+                flutMediaPlayer.release();
 
             }
             catch (Exception e){}
