@@ -19,7 +19,7 @@
     <string name="battle">COMPETITION</string>
     <string name="text_scenario_sample_stage_1">
     Trouve les mots le plus rapidement possible et accumule des vies.
-Chaque mot vous donne 100 points et chaque 1000 points vous donne une vie de plus.
+Chaque mot te donne 100 points et chaque 1000 points t\'ajoute 1 vie.
 \nAttention: tu n\'as que 50 secondes par mot.</string>
     <string name="text_scenario_sample_stage_2">
     Accumule plus de vies en trouvant des mots rapidement.

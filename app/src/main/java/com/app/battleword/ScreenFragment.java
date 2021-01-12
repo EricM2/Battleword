@@ -61,6 +61,7 @@ public class ScreenFragment extends Fragment  {
         screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+
                 screenTextView.setText(s);
             }
         }

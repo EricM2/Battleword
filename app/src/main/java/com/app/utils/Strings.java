@@ -14,6 +14,7 @@ public class Strings {
     public  static String PLAY = "play";
     public  static String SOUND_ACTION_INTENT_FILTER="soundActionIntentFilter";
     public static  String CHANNEL_ID="com.app.battleword";
+    public static String NEXT_STAGE_TO_PLAY="nextStage";
 
 
 

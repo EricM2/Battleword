@@ -70,12 +70,14 @@ public class LoadWordsActivity extends AppCompatActivity {
     }
 
     private int getNextStage(){
-        int nextStage = 1;
-        SharedPreferences prefs = this.getSharedPreferences(Strings.GAME_STATE_PREF, 0);
+        int nextStage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY,1);
+
+        /*SharedPreferences prefs = this.getSharedPreferences(Strings.GAME_STATE_PREF, 0);
         if (prefs.contains("stage")) {
             nextStage= prefs.getInt("stage",1);
             nextStage = nextStage > 5? 1 : nextStage;
-        }
+        }*/
+
         return  nextStage;
     }
 

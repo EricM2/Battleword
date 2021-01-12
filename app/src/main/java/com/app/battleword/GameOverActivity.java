@@ -62,6 +62,8 @@ public class GameOverActivity extends AppCompatActivity {
 
     private void startNewGame(){
         Intent i = new Intent(this, LoadWordsActivity.class);
+        int stage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY,1);
+        i.putExtra(Strings.NEXT_STAGE_TO_PLAY,stage);
         startActivity(i);
     }
 

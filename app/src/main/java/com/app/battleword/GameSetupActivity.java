@@ -59,14 +59,11 @@ public class GameSetupActivity extends AppCompatActivity {
         solitaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent;
+                    Intent intent = gameLoadWordIntent();
                     Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
 
-
-                     intent = new Intent(GameSetupActivity.this, LoadWordsActivity.class);
-
-                stopDingle();
-                startActivity(intent);
+                    stopDingle();
+                    startActivity(intent);
             }
         });
     }
@@ -77,24 +74,15 @@ public class GameSetupActivity extends AppCompatActivity {
 
     }
 
-    private Intent solitaireIntent(){
-        Intent intent = new Intent(this,CountDownActivity.class);
-
-        intent.putExtra(MODE,"solitare");
-        //intent.putExtra(LEVEL, selectedGameLevel);
-      return  intent;
-    }
-    private Intent gameScenarioIntent(){
+    private Intent gameLoadWordIntent(){
         int nextStage = 1;
         SharedPreferences prefs = this.getSharedPreferences(Strings.GAME_STATE_PREF, 0);
         if (prefs.contains("stage")) {
              nextStage= prefs.getInt("stage",1);
         }
-
-        //Intent intent = new Intent(this,GameScenarioActivity.class);
-        Intent intent = new Intent(this,NextStageActivity.class);
+        Intent intent = new Intent(this,LoadWordsActivity.class);
         intent.putExtra(MODE,"solitare");
-        intent.putExtra("nextStage",nextStage);
+        intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,nextStage);
         return  intent;
     }
 
