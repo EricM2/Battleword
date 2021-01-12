@@ -128,14 +128,13 @@ public class GameHeaderFragment extends Fragment   {
         retreiveprefs();
 
 
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
                 Log.d("onCreateView", "onCreateView: ");
 
                 currentStage = savedInstanceState.getInt("stage");
                 numLifes = savedInstanceState.getInt("lives");
                 currentWordNum = savedInstanceState.getInt("wordNum");
                 score = savedInstanceState.getString("score");
-                //wordsMask = savedInstanceState.getBooleanArray("wordmask");
                 words = savedInstanceState.getString("words");
                 lastTimeValue = savedInstanceState.getInt("time");
                 currenTime = lastTimeValue;
@@ -146,10 +145,10 @@ public class GameHeaderFragment extends Fragment   {
             }
             else {
 
-                setLives(numLifes);
-            }
 
+            }*/
 
+        setLives(numLifes);
         timeProgressBar.setProgress(currenTime);
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
@@ -317,7 +316,7 @@ public class GameHeaderFragment extends Fragment   {
 
     }*/
 
-    @Override
+    /*@Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putInt("stage", currentStage);
         outState.putInt("lives", numLifes);
@@ -329,21 +328,31 @@ public class GameHeaderFragment extends Fragment   {
         stopGame();
         super.onSaveInstanceState(outState);
 
-    }
+    }*/
 
     @Override
     public void onPause() {
         super.onPause();
         score = scoreTextView.getText().toString();
+        savePrefs(currentStage,score,words,numLifes,timeProgressBar.getProgress());
+        wasPaused = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        savePrefs(currentStage,lastStageScore,"",lastStageLifes,0);
+    }
+
+    private void savePrefs(int stage, String score, String words, int numLifes, int pausedTime ) {
         SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("stage", currentStage);
+        editor.putInt("stage", stage);
         editor.putString("score", score);
         editor.putString("words", words);
         editor.putInt("lives",numLifes);
-        editor.putInt("paused_time",timeProgressBar.getProgress());
+        editor.putInt("paused_time",pausedTime);
         editor.commit();
-        wasPaused = true;
     }
 
 

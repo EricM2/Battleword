@@ -44,7 +44,7 @@ public class NextStageActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     stopNextSagePlayer();
-                    if (true/*Utils.isStageFirstTime(getApplicationContext(),stage)*/)
+                    if (Utils.isStageFirstTime(getApplicationContext(),stage))
                         startActivity(nextActivityIntent(GameScenarioActivity.class));
                     else {
                         startActivity(nextActivityIntent(CountDownActivity.class));

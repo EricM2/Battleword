@@ -254,7 +254,7 @@ public class Utils {
     }
     public  static void setStageFirstTime(Context c, int stage){
         String prefKey = "stage"+String.valueOf(stage);
-        saveBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,true);
+        saveBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,false);
 
     }
 
