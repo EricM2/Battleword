@@ -31,6 +31,7 @@ public class LeaveGameActivity extends Activity {
                 Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
                 Intent i = new Intent(LeaveGameActivity.this,GameSetupActivity.class);
                 startActivity(i);
+                Utils.stopSoundGenericService(LeaveGameActivity.this);
                 finish();
             }
         });

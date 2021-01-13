@@ -98,7 +98,7 @@ public class GameOverActivity extends AppCompatActivity {
         Callable c1 = new Callable() {
             @Override
             public Object call() throws Exception {
-                Utils.playSound(GameOverActivity.this,R.raw.flute_sound,true);
+               flutMediaPlayer = Utils.playSound(GameOverActivity.this,R.raw.flute_sound,true);
                 return null;
             }
         };

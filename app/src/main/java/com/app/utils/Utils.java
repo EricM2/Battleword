@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.battleword.BackgroundSoundService;
 import com.app.battleword.R;
 import com.app.battleword.objects.Word;
 
@@ -249,7 +250,7 @@ public class Utils {
 
     public  static boolean isStageFirstTime(Context c, int stage){
         String prefKey = "stage"+String.valueOf(stage);
-        boolean res = getBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,false);
+        boolean res = getBooleanSharedPreferences(c,Strings.FIRST_TIME_STAGE_PREF,prefKey,true);
         return res;
     }
     public  static void setStageFirstTime(Context c, int stage){
@@ -358,33 +359,40 @@ public class Utils {
             throw new Exception("bad language parameter: "+ language);
         }
         else{
-            int st = stage >= 4 ? 4 : stage;
-            String fileName = "stage_"+String.valueOf(st)+"_"+language+".csv";
-            InputStreamReader is = new InputStreamReader(c.getAssets()
-                    .open(fileName));
+            if(stage < 4) {
+                int st = stage >= 4 ? 4 : stage;
+                String fileName = "stage_" + String.valueOf(st) + "_" + language + ".csv";
+                InputStreamReader is = new InputStreamReader(c.getAssets()
+                        .open(fileName));
 
-            BufferedReader reader = new BufferedReader(is);
-            reader.readLine();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(";");
-                if(parts.length!=3)
-                    throw new Exception("bad line in "+ fileName);
-                else
-                    uniqWords.add(new Word(parts[0],Integer.valueOf(parts[1]),parts[2]));
+                BufferedReader reader = new BufferedReader(is);
+                reader.readLine();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(";");
+                    if (parts.length != 3)
+                        throw new Exception("bad line in " + fileName);
+                    else
+                        uniqWords.add(new Word(parts[0], Integer.valueOf(parts[1]), parts[2]));
 
+                }
+            }
+            else{
+                for(int i = 0; i< 15; i++)
+                    words.add(new Word("testword",stage,""));
             }
 
         }
-        words.addAll(uniqWords);
+        if(stage<4)
+            words.addAll(uniqWords);
        Collections.shuffle(words);
         return  words;
    }
 
 
    public static Word getNewWord(Map<String,List<Word>> words,int stage,int wordIndex){
-        int s = stage > 4 ? 4 : stage;
-        String key = "stage"+String.valueOf(s);
+        //int s = stage > 4 ? 4 : stage;
+        String key = "stage"+String.valueOf(stage);
         return words.get(key).get(wordIndex);
    }
 
@@ -409,8 +417,13 @@ public class Utils {
    public static Boolean hasInternet(Context context){
        boolean connected = false;
        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-       if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-               connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+
+       if((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null &&
+          connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED)||
+         (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI) != null &&
+          connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED))
+       {
            //we are connected to a network
            connected = true;
        }
@@ -419,6 +432,13 @@ public class Utils {
 
        return connected;
    }
+
+   public static void stopSoundGenericService(Context context){
+        Intent i = new Intent(context, BackgroundSoundService.class);
+        context.stopService(i);
+   }
+
+   public static  void subscribeEmail(Context context,String email){}
 
 
 

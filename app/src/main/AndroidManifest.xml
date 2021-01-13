@@ -12,10 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BattleActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" ></activity>
+
         <service
             android:name=".GameService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".GameWonActivity" />
         <activity android:name=".LoadWordsActivity" />
@@ -36,7 +38,9 @@
         <activity
             android:name=".GameScenarioActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".PlayerControlActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".PlayerControlActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".CountDownActivity" />
         <activity android:name=".GameSetupActivity" />
         <activity android:name=".MainActivity">

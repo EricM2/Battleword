@@ -44,4 +44,15 @@
     </string>
 
     <string name="select_game_language">Choose Your Game Language</string>
+    <string name="subscribe_label">SUBSCRIBE</string>
+    <string name="subscribe_hint">Your email address</string>
+    <string name="play_solitaire">Play Solitaire Mode</string>
+    <string name="construction_message">This mode is still under developement and will allow you to compete remotely with friends.
+\nPlease subscribe bellow to be notified at release time</string>
+    <string name="follow_us">FOLLOW US</string>
+    <string name="close">CLOSE</string>
+    <string name="game_won_message">Congratulations !!
+\nYou\'ve won a huge battle.
+\nBut this iss just the beginning.
+\nWe are still working on new adventures.Please subscribe bellow in order to be notified</string>
 </resources>

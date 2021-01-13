@@ -32,6 +32,7 @@ public class GameSetupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game_setup);
         solitaireButton = findViewById(R.id.play_solitaire);
+        battleButton = findViewById(R.id.play_battle);
         settingsBut = findViewById(R.id.settings_button_setup);
         if(savedInstanceState==null) {
             selectedGameLevel = null;
@@ -42,11 +43,12 @@ public class GameSetupActivity extends AppCompatActivity {
             Callable v = new Callable() {
                 @Override
                 public Object call() throws Exception {
-                    playDingle();
+                    Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
+                    startService(sound);
                     return null;
                 }
             };
-            Utils.doAfter(200, v);
+            Utils.doAfter(50, v);
             wasPlaying = true;
         }
         settingsBut.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +64,17 @@ public class GameSetupActivity extends AppCompatActivity {
                     Intent intent = gameLoadWordIntent();
                     Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
 
-                    stopDingle();
+                    //stopDingle();
+                    stopBackgroundSoundService();
                     startActivity(intent);
+            }
+        });
+
+        battleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(GameSetupActivity.this,BattleActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -135,5 +146,10 @@ public class GameSetupActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    private void stopBackgroundSoundService(){
+        Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
+        stopService(sound);
     }
 }

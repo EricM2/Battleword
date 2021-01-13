@@ -521,25 +521,38 @@ public class GameHeaderFragment extends Fragment   {
                if (currentStage < 5) {
 
 
-               (new Handler()).postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
+                   (new Handler()).postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
 
-                       currentWordNum = 1;
-                       currentStage = currentStage + 1;
-                       Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
-                       words = "";
-                       stopStageWinSound();
-                       startNextStageActivity();
+                           currentWordNum = 1;
+                           currentStage = currentStage + 1;
+                           Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
+                           words = "";
+                           stopStageWinSound();
+                           startNextStageActivity();
+                           lastStageLifes = numLifes;
+                           lastStageScore = scoreTextView.getText().toString();
 
-                       screenTextViewModel.updateStage(String.valueOf(currentStage));
-                       setAllLedInvisible();
-                       getActivity().finish();
-                   }
-               }, 5000);
+                           screenTextViewModel.updateStage(String.valueOf(currentStage));
+                           setAllLedInvisible();
+                           getActivity().finish();
+                       }
+                   }, 5000);
 
 
-           }
+                }
+                else {
+                    if(currentStage == 5){
+                        Intent gameWonIntent = new Intent(getActivity(),GameWonActivity.class);
+                        startActivity(gameWonIntent);
+                        Intent soundServiceIntent = new Intent(getActivity(),BackgroundSoundService.class);
+                        getActivity().stopService(soundServiceIntent);
+                        stopStageWinSound();
+                        stopFiveSecLeftSound();
+                        getActivity().finish();
+                    }
+               }
             }
 
        }

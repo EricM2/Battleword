@@ -26,11 +26,11 @@ Chaque mot te donne 100 points et chaque 1000 points t\'ajoute 1 vie.
 \nAttention: tu ne disposes que de 40 secondes par mot
 </string>
     <string name="text_scenario_sample_stage_3">
-       Gagne encore plus de points à cet étape, car des batailles rudes arrivent.
+       Gagne encore plus de points à cette étape, car des batailles rudes arrivent.
     \nAttention: tu ne disposes que de 30 secondes par mot</string>
     <string name="text_scenario_sample_stage_4">
 Félicitations!
-        \nTu est sur le point de devenir une légende, mais il te reste encore quelques batailles.
+        \nTu es sur le point de devenir une légende, mais il te reste encore quelques batailles.
                 Trouve au moins 7 mots sur 10 en 40 secondes et accede à la bataille ultime.
 \nAttention: Tu n\'as que 25 touches par mot</string>
     <string name="text_scenario_sample_stage_5">
@@ -40,4 +40,17 @@ Félicitations!
     </string>
 
     <string name="select_game_language">Choisir La Langue Du Jeux</string>
+    <string name="subscribe_label">SOUSCRIRE</string>
+    <string name="subscribe_hint">Votre adresse email</string>
+    <string name="play_solitaire">Jouer en mode Solitare</string>
+    <string name="construction_message"> Ce mode est en cours de développement et permettra d\'organiser des compétitions à distance avec vos amis.
+    \nVeuillez vous abonner ci-dessous pour être notifié du lancement</string>
+    <string name="follow_us">NOUS SUIVRE</string>
+    <string name="close">FERMER</string>
+    <string name="game_won_message">
+Felicitions!!
+\nVous avez gagner une grande battaile
+\nMais ce n\'est que le début
+\nNous sommes entrain de travailler de nouvelles avantures. N\'hesitez pas à vous souscrire afin d\'être nofitié </string>
+
 </resources>
