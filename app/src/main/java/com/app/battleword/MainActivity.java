@@ -7,15 +7,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PersistableBundle;
 
+import com.app.battleword.objects.Word;
 import com.app.battleword.tasks.UpdateWordTask;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
      private CountDownTimer countDownTimer;
      private FirstTimeGameFragment firstTimeGameFragment;
      private FragmentTransaction ft;
+     Map<String, List<Word>> words = null;
      //private MediaPlayer dingle;
 
     @Override
@@ -68,8 +73,21 @@ public class MainActivity extends AppCompatActivity {
             hideFirstAppFragment();
         }
 
-        if(Utils.hasInternet(this))
-            new UpdateWordTask(this).execute("");
+        if(Utils.hasInternet(this)){
+            (new AsyncTask<Void, Integer, Map<String, List<Word>>>() {
+                @Override
+                protected Map<String, List<Word>> doInBackground(Void... voids) {
+                    return  Utils.getWordFromApiPost();
+                }
+
+                @Override
+                protected void onPostExecute(Map<String, List<Word>> stringListMap) {
+                    words = stringListMap;
+                }
+            }).execute();
+
+        }
+            //new UpdateWordTask(this).execute("");
         //Utils.resetGameStatePreferences(this,Strings.GAME_STATE_PREF);
 
 

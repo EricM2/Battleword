@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,7 +30,6 @@ import com.app.utils.Touch;
 import com.app.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -483,7 +481,7 @@ public class GameHeaderFragment extends Fragment   {
 
            currentWord = Utils.getNewWord(gameWords,currentStage,currentWordNum-1);
            String gameText =currentWord.getWord();
-           currentWordHint = currentWord.getTip();
+           currentWordHint = currentWord.getHint();
            screenTextViewModel.updateWordHint(currentWordHint);
            int stage = Integer.valueOf(stageTextView.getText().toString());
            String newInitWord = Utils.initScreemFromText(gameText,stage);

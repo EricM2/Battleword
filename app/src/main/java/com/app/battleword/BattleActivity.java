@@ -29,7 +29,7 @@ public class BattleActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String text = emailEditText.getText().toString();
-                if(text.length()> 0)
+                if(text.length()> 0 && Utils.hasInternet(BattleActivity.this))
                     Utils.subscribeEmail(BattleActivity.this,text);
                 finish();
             }

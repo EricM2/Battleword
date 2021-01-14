@@ -7,9 +7,11 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.JsonReader;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -19,8 +21,18 @@ import com.app.battleword.BackgroundSoundService;
 import com.app.battleword.R;
 import com.app.battleword.objects.Word;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -351,6 +364,7 @@ public class Utils {
         },wait);
     }
 
+
    public static List<Word> getWordForStage(Context c, int stage, String language) throws Exception{
         Set<Word> uniqWords= new HashSet<>();
        List<Word> words = new ArrayList<>();
@@ -438,7 +452,126 @@ public class Utils {
         context.stopService(i);
    }
 
-   public static  void subscribeEmail(Context context,String email){}
+   public static  void subscribeEmail(Context context,String email){
+        sendPost(email);
+   }
+
+
+
+
+    private static void sendPost(final String email) {
+        (new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    URL url = new URL(Strings.POST_SUBSCRIBER_URL);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept","application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("email", email);
+                    Log.i("JSON", jsonParam.toString());
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                    os.writeBytes(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG" , conn.getResponseMessage());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }).execute();
+        /*Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(Strings.POST_SUBSCRIBER_URL);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept","application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("email", email);
+                    Log.i("JSON", jsonParam.toString());
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                    os.writeBytes(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+
+                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                    Log.i("MSG" , conn.getResponseMessage());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();*/
+    }
+
+    public static Map<String,List<Word>>  getWordFromApiPost() {
+
+
+                Map<String,List<Word>> res = new HashMap<>();
+                try {
+                    for (int i = 1; i <= 5; i++){
+                        String inline = "";
+                        List<Word> ws = new ArrayList<>();
+                        URL url = new URL(Strings.GET_WORD_BASE_URL+i+"/10/");
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                        conn.setRequestMethod("GET");
+                        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setDoOutput(true);
+                        conn.setDoInput(true);
+                        conn.connect();
+                        int responsecode = conn.getResponseCode();
+                        if(true/*responsecode==200*/){
+                            Scanner sc = new Scanner(url.openStream());
+                            while (sc.hasNext()){
+                                inline+= sc.nextLine();
+                            }
+                            JSONArray j = new JSONArray(inline);
+                            for (int l = 0; l< j.length(); l++ ){
+                                JSONObject b = (JSONObject) j.get(l);
+                                String word = b.getString("word");
+                                String hint = b.getString("hint");
+                                int stage = b.getInt("stage");
+                                Word w = new Word(word,stage,hint);
+                                ws.add(w);
+                            }
+                            res.put("stage"+i,ws);
+
+
+
+                        }
+
+                        conn.disconnect();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return res;
+            }
 
 
 
@@ -446,4 +579,6 @@ public class Utils {
 
 
 
-}
+
+
+    }

@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class Word implements Serializable {
     String word;
-    String tip;
+    String hint;
     int stage;
 
-    public Word(String word, int stage,String tip) {
+    public Word(String word, int stage,String hint) {
         this.word = word;
-        this.tip = tip;
+        this.hint = hint;
         this.stage = stage;
     }
 
@@ -20,12 +20,12 @@ public class Word implements Serializable {
     public void setWord(String word) {
         this.word = word;
     }
-    public String getTip() {
-        return tip;
+    public String getHint() {
+        return hint;
     }
 
-    public void setTip(String tip) {
-        this.tip = tip;
+    public void setHint(String hint) {
+        this.hint = hint;
     }
 
     public int getStage() {

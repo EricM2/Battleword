@@ -54,7 +54,7 @@ public class GameWonActivity extends AppCompatActivity {
     private void updateGame(){
         Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
         String em = email.getText().toString();
-        if(em.length() > 0)
+        if(em.length() > 0 && Utils.hasInternet(GameWonActivity.this))
             Utils.subscribeEmail(this,em);
     }
 
