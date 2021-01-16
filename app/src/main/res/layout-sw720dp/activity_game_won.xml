@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_background"
     tools:context=".GameWonActivity">
+
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="571dp"
+        android:layout_height="104dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
@@ -21,16 +22,16 @@
     <TextView
         android:id="@+id/construction_message"
         android:layout_width="0dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:layout_marginRight="15dp"
+        android:layout_height="420dp"
         android:layout_marginLeft="15dp"
-        android:fontFamily="@font/snapitc"
-        android:textColor="@color/colorPrimaryLight"
-        android:padding="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/settings_background"
+        android:fontFamily="@font/snapitc"
+        android:gravity="center"
+        android:padding="30dp"
         android:text="@string/game_won_message"
+        android:textColor="@color/colorPrimaryLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -54,17 +55,17 @@
     <EditText
         android:id="@+id/email_edit_text"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:gravity="center"
+        android:layout_height="120dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
-        android:hint="@string/subscribe_hint"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/lifes_container_background"
         android:ems="10"
         android:fontFamily="@font/snapitc"
-        android:background="@drawable/lifes_container_background"
-        android:textColor="@color/colorPrimaryLight"
+        android:gravity="center"
+        android:hint="@string/subscribe_hint"
         android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimaryLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subscribe_label" />
@@ -87,82 +88,84 @@
         app:layout_constraintTop_toBottomOf="@+id/email_edit_text" />
 
 
-
-
     <Button
         android:id="@+id/play"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorSegondary"
+        android:background="@drawable/game_button_background"
         android:fontFamily="@font/snapitc"
         android:gravity="center"
-        android:textSize="15dp"
-
         android:text="@string/play_from_last_stage"
-        android:background="@drawable/game_button_background"
+
+        android:textColor="@color/colorSegondary"
+        android:textSize="15dp"
         app:layout_constraintEnd_toStartOf="@id/close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/social_net_container" />
+
     <Button
         android:id="@+id/close"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/colorSegondary"
+        android:background="@drawable/game_button_background"
         android:fontFamily="@font/snapitc"
         android:gravity="center"
-        android:textSize="15dp"
-
         android:text="@string/close"
-        android:background="@drawable/game_button_background"
+
+        android:textColor="@color/colorSegondary"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/play"
         app:layout_constraintTop_toBottomOf="@+id/social_net_container" />
 
     <LinearLayout
         android:id="@+id/social_net_container"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_width="552dp"
+        android:layout_height="120dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        app:layout_constraintTop_toBottomOf="@id/follow_us_label"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="333dp">
+        app:layout_constraintTop_toBottomOf="@id/follow_us_label">
+
         <Button
-            android:layout_gravity="center_vertical"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:id="@+id/facebook"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/facebook"/>
-        <Button
+            android:layout_width="@dimen/social_net_button_size"
+            android:layout_height="@dimen/social_net_button_size"
             android:layout_gravity="center_vertical"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/facebook" />
+
+        <Button
             android:id="@+id/instagram"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/instagram"/>
-        <Button
+            android:layout_width="@dimen/social_net_button_size"
+            android:layout_height="@dimen/social_net_button_size"
             android:layout_gravity="center_vertical"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/instagram" />
+
+        <Button
             android:id="@+id/twitter"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/twitter"/>
-        <Button
+            android:layout_width="@dimen/social_net_button_size"
+            android:layout_height="@dimen/social_net_button_size"
             android:layout_gravity="center_vertical"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/youtube"
             android:layout_marginRight="30dp"
-            android:background="@drawable/youtube"/>
+            android:background="@drawable/twitter" />
+
+        <Button
+            android:id="@+id/youtube"
+            android:layout_width="@dimen/social_net_button_size"
+            android:layout_height="@dimen/social_net_button_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/youtube" />
     </LinearLayout>
 
 

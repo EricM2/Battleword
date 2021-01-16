@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="412dp"
-    android:layout_height="123dp"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
     android:background="@drawable/header_background"
     tools:context=".GameHeaderFragment">
 
     <LinearLayout
         android:id="@+id/lifes_container"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/life_container_height"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/lifes_container_background"
@@ -22,72 +22,72 @@
 
         <ImageView
             android:id="@+id/life_1"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_2"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_3"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_4"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_5"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_life" />
 
         <ImageView
             android:id="@+id/life_6"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_7"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_8"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_9"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
         <ImageView
             android:id="@+id/life_10"
-            android:layout_width="20dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/diamond_life_width"
+            android:layout_height="@dimen/diamond_life_height"
             android:layout_gravity="center_vertical"
             android:src="@drawable/diamond_no_life" />
 
@@ -96,7 +96,7 @@
     <LinearLayout
         android:id="@+id/score_container"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/score_container_height"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
@@ -105,11 +105,11 @@
         app:layout_constraintHorizontal_weight="0.3"
         app:layout_constraintStart_toEndOf="@id/lifes_container"
         app:layout_constraintTop_toTopOf="parent">
-        
+
         <ImageView
             android:id="@+id/score_icon"
-            android:layout_width="33dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/score_icon_width"
+            android:layout_height="@dimen/score_container_height"
             android:src="@drawable/scrore_icon"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"/>
@@ -117,25 +117,25 @@
         <TextView
             android:id="@+id/score"
             android:layout_width="wrap_content"
-            android:layout_height="44dp"
+            android:layout_height="@dimen/score_icon_height"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:fontFamily="@font/snapitc"
-            android:textSize="13dp"
+            android:textSize="@dimen/score_text_size"
             android:layout_gravity="center_vertical"
-            android:text="256456"
+            android:text="256"
             android:textColor="@color/colorSegondary"
-             />
-        
+            />
+
     </LinearLayout>
-        
-    
+
+
 
     <ProgressBar
         android:id="@+id/time_progressbar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="@dimen/time_progress_height"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
@@ -150,7 +150,7 @@
     <LinearLayout
         android:id="@+id/word_found_led_container"
         android:layout_width="0dp"
-        android:layout_height="25dp"
+        android:layout_height="@dimen/word_found_led_container_height"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -161,71 +161,71 @@
         <ImageView
 
             android:id="@+id/word_found_led_1"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_2"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_3"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_4"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_5"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_6"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_7"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_8"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_9"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_not_found_led" />
 
         <ImageView
             android:id="@+id/word_found_led_10"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/word_led_size"
+            android:layout_height="@dimen/word_led_size"
             android:layout_gravity="center_vertical"
             android:background="@drawable/word_found_led" />
 
@@ -234,7 +234,7 @@
     <LinearLayout
         android:id="@+id/stage_container"
         android:layout_width="0dp"
-        android:layout_height="25dp"
+        android:layout_height="@dimen/stage_lock_width"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -244,8 +244,9 @@
 
         <TextView
             android:id="@+id/stage_label"
-            android:layout_width="70dp"
+            android:layout_width="@dimen/stage_label_width"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/stage_text_size"
             android:layout_gravity="center_vertical"
             android:text="@string/stage"
             android:fontFamily="@font/snapitc"
@@ -253,7 +254,8 @@
 
         <TextView
             android:id="@+id/stage_value"
-            android:layout_width="30dp"
+            android:textSize="@dimen/stage_text_size"
+            android:layout_width="@dimen/stage_value_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/snapitc"
@@ -263,8 +265,8 @@
 
     <Button
         android:id="@+id/settings_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/settings_button_size"
+        android:layout_height="@dimen/settings_button_size"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/settings_icon"

@@ -15,7 +15,7 @@
         <Button
             android:id="@+id/start_new_game"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="120dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/game_button_background"
@@ -32,7 +32,7 @@
         <Button
             android:id="@+id/continue_game"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="120dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
@@ -51,7 +51,7 @@
         <Button
             android:id="@+id/leave_game"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="120dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"

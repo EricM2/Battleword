@@ -21,8 +21,8 @@
 
     <TextView
         android:id="@+id/construction_message"
-        android:layout_width="572dp"
-        android:layout_height="386dp"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
@@ -30,6 +30,7 @@
         android:fontFamily="@font/snapitc"
         android:gravity="center"
         android:padding="30dp"
+        android:textSize="20dp"
         android:text="@string/game_won_message"
         android:textColor="@color/colorPrimaryLight"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +55,7 @@
 
     <EditText
         android:id="@+id/email_edit_text"
-        android:layout_width="590dp"
+        android:layout_width="0dp"
         android:layout_height="101dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
