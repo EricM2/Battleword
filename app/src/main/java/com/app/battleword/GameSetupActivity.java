@@ -174,4 +174,11 @@ public class GameSetupActivity extends AppCompatActivity {
         Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
         stopService(sound);
     }
+
+    @Override
+    protected void onDestroy() {
+        Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
+        stopService(sound);
+        super.onDestroy();
+    }
 }
