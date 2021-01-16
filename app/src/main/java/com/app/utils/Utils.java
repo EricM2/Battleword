@@ -51,6 +51,7 @@ import java.util.concurrent.Callable;
 public class Utils {
 
     public static double[] stageWeight = new double[]{40d,55d,70d,80d,90d};
+    public static  Map<String,List<Word>> apiWords =null;
 
     public static boolean testIfStrIsInt(String str){
         try {
@@ -527,7 +528,7 @@ public class Utils {
         thread.start();*/
     }
 
-    public static Map<String,List<Word>>  getWordFromApiPost() {
+    public static Map<String,List<Word>>  getWordFromApiPost(String lang) {
 
 
                 Map<String,List<Word>> res = new HashMap<>();
@@ -535,7 +536,7 @@ public class Utils {
                     for (int i = 1; i <= 5; i++){
                         String inline = "";
                         List<Word> ws = new ArrayList<>();
-                        URL url = new URL(Strings.GET_WORD_BASE_URL+i+"/10/");
+                        URL url = new URL(Strings.GET_WORD_BASE_URL+i+"/10/"+lang+"/");
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                         conn.setRequestMethod("GET");

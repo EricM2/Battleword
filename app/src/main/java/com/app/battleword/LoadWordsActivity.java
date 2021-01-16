@@ -5,6 +5,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class LoadWordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_words);
         words = new HashMap<>();
+
     }
 
     @Override
@@ -37,9 +39,16 @@ public class LoadWordsActivity extends AppCompatActivity {
         (new Handler()).post(new Runnable() {
             @Override
             public void run() {
-                String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
-                String lang = prefCode.split("-")[0];
-                    int nextStage = getNextStage();
+                int nextStage = getNextStage();
+                if(Utils.apiWords!=null && Utils.apiWords.get("stage"+String.valueOf(nextStage))!=null
+                        && Utils.apiWords.get("stage"+String.valueOf(nextStage)).size()>= 10) {
+                    words.put("stage"+String.valueOf(nextStage),Utils.apiWords.get("stage"+String.valueOf(nextStage)));
+
+                }
+                else {
+                    String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
+                    String lang = prefCode.split("-")[0];
+
                     String key = "stage"+String.valueOf(nextStage);
                     try {
                         words.put(key, Utils.getWordForStage(LoadWordsActivity.this,nextStage,lang));
@@ -47,6 +56,8 @@ public class LoadWordsActivity extends AppCompatActivity {
                     catch (Exception e){
                         Log.d("Exception", e.getMessage());
                     }
+
+                }
 
 
 

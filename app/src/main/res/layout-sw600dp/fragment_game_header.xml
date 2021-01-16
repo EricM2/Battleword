@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="412dp"
-    android:layout_height="123dp"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
     android:background="@drawable/header_background"
     tools:context=".GameHeaderFragment">
 
@@ -105,7 +105,7 @@
         app:layout_constraintHorizontal_weight="0.3"
         app:layout_constraintStart_toEndOf="@id/lifes_container"
         app:layout_constraintTop_toTopOf="parent">
-        
+
         <ImageView
             android:id="@+id/score_icon"
             android:layout_width="@dimen/score_icon_width"
@@ -119,18 +119,17 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/score_icon_height"
             android:layout_marginLeft="5dp"
-
             android:gravity="center"
             android:fontFamily="@font/snapitc"
             android:textSize="@dimen/score_text_size"
             android:layout_gravity="center_vertical"
             android:text="256"
             android:textColor="@color/colorSegondary"
-             />
-        
+            />
+
     </LinearLayout>
-        
-    
+
+
 
     <ProgressBar
         android:id="@+id/time_progressbar"
@@ -247,8 +246,8 @@
             android:id="@+id/stage_label"
             android:layout_width="@dimen/stage_label_width"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:textSize="@dimen/stage_text_size"
+            android:layout_gravity="center_vertical"
             android:text="@string/stage"
             android:fontFamily="@font/snapitc"
             android:textColor="@color/colorSegondary" />

@@ -6,14 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.app.battleword.objects.Word;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class GameSetupActivity extends AppCompatActivity {
@@ -50,6 +54,7 @@ public class GameSetupActivity extends AppCompatActivity {
             };
             Utils.doAfter(50, v);
             wasPlaying = true;
+
         }
         settingsBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +72,23 @@ public class GameSetupActivity extends AppCompatActivity {
                     //stopDingle();
                     stopBackgroundSoundService();
                     startActivity(intent);
+                if(Utils.hasInternet(GameSetupActivity.this)){
+                    String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
+                    String lang = prefCode.split("-")[0];
+                    (new AsyncTask<String, Integer, Map<String, List<Word>>>() {
+                        @Override
+                        protected Map<String, List<Word>> doInBackground(String... str) {
+                            return  Utils.getWordFromApiPost(str[0]);
+                        }
+
+                        @Override
+                        protected void onPostExecute(Map<String, List<Word>> stringListMap) {
+
+                            Utils.apiWords = stringListMap;
+                        }
+                    }).execute(lang);
+
+                }
             }
         });
 

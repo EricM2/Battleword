@@ -53,7 +53,7 @@
         android:id="@+id/segondary_screen_text"
         android:layout_width="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/tip_button"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginRight="10dp"

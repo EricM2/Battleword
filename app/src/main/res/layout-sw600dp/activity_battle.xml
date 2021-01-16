@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BattleActivity"
+    android:background="@drawable/app_background">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/battleword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/construction_message"
+        android:layout_width="567dp"
+        android:layout_height="427dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/settings_background"
+        android:fontFamily="@font/snapitc"
+        android:gravity="center"
+        android:padding="30dp"
+        android:text="@string/construction_message"
+        android:textColor="@color/colorPrimaryLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <TextView
+        android:id="@+id/subscribe_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/subscribe_label"
+        android:fontFamily="@font/snapitc"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/play_button_text_size"
+        android:textColor="@color/colorSegondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/construction_message" />
+
+    <EditText
+        android:id="@+id/email_edit_text"
+        android:layout_width="571dp"
+        android:layout_height="135dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/lifes_container_background"
+        android:ems="10"
+        android:fontFamily="@font/snapitc"
+
+        android:gravity="center"
+        android:hint="@string/subscribe_hint"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimaryLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subscribe_label" />
+
+    <Button
+        android:id="@+id/play"
+        android:layout_width="562dp"
+        android:layout_height="134dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/game_button_background"
+        android:fontFamily="@font/snapitc"
+        android:gravity="center"
+        android:text="@string/play_solitaire"
+
+        android:textColor="@color/colorSegondary"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_edit_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

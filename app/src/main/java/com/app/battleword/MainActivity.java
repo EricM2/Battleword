@@ -73,20 +73,7 @@ public class MainActivity extends AppCompatActivity {
             hideFirstAppFragment();
         }
 
-        if(Utils.hasInternet(this)){
-            (new AsyncTask<Void, Integer, Map<String, List<Word>>>() {
-                @Override
-                protected Map<String, List<Word>> doInBackground(Void... voids) {
-                    return  Utils.getWordFromApiPost();
-                }
 
-                @Override
-                protected void onPostExecute(Map<String, List<Word>> stringListMap) {
-                    words = stringListMap;
-                }
-            }).execute();
-
-        }
             //new UpdateWordTask(this).execute("");
         //Utils.resetGameStatePreferences(this,Strings.GAME_STATE_PREF);
 
