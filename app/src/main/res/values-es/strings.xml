@@ -52,5 +52,6 @@ Encuentra al menos 7 palabras de 10 en 40 segundos y acceda a  la batalla últim
     <string name="game_won_message">Enhorabuena !!
 \nHas ganado una gran batalla
 \nPero eso acaba de empezar
-\nEstamos trabajando en nuevos aventuras. No dudes en suscribirte para ser notificadado</string>
+\nEstamos trabajando en nuevas aventuras. No dudes en suscribirte para ser notificadado</string>
+    <string name="start_reset_language_and_restart">Cambiar Idioma</string>
 </resources>

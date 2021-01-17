@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/settings_background"
-        android:layout_width="569dp"
+        android:layout_width="0dp"
         android:layout_height="492dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
@@ -36,13 +36,13 @@
         android:id="@+id/game_language_spinner"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        app:layout_constraintStart_toStartOf="@id/settings_background"
-        app:layout_constraintEnd_toEndOf="@id/settings_background"
-        app:layout_constraintBottom_toBottomOf="@id/settings_background"
-        app:layout_constraintTop_toTopOf="@id/settings_background"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         android:background="@color/dark_transparent"
-        android:layout_marginRight="30dp" />
+        app:layout_constraintBottom_toBottomOf="@id/settings_background"
+        app:layout_constraintEnd_toEndOf="@id/settings_background"
+        app:layout_constraintStart_toStartOf="@id/settings_background"
+        app:layout_constraintTop_toTopOf="@id/settings_background" />
 
 
     <Button

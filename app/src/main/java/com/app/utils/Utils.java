@@ -374,7 +374,7 @@ public class Utils {
             throw new Exception("bad language parameter: "+ language);
         }
         else{
-            if(stage < 4) {
+            //if(stage < 4) {
                 int st = stage >= 4 ? 4 : stage;
                 String fileName = "stage_" + String.valueOf(st) + "_" + language + ".csv";
                 InputStreamReader is = new InputStreamReader(c.getAssets()
@@ -388,17 +388,17 @@ public class Utils {
                     if (parts.length != 3)
                         throw new Exception("bad line in " + fileName);
                     else
-                        uniqWords.add(new Word(parts[0], Integer.valueOf(parts[1]), parts[2]));
+                        uniqWords.add(new Word(parts[0].toLowerCase().trim(), Integer.valueOf(parts[1].toLowerCase().trim()), parts[2]));
 
                 }
-            }
-            else{
+            //}
+            /*else{
                 for(int i = 0; i< 15; i++)
                     words.add(new Word("testword",stage,""));
-            }
+            }*/
 
         }
-        if(stage<4)
+        //if(stage<4)
             words.addAll(uniqWords);
        Collections.shuffle(words);
         return  words;
@@ -554,7 +554,7 @@ public class Utils {
                             JSONArray j = new JSONArray(inline);
                             for (int l = 0; l< j.length(); l++ ){
                                 JSONObject b = (JSONObject) j.get(l);
-                                String word = b.getString("word");
+                                String word = b.getString("word").toLowerCase().trim();
                                 String hint = b.getString("hint");
                                 int stage = b.getInt("stage");
                                 Word w = new Word(word,stage,hint);

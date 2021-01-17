@@ -14,6 +14,7 @@ public class Strings {
     public  static String STOP = "stop";
     public  static String PLAY = "play";
     public  static String SOUND_ACTION_INTENT_FILTER="soundActionIntentFilter";
+    public  static String CLOSE_GAME_INTENT_FILTER="closeGameIntentFilter";
     public static  String CHANNEL_ID="com.app.battleword";
     public static String NEXT_STAGE_TO_PLAY="nextStage";
     public static String POST_SUBSCRIBER_URL = "http://www.leshx.com/battlewordapi/subscriber/add/";

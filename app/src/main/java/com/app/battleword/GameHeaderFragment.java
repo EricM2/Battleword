@@ -154,7 +154,9 @@ public class GameHeaderFragment extends Fragment   {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((PlayerControlActivity) getActivity()).onBackPressed();
+                Intent menuActivityIntent = new Intent(getActivity(),GameMenuActivity.class);
+                startActivity(menuActivityIntent);
+                ((PlayerControlActivity) getActivity()).pauseGame();
             }
         });
         gameWords =  (Map<String,List<Word>>)getActivity().getIntent().getSerializableExtra(Strings.GAMEWORDS);

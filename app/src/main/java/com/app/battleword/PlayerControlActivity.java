@@ -8,8 +8,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 
+import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,12 +38,16 @@ public class PlayerControlActivity extends AppCompatActivity {
     private  GameHeaderFragment gameHeaderFragment;
     private ScreenFragment screenFragment;
     private Callable dingleCallable ;
+    private CloseGameListener closeGameListener;
+    private IntentFilter closeGameIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_control);
-
+        closeGameIntentFilter = new IntentFilter(Strings.CLOSE_GAME_INTENT_FILTER);
+        closeGameListener = new CloseGameListener(this);
+        registerReceiver(closeGameListener,closeGameIntentFilter);
 
         if (savedInstanceState != null) {
             //Restore the fragment's instance
@@ -100,6 +108,8 @@ public class PlayerControlActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(closeGameListener!=null)
+            unregisterReceiver(closeGameListener);
 
     }
 
@@ -117,6 +127,7 @@ public class PlayerControlActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this,LeaveGameActivity.class);
@@ -124,7 +135,7 @@ public class PlayerControlActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void pauseGame(){
+    public void pauseGame(){
         screenTextViewModel.updatePauseGame(true);
     }
 
@@ -137,6 +148,21 @@ public class PlayerControlActivity extends AppCompatActivity {
         Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
         i.putExtra(Strings.SOUND_ACTION,Strings.PLAY);
         sendBroadcast(i);
+    }
+    public  void  close(){
+        finish();
+    }
+
+
+    private static  class CloseGameListener extends BroadcastReceiver{
+        private Activity a;
+         public  CloseGameListener(Activity activity){
+             a = activity;
+         }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            a.finish();
+        }
     }
 
 }

@@ -8,31 +8,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.app.battleword.R;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
-public class LeaveGameActivity extends Activity {
+public class GameMenuActivity extends Activity {
+    private Button resetLanguage;
     private Button continueGameBut;
-    private Button leaveGameButton;
-    private Button startNewGameButton;
+    private  Button startNewGameButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leave_game);
+        setContentView(R.layout.activity_game_menu);
+
         continueGameBut = findViewById(R.id.continue_game);
-        startNewGameButton = findViewById(R.id.start_new_game);
-        leaveGameButton = findViewById(R.id.leave_game);
+        startNewGameButton = findViewById(R.id.new_game);
+        resetLanguage = findViewById(R.id.change_language);
         startNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeGameActivity();
                 Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
-                Intent i = new Intent(LeaveGameActivity.this,GameSetupActivity.class);
+                Intent i = new Intent(GameMenuActivity.this,GameSetupActivity.class);
                 startActivity(i);
-                Utils.stopSoundGenericService(LeaveGameActivity.this);
+                Utils.stopSoundGenericService(GameMenuActivity.this);
                 finish();
             }
         });
@@ -43,23 +43,26 @@ public class LeaveGameActivity extends Activity {
             }
         });
 
-        leaveGameButton.setOnClickListener(new View.OnClickListener() {
+        resetLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopGeneric();
-                finishAffinity();
+                Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
+                Utils.resetGameStatePreferences(getApplicationContext(), Strings.FIRST_TIME_APP_INSTALLED_PREF);
+                gotoMainActivity();
+
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
     public void stopGeneric(){
-        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
-        i.putExtra(Strings.SOUND_ACTION,Strings.STOP);
-        sendBroadcast(i);
+        Intent i = new Intent(this,BackgroundSoundService.class);
+       stopService(i);
+    }
+
+    public void gotoMainActivity(){
+        Intent i = new Intent(this,MainActivity.class);
+        startActivity(i);
     }
 
     public void closeGameActivity(){

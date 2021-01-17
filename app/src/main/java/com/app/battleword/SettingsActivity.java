@@ -35,7 +35,7 @@ public class SettingsActivity extends Activity {
         closeButton = findViewById(R.id.close_but);
         okButton = findViewById(R.id.close_settings);
         String prefCode = Utils.getGameLanguage(getApplicationContext(),Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
-        int defaultLaguange = findByCode(prefCode,languages);
+        final int defaultLaguange = findByCode(prefCode,languages);
         languageSpinner.setSelection(defaultLaguange);
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -54,6 +54,9 @@ public class SettingsActivity extends Activity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int code = languageSpinner.getSelectedItemPosition();
+                if(code!=defaultLaguange)
+                    Utils.resetGameStatePreferences(getApplicationContext(),Strings.GAME_STATE_PREF);
                 finish();
             }
         });
@@ -61,6 +64,9 @@ public class SettingsActivity extends Activity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int code = languageSpinner.getSelectedItemPosition();
+                if(code!=defaultLaguange)
+                    Utils.resetGameStatePreferences(getApplicationContext(),Strings.GAME_STATE_PREF);
                 finish();
             }
         });
@@ -105,4 +111,5 @@ public class SettingsActivity extends Activity {
 
 
     }
+
 }

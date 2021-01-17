@@ -9,18 +9,18 @@
     <dimen name="word_led_size">30dp</dimen>
     <dimen name="word_led_size_land">42dp</dimen>
 
-    <dimen name="next_stage_linear_progress_width_land">120dp</dimen>
+    <dimen name="next_stage_linear_progress_width_land">140dp</dimen>
     <dimen name="next_stage_linear_progress_heigth_land">40dp</dimen>
     <dimen name="next_stage_linear_progress_width">140dp</dimen>
     <dimen name="next_stage_linear_progress_heigth">40dp</dimen>
-    <dimen name="next_stage_circular_progress_width_land">90dp</dimen>
-    <dimen name="next_stage_circular_progress_heigth_land">90dp</dimen>
+    <dimen name="next_stage_circular_progress_width_land">100dp</dimen>
+    <dimen name="next_stage_circular_progress_heigth_land">120dp</dimen>
     <dimen name="next_stage_circular_progress_width">100dp</dimen>
     <dimen name="next_stage_circular_progress_heigth">120dp</dimen>
     <dimen name="stage_lock_width">60dp</dimen>
     <dimen name="stage_lock_height">60dp</dimen>
-    <dimen name="stage_lock_width_land">70dp</dimen>
-    <dimen name="stage_lock_height_land">70dp</dimen>
+    <dimen name="stage_lock_width_land">60dp</dimen>
+    <dimen name="stage_lock_height_land">60dp</dimen>
 
 
     <dimen name="time_progress_height">40dp</dimen>
@@ -46,7 +46,7 @@
 
     <dimen name="stage_text_size">20dp</dimen>
     <dimen name="score_text_size">20dp</dimen>
-    <dimen name="social_net_button_size">100dp</dimen>
+    <dimen name="social_net_button_size">60dp</dimen>
 
 
 
