@@ -250,6 +250,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/stage"
             android:fontFamily="@font/snapitc"
+            android:layout_marginRight="5dp"
             android:textColor="@color/colorSegondary" />
 
         <TextView

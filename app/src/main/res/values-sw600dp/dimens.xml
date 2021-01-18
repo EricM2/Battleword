@@ -45,7 +45,7 @@
     <dimen name="stage_value_width">50dp</dimen>
 
     <dimen name="stage_text_size">20dp</dimen>
-    <dimen name="score_text_size">20dp</dimen>
+    <dimen name="score_text_size">18dp</dimen>
     <dimen name="social_net_button_size">60dp</dimen>
 
 

@@ -38,7 +38,8 @@ public class GameOverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 resetGameStatePreferences();
                 stopGameOverSound();
-                startNewGame();
+
+                startNewGame(1);
             }
         });
 
@@ -54,16 +55,16 @@ public class GameOverActivity extends AppCompatActivity {
                Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"paused_time",0);
 
                stopGameOverSound();
-               startNewGame();
+                int stage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY,1);
+               startNewGame(stage);
             }
         });
         animate(deadHead);
     }
 
-    private void startNewGame(){
+    private void startNewGame(int nextStage){
         Intent i = new Intent(this, LoadWordsActivity.class);
-        int stage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY,1);
-        i.putExtra(Strings.NEXT_STAGE_TO_PLAY,stage);
+        i.putExtra(Strings.NEXT_STAGE_TO_PLAY,nextStage);
         startActivity(i);
     }
 

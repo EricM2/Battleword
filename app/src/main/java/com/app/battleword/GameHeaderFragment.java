@@ -612,6 +612,7 @@ public class GameHeaderFragment extends Fragment   {
            words ="";
            score = lastStageScore;
            Intent intent = new Intent(getActivity(),GameOverActivity.class);
+           intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,currentStage);
            startActivity(intent);
 
        }
@@ -619,7 +620,7 @@ public class GameHeaderFragment extends Fragment   {
            stopGame();
            Intent intent = new Intent(getActivity(), LoadWordsActivity.class);
            intent.putExtra("mode","solitare");
-           intent.putExtra("nextStage",currentStage);
+           intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,currentStage);
            stopDingle();
            startActivity(intent);
        }
