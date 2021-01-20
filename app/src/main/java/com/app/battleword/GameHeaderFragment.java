@@ -84,6 +84,7 @@ public class GameHeaderFragment extends Fragment   {
     private int lastTimeValue =0;
     private boolean wasPaused = false;
     private Boolean settingBut;
+    private boolean isGameOver = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -512,45 +513,48 @@ public class GameHeaderFragment extends Fragment   {
        }
 
        else {
-
-           stageWinPlayer = Utils.playSound(getActivity(), R.raw.stage_win_sound, true);
            if ((currentStage == 4 && getNumWorfound() < Limit.LIMIT_STAGE_4) || (currentStage == 5 && getNumWorfound() < Limit.LIMIT_STAGE_5))
                gameOver();
 
            else {
                if (currentStage < 5) {
+                   if(!isGameOver) {
+                       stageWinPlayer = Utils.playSound(getActivity(), R.raw.stage_win_sound, true);
 
+                       (new Handler()).postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
 
-                   (new Handler()).postDelayed(new Runnable() {
-                       @Override
-                       public void run() {
+                               currentWordNum = 1;
+                               currentStage = currentStage + 1;
+                               Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
+                               words = "";
+                               stopStageWinSound();
+                               startNextStageActivity();
+                               lastStageLifes = numLifes;
+                               lastStageScore = scoreTextView.getText().toString();
 
-                           currentWordNum = 1;
-                           currentStage = currentStage + 1;
-                           Utils.saveIntSharedPreferences(getActivity().getApplicationContext(), Strings.GAME_STATE_PREF, "laststagelives", numLifes);
-                           words = "";
-                           stopStageWinSound();
-                           startNextStageActivity();
-                           lastStageLifes = numLifes;
-                           lastStageScore = scoreTextView.getText().toString();
+                               screenTextViewModel.updateStage(String.valueOf(currentStage));
+                               setAllLedInvisible();
+                               getActivity().finish();
+                           }
+                       }, 5000);
 
-                           screenTextViewModel.updateStage(String.valueOf(currentStage));
-                           setAllLedInvisible();
-                           getActivity().finish();
-                       }
-                   }, 5000);
+                   }
 
 
                 }
                 else {
                     if(currentStage == 5){
-                        Intent gameWonIntent = new Intent(getActivity(),GameWonActivity.class);
-                        startActivity(gameWonIntent);
-                        Intent soundServiceIntent = new Intent(getActivity(),BackgroundSoundService.class);
-                        getActivity().stopService(soundServiceIntent);
-                        stopStageWinSound();
-                        stopFiveSecLeftSound();
-                        getActivity().finish();
+                        if(!isGameOver ){
+                            Intent gameWonIntent = new Intent(getActivity(),GameWonActivity.class);
+                            startActivity(gameWonIntent);
+                            Intent soundServiceIntent = new Intent(getActivity(),BackgroundSoundService.class);
+                            getActivity().stopService(soundServiceIntent);
+                            stopStageWinSound();
+                            stopFiveSecLeftSound();
+                            getActivity().finish();
+                        }
                     }
                }
             }
@@ -604,6 +608,7 @@ public class GameHeaderFragment extends Fragment   {
        }
 
        public void gameOver(){
+            isGameOver = true;
            stopStageWinSound();
            stopFiveSecLeftSound();
            stopDingle();
@@ -707,6 +712,12 @@ public class GameHeaderFragment extends Fragment   {
                 words +="0";
                 screenTextViewModel.wordFoundBluPrint(false);
                 decrementlifeLife();
+                if(numLifes <= 0){
+                    gameOver();
+                    stopStageWinSound();
+                    stopFiveSecLeftSound();
+
+                }
 
             }
 
