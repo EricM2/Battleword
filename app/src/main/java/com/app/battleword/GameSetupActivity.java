@@ -44,18 +44,19 @@ public class GameSetupActivity extends AppCompatActivity {
             wasPlaying = false;
 
             Utils.playSound(this, R.raw.new_activity_sound, false);
-            Callable v = new Callable() {
-                @Override
-                public Object call() throws Exception {
-                    Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
-                    startService(sound);
-                    return null;
-                }
-            };
-            Utils.doAfter(50, v);
-            wasPlaying = true;
+
 
         }
+        Callable v = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
+                startService(sound);
+                return null;
+            }
+        };
+        Utils.doAfter(50, v);
+        wasPlaying = true;
         settingsBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +164,12 @@ public class GameSetupActivity extends AppCompatActivity {
         super.onPause();
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopBackgroundSoundService();
     }
 
     @Override
