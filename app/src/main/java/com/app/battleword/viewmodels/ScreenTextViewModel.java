@@ -26,6 +26,7 @@ public class ScreenTextViewModel extends ViewModel {
     private MutableLiveData<Boolean> pauseGame = new MutableLiveData<>();
     private MutableLiveData<Boolean> stopDingle = new MutableLiveData<>();
     private MutableLiveData<Boolean> turnOffSecondScreenText = new MutableLiveData<>();
+    private MutableLiveData<Boolean> allowWordUpdate = new MutableLiveData<>(true);
 
     public void updateNumTouch(int num){
         numTouch.setValue(num);
@@ -54,6 +55,10 @@ public class ScreenTextViewModel extends ViewModel {
 
     public void updateGameLanguage(String language){
         this.gameLanguage.setValue(language);
+    }
+
+    public void updateAllowWordUpdate(boolean allow){
+        allowWordUpdate.setValue(allow);
     }
 
     public void updateScore(String score){
@@ -147,5 +152,9 @@ public class ScreenTextViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getNumTouch() {
         return numTouch;
+    }
+
+    public MutableLiveData<Boolean> getAllowWordUpdate() {
+        return allowWordUpdate;
     }
 }

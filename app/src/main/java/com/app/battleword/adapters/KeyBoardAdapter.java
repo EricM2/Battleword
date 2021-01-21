@@ -102,21 +102,23 @@ public class KeyBoardAdapter extends ArrayAdapter   {
         if(!l.isEmpty() && !Utils.isSreenTextComplete(screenText)) {
             numTouches = screen.getNumTouch().getValue();
             numTouches ++;
-            if(Touch.getNumTouches(currentStage)!=-1 && numTouches <=Touch.getNumTouches(currentStage)) {
-                Log.d("KEY_PRESSED", l);
-                //Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
-                String newString = Utils.putCharInScreenText(l, screen.getRequiredText(), screenText, c);
-                Log.d("NEW_STRING", newString);
-                screen.updateScreenText(newString);
-                screen.updateNumTouch(numTouches);
-            }
-            else{
-                if(Touch.getNumTouches(currentStage)==-1){
+            if(screen.getAllowWordUpdate().getValue()){
+                if(Touch.getNumTouches(currentStage)!=-1 && numTouches <=Touch.getNumTouches(currentStage)) {
                     Log.d("KEY_PRESSED", l);
                     //Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
                     String newString = Utils.putCharInScreenText(l, screen.getRequiredText(), screenText, c);
                     Log.d("NEW_STRING", newString);
                     screen.updateScreenText(newString);
+                    screen.updateNumTouch(numTouches);
+                }
+                else{
+                    if(Touch.getNumTouches(currentStage)==-1){
+                        Log.d("KEY_PRESSED", l);
+                        //Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
+                        String newString = Utils.putCharInScreenText(l, screen.getRequiredText(), screenText, c);
+                        Log.d("NEW_STRING", newString);
+                        screen.updateScreenText(newString);
+                    }
                 }
             }
 

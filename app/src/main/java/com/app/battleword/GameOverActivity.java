@@ -134,4 +134,9 @@ public class GameOverActivity extends AppCompatActivity {
             catch (Exception e){}
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

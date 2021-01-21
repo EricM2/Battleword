@@ -408,7 +408,10 @@ public class Utils {
    public static Word getNewWord(Map<String,List<Word>> words,int stage,int wordIndex){
         //int s = stage > 4 ? 4 : stage;
         String key = "stage"+String.valueOf(stage);
-        return words.get(key).get(wordIndex);
+        if(key.equalsIgnoreCase("stage5"))
+            return new Word("test",5,"RAS");
+        else
+            return words.get(key).get(wordIndex);
    }
 
    public static String getTextScenarioForStage(Context context,int stage){

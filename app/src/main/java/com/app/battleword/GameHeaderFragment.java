@@ -66,6 +66,7 @@ public class GameHeaderFragment extends Fragment   {
     private List<WordTimeCompletedSubscriber> subscibers = new ArrayList<>();
     private  int currentWordNum=0;
     private int currentStage = 1;
+    private int currentScore = 0;
     private String score = "0";
     private ScreenTextViewModel screenTextViewModel;
     private String currentScreenText;
@@ -151,7 +152,7 @@ public class GameHeaderFragment extends Fragment   {
         timeProgressBar.setProgress(currenTime);
         stageTextView.setText(String.valueOf(currentStage));
         scoreTextView.setText(score);
-
+        currentScore = Integer.valueOf(score);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,13 +178,18 @@ public class GameHeaderFragment extends Fragment   {
                             lastTimeValue = 0;
                         }
                         screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
+                        screenTextViewModel.updateAllowWordUpdate(false);
                         (new Handler()).postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 screenTextViewModel.updateTurnOffSecondScreenText(true);
                                 lastTimeValue = 0;
                                 updateWorFoundStatus(false,currentWordNum);
-                                findNewWord();
+                                if(!isGameOver) {
+                                    screenTextViewModel.updateAllowWordUpdate(true);
+                                    findNewWord();
+
+                                }
                             }
                         }, 2000);
 
@@ -206,7 +212,8 @@ public class GameHeaderFragment extends Fragment   {
                         @Override
                         public void run() {
                             updateWorFoundStatus(true,currentWordNum);
-                            findNewWord();
+                            if(!isGameOver)
+                                findNewWord();
                         }
                     }, 2000);
 
@@ -241,8 +248,10 @@ public class GameHeaderFragment extends Fragment   {
         screenTextViewModel.setRequiredText(gameText);
         screenTextViewModel.initText(iniText);*/
 
-        if(savedInstanceState== null)
-            findNewWord();
+        if(savedInstanceState== null) {
+            if(!isGameOver)
+                findNewWord();
+        }
         else{
 
             try {
@@ -428,13 +437,17 @@ public class GameHeaderFragment extends Fragment   {
                 if(currentScreenText!=null && !Utils.isSreenTextComplete(currentScreenText)){
 
                     screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
+                    screenTextViewModel.updateAllowWordUpdate(false);
                     (new Handler()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             screenTextViewModel.updateTurnOffSecondScreenText(true);
                             lastTimeValue = 0;
                             updateWorFoundStatus(false,currentWordNum);
-                            findNewWord();
+                            if(!isGameOver) {
+                                screenTextViewModel.updateAllowWordUpdate(true);
+                                findNewWord();
+                            }
                         }
                     }, 2000);
 
@@ -513,8 +526,10 @@ public class GameHeaderFragment extends Fragment   {
        }
 
        else {
-           if ((currentStage == 4 && getNumWorfound() < Limit.LIMIT_STAGE_4) || (currentStage == 5 && getNumWorfound() < Limit.LIMIT_STAGE_5))
+           if ((currentStage == 4 && getNumWorfound() < Limit.LIMIT_STAGE_4) || (currentStage == 5 && getNumWorfound() < Limit.LIMIT_STAGE_5)) {
+               scoreTextView.setText(lastStageScore);
                gameOver();
+           }
 
            else {
                if (currentStage < 5) {
@@ -619,6 +634,7 @@ public class GameHeaderFragment extends Fragment   {
            Intent intent = new Intent(getActivity(),GameOverActivity.class);
            intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,currentStage);
            startActivity(intent);
+           getActivity().finish();
 
        }
        private void startNextStageActivity(){
@@ -741,9 +757,9 @@ public class GameHeaderFragment extends Fragment   {
     public int getNumWorfound(){
         int res = 0;
         if( words.length()==10){
-            String[] v = words.split("");
+           // String[] v = words.split("");
             for (int i = 0; i<10; i++){
-                if(v[i].equalsIgnoreCase("1"))
+                if(String.valueOf(words.charAt(i)).equalsIgnoreCase("1"))
                     res++;
             }
         }
