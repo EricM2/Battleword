@@ -13,6 +13,8 @@ public class Strings {
     public static String SOUND_ACTION="sound_action";
     public  static String STOP = "stop";
     public  static String PLAY = "play";
+    public  static String PAUSE = "pause";
+    public  static String RESUME = "resume";
     public  static String SOUND_ACTION_INTENT_FILTER="soundActionIntentFilter";
     public  static String CLOSE_GAME_INTENT_FILTER="closeGameIntentFilter";
     public static  String CHANNEL_ID="com.app.battleword";

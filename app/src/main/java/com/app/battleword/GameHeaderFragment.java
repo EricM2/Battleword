@@ -126,7 +126,8 @@ public class GameHeaderFragment extends Fragment   {
         setAllLedInvisible();
 
         retreiveprefs();
-
+        lastStageLifes = numLifes;
+        lastStageScore = score;
 
         /*if (savedInstanceState != null) {
                 Log.d("onCreateView", "onCreateView: ");
@@ -175,6 +176,7 @@ public class GameHeaderFragment extends Fragment   {
 
                         if(countDownTimer!=null) {
                             countDownTimer.cancel();
+                            countDownTimer = null;
                             lastTimeValue = 0;
                         }
                         screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
@@ -187,7 +189,8 @@ public class GameHeaderFragment extends Fragment   {
                                 updateWorFoundStatus(false,currentWordNum);
                                 if(!isGameOver) {
                                     screenTextViewModel.updateAllowWordUpdate(true);
-                                    findNewWord();
+                                    if(!wasPaused)
+                                        findNewWord();
 
                                 }
                             }
@@ -206,13 +209,14 @@ public class GameHeaderFragment extends Fragment   {
                     if(countDownTimer!=null) {
                         countDownTimer.cancel();
                         lastTimeValue = 0;
+                        countDownTimer = null;
                     }
                     updatScore(100);
                     (new Handler()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             updateWorFoundStatus(true,currentWordNum);
-                            if(!isGameOver)
+                            if(!isGameOver && !wasPaused)
                                 findNewWord();
                         }
                     }, 2000);
@@ -249,7 +253,7 @@ public class GameHeaderFragment extends Fragment   {
         screenTextViewModel.initText(iniText);*/
 
         if(savedInstanceState== null) {
-            if(!isGameOver)
+            if(!isGameOver && !wasPaused)
                 findNewWord();
         }
         else{
@@ -272,11 +276,11 @@ public class GameHeaderFragment extends Fragment   {
         }
         if (prefs.contains("lives")) {
             numLifes =  prefs.getInt("lives",5);
-            lastStageLifes = numLifes;
+
         }
         if (prefs.contains("score")) {
             score =  prefs.getString("score","0");
-            lastStageScore = score;
+
         }
         if (prefs.contains("paused_time")) {
             lastTimeValue =  prefs.getInt("paused_time",0);
@@ -287,7 +291,8 @@ public class GameHeaderFragment extends Fragment   {
         if(prefs.contains("words")){
             words = prefs.getString("words","");
             buildWordLedsFromWord(words);
-            currentWordNum = words.length();
+            if(words.length()>0)
+                currentWordNum = words.length()+1;
         }
     }
 
@@ -296,8 +301,11 @@ public class GameHeaderFragment extends Fragment   {
         super.onResume();
         if(wasPaused){
             try {
-                retreiveprefs();
-                startGame();
+
+
+                    retreiveprefs();
+                    startGame();
+
                 wasPaused = false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -345,6 +353,7 @@ public class GameHeaderFragment extends Fragment   {
         super.onPause();
         score = scoreTextView.getText().toString();
         savePrefs(currentStage,score,words,numLifes,timeProgressBar.getProgress());
+        stopGame();
         wasPaused = true;
     }
 
@@ -414,51 +423,58 @@ public class GameHeaderFragment extends Fragment   {
 
     private  void startGame() throws Exception {
         timeProgressBar.setProgress(lastTimeValue);
-        final long max1= GameTime.getTime(currentStage);
-        final long max = max1-lastTimeValue*max1/100;
+        final long max1 = GameTime.getTime(currentStage);
+        final long max = max1 - lastTimeValue * max1 / 100;
 
-        countDownTimer = new CountDownTimer(max,10) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+        if (countDownTimer == null){
+            countDownTimer = new CountDownTimer(max, 10) {
+                @Override
+                public void onTick(long millisUntilFinished) {
 
                     long time = max1 - millisUntilFinished;
-                    long progressValue = time*100/max1;
+                    long progressValue = time * 100 / max1;
                     timeProgressBar.setProgress((int) progressValue);
-                    if((millisUntilFinished <= 5000) && !fiveSecLeft){
-                        fiveSecLeftPlayer = Utils.playSound(getActivity(),R.raw.fivesec_left_sound,false);
-                        fiveSecLeft= true;
+                    if ((millisUntilFinished <= 5000) && !fiveSecLeft) {
+                        fiveSecLeftPlayer = Utils.playSound(getActivity(), R.raw.fivesec_left_sound, false);
+                        fiveSecLeft = true;
                     }
 
 
-            }
-
-            @Override
-            public void onFinish() {
-                if(currentScreenText!=null && !Utils.isSreenTextComplete(currentScreenText)){
-
-                    screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
-                    screenTextViewModel.updateAllowWordUpdate(false);
-                    (new Handler()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            screenTextViewModel.updateTurnOffSecondScreenText(true);
-                            lastTimeValue = 0;
-                            updateWorFoundStatus(false,currentWordNum);
-                            if(!isGameOver) {
-                                screenTextViewModel.updateAllowWordUpdate(true);
-                                findNewWord();
-                            }
-                        }
-                    }, 2000);
-
                 }
-                stopFiveSecLeftSound();
+
+                @Override
+                public void onFinish() {
+                    if (currentScreenText != null && !Utils.isSreenTextComplete(currentScreenText)) {
+
+                        screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
+                        screenTextViewModel.updateAllowWordUpdate(false);
+                        (new Handler()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                screenTextViewModel.updateTurnOffSecondScreenText(true);
+                                lastTimeValue = 0;
+                                if(countDownTimer!=null){
+                                    countDownTimer.cancel();
+                                    countDownTimer = null;
+                                }
+                                updateWorFoundStatus(false, currentWordNum);
+                                if (!isGameOver) {
+                                    screenTextViewModel.updateAllowWordUpdate(true);
+                                    if(!wasPaused)
+                                        findNewWord();
+                                }
+                            }
+                        }, 2000);
+
+                    }
+                    stopFiveSecLeftSound();
 
 
-                //notifyTimeCompleted();
-                //timeProgressBar.setProgress(0);
-            }
-        }.start();
+                    //notifyTimeCompleted();
+                    //timeProgressBar.setProgress(0);
+                }
+            }.start();
+        }
     }
 
 

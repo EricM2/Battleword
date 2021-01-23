@@ -182,5 +182,39 @@ public class GameSetupActivity extends AppCompatActivity {
         stopService(sound);
     }
 
+    public void stopGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.STOP);
+        sendBroadcast(i);
+    }
+    public void playGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.PLAY);
+        sendBroadcast(i);
+    }
+    public void pauseGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.PAUSE);
+        sendBroadcast(i);
+    }
+    public void resumeGeneric(){
+
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.RESUME);
+        sendBroadcast(i);
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        if(hasFocus)
+            resumeGeneric();
+        else
+            pauseGeneric();
+        super.onWindowFocusChanged(hasFocus);
+    }
+
+
 
 }

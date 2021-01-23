@@ -40,6 +40,8 @@ public class PlayerControlActivity extends AppCompatActivity {
     private Callable dingleCallable ;
     private CloseGameListener closeGameListener;
     private IntentFilter closeGameIntentFilter;
+    private boolean isAppWentToBg;
+    private boolean  isWindowFocused ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class PlayerControlActivity extends AppCompatActivity {
         closeGameIntentFilter = new IntentFilter(Strings.CLOSE_GAME_INTENT_FILTER);
         closeGameListener = new CloseGameListener(this);
         registerReceiver(closeGameListener,closeGameIntentFilter);
+        isAppWentToBg = false;
+        isWindowFocused = false;
 
         if (savedInstanceState != null) {
             //Restore the fragment's instance
@@ -149,8 +153,31 @@ public class PlayerControlActivity extends AppCompatActivity {
         i.putExtra(Strings.SOUND_ACTION,Strings.PLAY);
         sendBroadcast(i);
     }
+    public void pauseGeneric(){
+        Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+        i.putExtra(Strings.SOUND_ACTION,Strings.PAUSE);
+        sendBroadcast(i);
+    }
+    public void resumeGeneric(){
+
+            Intent i = new Intent(Strings.SOUND_ACTION_INTENT_FILTER);
+            i.putExtra(Strings.SOUND_ACTION,Strings.RESUME);
+            sendBroadcast(i);
+
+    }
     public  void  close(){
         finish();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        isWindowFocused = hasFocus;
+        if(hasFocus)
+            resumeGeneric();
+        else
+            pauseGeneric();
+        super.onWindowFocusChanged(hasFocus);
     }
 
 
@@ -164,5 +191,19 @@ public class PlayerControlActivity extends AppCompatActivity {
             a.finish();
         }
     }
+
+    private void applicationWillEnterForeground() {
+        if (isAppWentToBg) {
+            isAppWentToBg = false;
+        }
+    }
+
+    public void applicationdidenterbackground() {
+        if (!isWindowFocused) {
+            isAppWentToBg = true;
+
+        }
+    }
+
 
 }

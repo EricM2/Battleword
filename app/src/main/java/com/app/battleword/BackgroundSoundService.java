@@ -29,6 +29,7 @@ public class BackgroundSoundService extends Service {
     private SoundActionsRecever soundActionsRecever;
     private Notification notification;
     MediaPlayer player;
+    private boolean isSoundPaused;
     public IBinder onBind(Intent arg0) {
 
         return null;
@@ -37,6 +38,7 @@ public class BackgroundSoundService extends Service {
     public void onCreate() {
         super.onCreate();
         player =null;
+        isSoundPaused = false;
 
 
     }
@@ -90,6 +92,7 @@ public class BackgroundSoundService extends Service {
         player.setLooping(true);
         player.setVolume(30,30);
         player.start();
+        isSoundPaused = false;
     }
 
 
@@ -97,10 +100,38 @@ public class BackgroundSoundService extends Service {
     public void stop(){
         if(player != null){
             try {
-                if(player.isPlaying())
+                if(player.isPlaying()) {
                     player.stop();
+                    isSoundPaused = false;
+                }
                 player.release();
                 player = null;
+            }
+            catch (Exception e){}
+        }
+    }
+
+    public void pause(){
+        if(player != null){
+            try {
+                if(player.isPlaying()) {
+                    player.pause();
+                    isSoundPaused = true;
+                    //stopForeground(true);
+                }
+            }
+            catch (Exception e){}
+        }
+    }
+
+    public void resume(){
+        if(player != null){
+            try {
+                if(isSoundPaused && !player.isPlaying()) {
+                    player.start();
+                    isSoundPaused = false;
+
+                }
             }
             catch (Exception e){}
         }
@@ -119,6 +150,11 @@ public class BackgroundSoundService extends Service {
                 contextService.stop();
             if(action.equalsIgnoreCase(Strings.PLAY))
                 contextService.play();
+            if(action.equalsIgnoreCase(Strings.PAUSE))
+                contextService.pause();
+            if(action.equalsIgnoreCase(Strings.RESUME))
+                contextService.resume();
+
 
         }
     }
@@ -145,4 +181,6 @@ public class BackgroundSoundService extends Service {
                 .build();
         return notif;
     }
+
+
 }
