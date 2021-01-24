@@ -97,6 +97,7 @@ public class GameWonActivity extends AppCompatActivity {
 
             }
         }
+        updateGame();
         super.onDestroy();
     }
 
