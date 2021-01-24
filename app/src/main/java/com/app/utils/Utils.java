@@ -52,6 +52,7 @@ public class Utils {
 
     public static double[] stageWeight = new double[]{40d,55d,70d,80d,90d};
     public static  Map<String,List<Word>> apiWords =null;
+    public static Map<String,List<Word>> innerGameWords =null;
 
     public static boolean testIfStrIsInt(String str){
         try {
@@ -400,6 +401,7 @@ public class Utils {
         }
         //if(stage<4)
             words.addAll(uniqWords);
+       Collections.shuffle(words);
        Collections.shuffle(words);
         return  words;
    }
