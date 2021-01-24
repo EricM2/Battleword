@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.app.battleword.R;
+import com.app.battleword.listeners.AudioFocusObserver;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
@@ -30,6 +31,7 @@ public class BackgroundSoundService extends Service {
     private Notification notification;
     MediaPlayer player;
     private boolean isSoundPaused;
+    private AudioFocusObserver audioFocusObeserver;
     public IBinder onBind(Intent arg0) {
 
         return null;
@@ -38,6 +40,7 @@ public class BackgroundSoundService extends Service {
     public void onCreate() {
         super.onCreate();
         player =null;
+        audioFocusObeserver = null;
         isSoundPaused = false;
 
 
@@ -88,10 +91,18 @@ public class BackgroundSoundService extends Service {
         if(player != null){
             stop();
         }
+        if (audioFocusObeserver !=null) {
+            audioFocusObeserver.abandonAudioFocus(this);
+            audioFocusObeserver = null;
+        }
+
         player = MediaPlayer.create(this,R.raw.battleword_generic);
         player.setLooping(true);
         player.setVolume(30,30);
-        player.start();
+
+        audioFocusObeserver = new AudioFocusObserver(player);
+        if(audioFocusObeserver.requestAudioFocus(this))
+            player.start();
         isSoundPaused = false;
     }
 
@@ -103,6 +114,8 @@ public class BackgroundSoundService extends Service {
                 if(player.isPlaying()) {
                     player.stop();
                     isSoundPaused = false;
+                    if(audioFocusObeserver!=null)
+                        audioFocusObeserver.abandonAudioFocus(this);
                 }
                 player.release();
                 player = null;
@@ -117,6 +130,8 @@ public class BackgroundSoundService extends Service {
                 if(player.isPlaying()) {
                     player.pause();
                     isSoundPaused = true;
+                    if(audioFocusObeserver!=null)
+                        audioFocusObeserver.abandonAudioFocus(this);
                     //stopForeground(true);
                 }
             }
@@ -128,8 +143,10 @@ public class BackgroundSoundService extends Service {
         if(player != null){
             try {
                 if(isSoundPaused && !player.isPlaying()) {
-                    player.start();
-                    isSoundPaused = false;
+                    if(audioFocusObeserver !=null && audioFocusObeserver.requestAudioFocus(this)){
+                        player.start();
+                        isSoundPaused = false;
+                    }
 
                 }
             }
