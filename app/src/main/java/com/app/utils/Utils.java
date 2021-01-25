@@ -50,7 +50,7 @@ import java.util.concurrent.Callable;
 
 public class Utils {
 
-    public static double[] stageWeight = new double[]{40d,55d,70d,80d,90d};
+    public static double[] stageWeight = new double[]{50d,55d,70d,80d,95d};
     public static  Map<String,List<Word>> apiWords =null;
     public static Map<String,List<Word>> innerGameWords =null;
 

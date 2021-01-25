@@ -1,7 +1,5 @@
 package com.app.battleword;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,10 +27,11 @@ public class GameMenuActivity extends Activity {
             @Override
             public void onClick(View v) {
                 closeGameActivity();
-                Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
-                Intent i = new Intent(GameMenuActivity.this,GameSetupActivity.class);
-                startActivity(i);
                 Utils.stopSoundGenericService(GameMenuActivity.this);
+                Intent i = new Intent(GameMenuActivity.this,GameSetupActivity.class);
+                i.putExtra(Strings.NEW_GAME,true);
+                Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
+                startActivity(i);
                 finish();
             }
         });

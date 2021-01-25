@@ -58,6 +58,7 @@ public class GameWonActivity extends AppCompatActivity {
             public void onClick(View v) {
                 updateGame();
                 Intent i = new Intent(GameWonActivity.this,GameSetupActivity.class);
+                i.putExtra(Strings.NEW_GAME,true);
                 startActivity(i);
                 finish();
             }
@@ -105,6 +106,7 @@ public class GameWonActivity extends AppCompatActivity {
     public void onBackPressed() {
         updateGame();
         Intent i = new Intent(GameWonActivity.this,GameSetupActivity.class);
+        i.putExtra(Strings.NEW_GAME,true);
         startActivity(i);
         finish();
     }

@@ -67,6 +67,9 @@ public class GameSetupActivity extends AppCompatActivity {
         solitaireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    boolean isNewGame = getIntent().getBooleanExtra(Strings.NEW_GAME,false);
+                    if(isNewGame)
+                        Utils.resetGameStatePreferences(getApplicationContext(),Strings.GAME_STATE_PREF);
                     Intent intent = gameLoadWordIntent();
                     Utils.playSound(getApplicationContext(), R.raw.play_button_sound,false);
 
@@ -110,7 +113,7 @@ public class GameSetupActivity extends AppCompatActivity {
 
     private Intent gameLoadWordIntent(){
         int nextStage = 1;
-        SharedPreferences prefs = this.getSharedPreferences(Strings.GAME_STATE_PREF, 0);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
         if (prefs.contains("stage")) {
              nextStage= prefs.getInt("stage",1);
         }

@@ -30,7 +30,7 @@ public class NextStageActivity extends AppCompatActivity {
         if(savedInstanceState == null) {
             stageProgressFragment = (StageProgressFragment) getSupportFragmentManager().findFragmentById(R.id.game_progress_fragment);
             nextStageSoundPlayer = null;
-            stage = getIntent().getIntExtra("nextStage", 1);
+            stage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY, 1);
             Callable c = new Callable() {
                 @Override
                 public Object call() throws Exception {

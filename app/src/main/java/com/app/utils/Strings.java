@@ -19,6 +19,7 @@ public class Strings {
     public  static String CLOSE_GAME_INTENT_FILTER="closeGameIntentFilter";
     public static  String CHANNEL_ID="com.app.battleword";
     public static String NEXT_STAGE_TO_PLAY="nextStage";
+    public static String NEW_GAME ="new_game";
     public static String POST_SUBSCRIBER_URL = "http://www.leshx.com/battlewordapi/subscriber/add/";
     public static  String GET_WORD_BASE_URL = "http://www.leshx.com/battlewordapi/words/";
 

@@ -1,14 +1,11 @@
 package com.app.battleword;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.app.battleword.R;
 import com.app.utils.Strings;
 import com.app.utils.Utils;
 
@@ -29,10 +26,13 @@ public class LeaveGameActivity extends Activity {
             @Override
             public void onClick(View v) {
                 closeGameActivity();
-                Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
                 Intent i = new Intent(LeaveGameActivity.this,GameSetupActivity.class);
-                startActivity(i);
                 Utils.stopSoundGenericService(LeaveGameActivity.this);
+                i.putExtra(Strings.NEW_GAME,true);
+                Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
+                startActivity(i);
+
+
                 finish();
             }
         });
