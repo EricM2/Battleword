@@ -413,7 +413,10 @@ public class Utils {
         /*if(key.equalsIgnoreCase("stage5"))
             return new Word("test",5,"RAS");
         else*/
-            return words.get(key).get(wordIndex);
+            if(apiWords!=null && apiWords.get(key)!=null && apiWords.get(key).size()>wordIndex)
+                return apiWords.get(key).get(wordIndex);
+            else
+                return words.get(key).get(wordIndex);
    }
 
    public static String getTextScenarioForStage(Context context,int stage){
