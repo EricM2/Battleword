@@ -160,21 +160,21 @@ public class GameEngineService extends LifecycleService  {
 
         }
 
-        if(!isPlaying && countDownTimer == null && currentWordNum< 10){
+        if(!isPlaying && countDownTimer == null && currentWordNum< 10 && !wasPaused){
             try {
 
                 //final long max1 = GameTime.getTime(stage);
                 final long max1 = 8000;
                 final long max = max1 - pausedTime * max1 / 100;
-                if(!wasPaused) {
+                if(pausedTime==0) {
                     Word w = Utils.getNewWord(gameWords, stage, currentWordNum);
                     gameStateViewModel.updateWord(w);
                     String initext = Utils.initScreemFromText(w.getWord(), stage);
                     gameStateViewModel.updateScreenWord(initext);
-                    pausedTime =0;
                 }
-                if(wasPaused)
-                    wasPaused =! wasPaused;
+                else{
+                    pausedTime = 0;
+                }
                 countDownTimer  = new CountDownTimer(max,100) {
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -189,25 +189,28 @@ public class GameEngineService extends LifecycleService  {
 
                     @Override
                     public void onFinish()
-                    {    words +="0";
+                    {
                         gameStateViewModel.updateTimeCompleted(true);
-                        gameStateViewModel.updateWordFound(words);
                         currentWordNum++;
                         stopFiveSecLeftSound();
                         gameStateViewModel.updateAllowWordUpdate(false);
                         (new Handler()).postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if(countDownTimer!=null){
-                                    countDownTimer.cancel();
-                                    countDownTimer = null;
-                                }
-                                gameStateViewModel.updateTimeCompleted(false);
-                                gameStateViewModel.updateAllowWordUpdate(true);
-                                isPlaying = false;
-                                decrementLives();
-                                if (!isGameOver) {
-                                    playGame();
+                                if(!wasPaused) {
+                                    if (countDownTimer != null) {
+                                        countDownTimer.cancel();
+                                        countDownTimer = null;
+                                    }
+                                    gameStateViewModel.updateTimeCompleted(false);
+                                    gameStateViewModel.updateAllowWordUpdate(true);
+                                    isPlaying = false;
+                                    words +="0";
+                                    gameStateViewModel.updateWordFound(words);
+                                    decrementLives();
+                                    if (!isGameOver) {
+                                        playGame();
+                                    }
                                 }
                             }
                         }, 2000);
@@ -533,7 +536,9 @@ public class GameEngineService extends LifecycleService  {
 
     public void resumeGame(){
         if(wasPaused){
+            wasPaused = false;
             playGame();
+
         }
     }
 

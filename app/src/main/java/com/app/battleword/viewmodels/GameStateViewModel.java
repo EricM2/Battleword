@@ -17,9 +17,9 @@ public class GameStateViewModel extends ViewModel {
     private MutableLiveData<String> clickedKey = new MutableLiveData<>();
     private MutableLiveData<Boolean> allowWordUpdate = new MutableLiveData<>(true);
     private MutableLiveData<Boolean> timeCompleted = new MutableLiveData<>(false);
-    private MutableLiveData<Boolean> stageCompleted = new MutableLiveData<>();
-    private MutableLiveData<Boolean> gameWon = new MutableLiveData<>();
-    private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
+    private MutableLiveData<Boolean> stageCompleted = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> gameWon = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> gameOver = new MutableLiveData<>(false);
 
 
 
