@@ -5,10 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <supports-screens android:smallScreens="false"
-        android:normalScreens="true"
+
+    <supports-screens
         android:largeScreens="true"
-        android:xlargeScreens="true"/>
+        android:normalScreens="true"
+        android:smallScreens="false"
+        android:xlargeScreens="true" />
 
     <application
         android:allowBackup="false"
@@ -18,9 +20,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GameMenuActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:screenOrientation="portrait"/>
+        <service
+            android:name=".GameEngineService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".GameMenuActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".BattleActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -50,8 +57,7 @@
             android:name=".GameScenarioActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".PlayerControlActivity"
-            android:screenOrientation="portrait" />
+            android:name=".PlayerControlActivity" />
         <activity android:name=".CountDownActivity" />
         <activity android:name=".GameSetupActivity" />
         <activity android:name=".MainActivity">

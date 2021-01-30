@@ -12,10 +12,12 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.app.battleword.KeyBoardFragment;
+import com.app.battleword.PlayerControlActivity;
 import com.app.battleword.R;
 import com.app.battleword.objects.Letter;
 import com.app.battleword.subscribers.WordFoundSubscriber;
-import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.battleword.viewmodels.WordViewModel;
 import com.app.utils.Touch;
 import com.app.utils.Utils;
 
@@ -30,12 +32,12 @@ public class KeyBoardAdapter extends ArrayAdapter   {
     List<Letter> letters = new ArrayList<>();
     private int numTouches = 0;
     private int currentStage;
-    ScreenTextViewModel screen = null;
+    WordViewModel screen = null;
     Map<Integer,String> keys = Utils.getKeyString();
-    public KeyBoardAdapter(@NonNull Context context, int resource, List<Letter> keyLetters, ScreenTextViewModel screenTextViewModel,int stage) {
+    public KeyBoardAdapter(@NonNull Context context, int resource, List<Letter> keyLetters, WordViewModel wordViewModel, int stage) {
         super(context, resource);
         letters = keyLetters;
-        screen = screenTextViewModel;
+        screen = wordViewModel;
         this.context = context;
         currentStage = stage;
     }
@@ -87,7 +89,10 @@ public class KeyBoardAdapter extends ArrayAdapter   {
         keyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateScreen(screen,(Button)v,position,context);
+                String l = getPressedCharacter(position);
+                if(context!=null)
+                    ((PlayerControlActivity)context).keyClicked(l);
+                //updateScreen(screen,(Button)v,position,context);
             }
 
         });
@@ -96,7 +101,7 @@ public class KeyBoardAdapter extends ArrayAdapter   {
     }
 
 
-    private void updateScreen(ScreenTextViewModel screen, Button button, int position, Context c){
+    private void updateScreen(WordViewModel screen, Button button, int position, Context c){
        String screenText =  screen.getScreenText().getValue();
         String l = getPressedCharacter(position);
         if(!l.isEmpty() && !Utils.isSreenTextComplete(screenText)) {

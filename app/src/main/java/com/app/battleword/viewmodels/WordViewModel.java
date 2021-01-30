@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ScreenTextViewModel extends ViewModel {
+public class WordViewModel extends ViewModel {
    private String requiredText ;
     private MutableLiveData<String> wordHint = new MutableLiveData<>();
     private MutableLiveData<Integer> numTouch = new MutableLiveData<>(new Integer(0));

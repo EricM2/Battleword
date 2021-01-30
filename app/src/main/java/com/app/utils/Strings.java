@@ -1,6 +1,11 @@
 package com.app.utils;
 
 public class Strings {
+    public static final String RESET_TO_ZERO = "reset_to_zero" ;
+    public static final String RESET_TO_LAST_STAGE = "reset_to_last_stage" ;
+    public static final String GAME_STATE_INTENT_FILTER = "game_state_intent_filter";
+    public static final String GAME_ENGINE_ACTION = "game_engine_action" ;
+    public static final String START_GAME_ENGINE ="start_game_engine" ;
     public static String FIRST_TIME_STAGE_PREF="first_time_stage";
     public static String GAME_STATE_PREF="game_state_pref";
     public static String MODE="mode";

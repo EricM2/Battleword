@@ -25,15 +25,16 @@ public class LeaveGameActivity extends Activity {
         startNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Utils.stopService(LeaveGameActivity.this,BackgroundSoundService.class);
+                resetGameServiceToZero();
                 closeGameActivity();
-                Intent i = new Intent(LeaveGameActivity.this,GameSetupActivity.class);
-                Utils.stopSoundGenericService(LeaveGameActivity.this);
-                i.putExtra(Strings.NEW_GAME,true);
-                Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
-                startActivity(i);
-
-
+                startNewGame(1);
+                Utils.stopService(LeaveGameActivity.this,GameEngineService.class);
                 finish();
+
+
+
             }
         });
         continueGameBut.setOnClickListener(new View.OnClickListener() {
@@ -66,4 +67,19 @@ public class LeaveGameActivity extends Activity {
         Intent i = new Intent(Strings.CLOSE_GAME_INTENT_FILTER);
         sendBroadcast(i);
     }
+
+    public void resetGameServiceToZero(){
+        Intent i = new Intent(Strings.GAME_STATE_INTENT_FILTER);
+        i.putExtra(Strings.GAME_ENGINE_ACTION,Strings.RESET_TO_ZERO);
+        sendBroadcast(i);
+    }
+
+    private void startNewGame(int nextStage){
+        Intent i = new Intent(this, GameSetupActivity.class);
+
+        i.putExtra(Strings.NEW_GAME,true);
+        startActivity(i);
+    }
+
+
 }

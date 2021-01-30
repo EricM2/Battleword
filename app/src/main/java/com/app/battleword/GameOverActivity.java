@@ -36,10 +36,15 @@ public class GameOverActivity extends AppCompatActivity {
         playFromZeroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetGameStatePreferences();
-                stopGameOverSound();
 
+                stopGameOverSound();
+                stopSoundBackoundService();
+                resetGameServiceToZero();
+                closeGameActivity();
                 startNewGame(1);
+                stopGameEngineService();
+                finish();
+                //resetGameStatePreferences();
             }
         });
 
@@ -48,23 +53,34 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                int numLifes = Utils.getIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"laststagelives");
+               /* int numLifes = Utils.getIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"laststagelives");
                if (numLifes!=-1)
                     Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"lives",numLifes);
                Utils.saveStringSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"words","");
-               Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"paused_time",0);
+               Utils.saveIntSharedPreferences(getApplicationContext(),Strings.GAME_STATE_PREF,"paused_time",0);*/
 
-               stopGameOverSound();
-                int stage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY,1);
-               startNewGame(stage);
+                stopGameOverSound();
+
+               // stopGameEngineService();
+                stopSoundBackoundService();
+                //startGameEngineService();
+                //int stage = getIntent().getIntExtra(Strings.NEXT_STAGE_TO_PLAY,1);
+                resetGameServiceToLastStage();
+                closeGameActivity();
+                //stopGameEngineService();
+
+               startCountDownActivity();
+               finish();
+
             }
         });
         animate(deadHead);
     }
 
     private void startNewGame(int nextStage){
-        Intent i = new Intent(this, LoadWordsActivity.class);
-        i.putExtra(Strings.NEXT_STAGE_TO_PLAY,nextStage);
+        Intent i = new Intent(this, GameSetupActivity.class);
+
+        i.putExtra(Strings.NEW_GAME,true);
         startActivity(i);
     }
 
@@ -139,4 +155,38 @@ public class GameOverActivity extends AppCompatActivity {
     public void onBackPressed() {
 
     }
+    private void stopSoundBackoundService(){
+        Intent i = new Intent(this, BackgroundSoundService.class);
+        stopService(i);
+    }
+    private void stopGameEngineService(){
+        Intent i = new Intent(this, GameEngineService.class);
+        stopService(i);
+    }
+    private void startCountDownActivity(){
+        Intent i = new Intent(this, CountDownActivity.class);
+        i.putExtra(Strings.START_GAME_ENGINE,true);
+        startActivity(i);
+    }
+    private void startGameEngineService(){
+        Intent i = new Intent(this, GameEngineService.class);
+        startService(i);
+    }
+
+    public void closeGameActivity(){
+        Intent i = new Intent(Strings.CLOSE_GAME_INTENT_FILTER);
+        sendBroadcast(i);
+    }
+
+    public void resetGameServiceToLastStage(){
+        Intent i = new Intent(Strings.GAME_STATE_INTENT_FILTER);
+        i.putExtra(Strings.GAME_ENGINE_ACTION,Strings.RESET_TO_LAST_STAGE);
+        sendBroadcast(i);
+    }
+    public void resetGameServiceToZero(){
+        Intent i = new Intent(Strings.GAME_STATE_INTENT_FILTER);
+        i.putExtra(Strings.GAME_ENGINE_ACTION,Strings.RESET_TO_ZERO);
+        sendBroadcast(i);
+    }
+
 }

@@ -407,6 +407,51 @@ public class Utils {
    }
 
 
+
+    public static Map<String,List<Word>> getWordInnerGameWord(Context c, String language) throws Exception {
+        Set<Word> uniqWords = new HashSet<>();
+        List<Word> words = new ArrayList<>();
+        Map<String, List<Word>> res = new HashMap<>();
+        if (!(language.equalsIgnoreCase("fr") || language.equalsIgnoreCase("en")
+                || language.equalsIgnoreCase("es"))) {
+            throw new Exception("bad language parameter: " + language);
+        } else {
+            for (int stage = 1; stage <= 5; stage++){
+                words = new ArrayList<>();
+                uniqWords = new HashSet<>();
+                //if(stage < 4) {
+                int st = stage >= 4 ? 4 : stage;
+            String fileName = "stage_" + String.valueOf(st) + "_" + language + ".csv";
+            InputStreamReader is = new InputStreamReader(c.getAssets()
+                    .open(fileName));
+
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts.length != 3)
+                    throw new Exception("bad line in " + fileName);
+                else
+                    uniqWords.add(new Word(parts[0].toLowerCase().trim(), Integer.valueOf(parts[1].toLowerCase().trim()), parts[2]));
+
+            }
+                words.addAll(uniqWords);
+                Collections.shuffle(words);
+                Collections.shuffle(words);
+                res.put("stage"+String.valueOf(stage),words);
+        }
+        //if(stage<4)
+
+    }
+        return  res;
+    }
+
+
+
+
+
+
    public static Word getNewWord(Map<String,List<Word>> words,int stage,int wordIndex){
         //int s = stage > 4 ? 4 : stage;
         String key = "stage"+String.valueOf(stage);
@@ -580,6 +625,12 @@ public class Utils {
                     e.printStackTrace();
                 }
                 return res;
+            }
+
+
+            public  static void stopService(Context c , Class serviceClass){
+                    Intent i = new Intent(c, serviceClass);
+                    c.stopService(i);
             }
 
 

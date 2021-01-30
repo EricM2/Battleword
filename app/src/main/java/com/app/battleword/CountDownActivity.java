@@ -27,6 +27,11 @@ public class CountDownActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_count_down);
+        if(savedInstanceState == null){
+            boolean startEngine = getIntent().getBooleanExtra(Strings.START_GAME_ENGINE,false);
+            if(startEngine)
+                startGameEngineService();
+        }
         countDownTextView = findViewById(R.id.count_down_text);
         countDownTimer = new CountDownTimer(5000,1000) {
             @Override
@@ -76,13 +81,17 @@ public class CountDownActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this,nextActivityClass);
         intent.putExtra(Strings.MODE,"solitare");
-        Map<String, List<Word>> gameWords = (Map<String, List<Word>>) getIntent().getSerializableExtra(Strings.GAMEWORDS);
-        intent.putExtra(Strings.GAMEWORDS,(Serializable) gameWords);
+       // Map<String, List<Word>> gameWords = (Map<String, List<Word>>) getIntent().getSerializableExtra(Strings.GAMEWORDS);
+        //intent.putExtra(Strings.GAMEWORDS,(Serializable) gameWords);
         return  intent;
     }
 
     @Override
     public void onBackPressed() {
 
+    }
+    private void startGameEngineService(){
+        Intent i = new Intent(this,GameEngineService.class);
+        startService(i);
     }
 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 
 import com.app.battleword.objects.Word;
 import com.app.battleword.subscribers.WordTimeCompletedSubscriber;
-import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.battleword.viewmodels.WordViewModel;
 import com.app.utils.GameTime;
 import com.app.utils.Limit;
 import com.app.utils.Strings;
@@ -68,7 +69,7 @@ public class GameHeaderFragment extends Fragment   {
     private int currentStage = 1;
     private int currentScore = 0;
     private String score = "0";
-    private ScreenTextViewModel screenTextViewModel;
+    private WordViewModel wordViewModel;
     private String currentScreenText;
     //private boolean[] wordsMask = new boolean[]{};
     private int lastStageLifes = 5;
@@ -86,6 +87,13 @@ public class GameHeaderFragment extends Fragment   {
     private boolean wasPaused = false;
     private Boolean settingBut;
     private boolean isGameOver = false;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,10 +157,10 @@ public class GameHeaderFragment extends Fragment   {
 
             }*/
 
-        setLives(numLifes);
+        /*setLives(numLifes);
         timeProgressBar.setProgress(currenTime);
         stageTextView.setText(String.valueOf(currentStage));
-        scoreTextView.setText(score);
+        scoreTextView.setText(score);*/
         currentScore = Integer.valueOf(score);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,10 +172,10 @@ public class GameHeaderFragment extends Fragment   {
         });
         gameWords =  (Map<String,List<Word>>)getActivity().getIntent().getSerializableExtra(Strings.GAMEWORDS);
 
-        screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
-        screenTextViewModel.updateGameWords(gameWords);
-        screenTextViewModel.updateStage(String.valueOf(currentStage));
-        screenTextViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        wordViewModel = new ViewModelProvider(requireActivity()).get(WordViewModel.class);
+        wordViewModel.updateGameWords(gameWords);
+        wordViewModel.updateStage(String.valueOf(currentStage));
+        wordViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if( Touch.getNumTouches(currentStage)!=-1 && integer >= Touch.getNumTouches(currentStage)){
@@ -179,16 +187,16 @@ public class GameHeaderFragment extends Fragment   {
                             countDownTimer = null;
                             lastTimeValue = 0;
                         }
-                        screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
-                        screenTextViewModel.updateAllowWordUpdate(false);
+                        wordViewModel.updateSecondScreenText(wordViewModel.getRequiredText());
+                        wordViewModel.updateAllowWordUpdate(false);
                         (new Handler()).postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                screenTextViewModel.updateTurnOffSecondScreenText(true);
+                                wordViewModel.updateTurnOffSecondScreenText(true);
                                 lastTimeValue = 0;
                                 updateWorFoundStatus(false,currentWordNum);
                                 if(!isGameOver) {
-                                    screenTextViewModel.updateAllowWordUpdate(true);
+                                    wordViewModel.updateAllowWordUpdate(true);
                                     if(!wasPaused)
                                         findNewWord();
 
@@ -201,7 +209,7 @@ public class GameHeaderFragment extends Fragment   {
             }
         });
 
-        screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 currentScreenText = s;
@@ -226,7 +234,7 @@ public class GameHeaderFragment extends Fragment   {
             }
         });
 
-        screenTextViewModel.getPauseGame().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        wordViewModel.getPauseGame().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 pauseGame(aBoolean);
@@ -234,13 +242,13 @@ public class GameHeaderFragment extends Fragment   {
         });
 
 
-        screenTextViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 stageTextView.setText(s);
             }
         });
-        screenTextViewModel.getGameScore().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel.getGameScore().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 score = s;
@@ -249,10 +257,10 @@ public class GameHeaderFragment extends Fragment   {
         });
 
         /*String iniText = Utils.initScreemFromText(gameText,currentStage);
-        screenTextViewModel.setRequiredText(gameText);
-        screenTextViewModel.initText(iniText);*/
+        wordViewModel.setRequiredText(gameText);
+        wordViewModel.initText(iniText);*/
 
-        if(savedInstanceState== null) {
+       /* if(savedInstanceState== null) {
             if(!isGameOver && !wasPaused)
                 findNewWord();
         }
@@ -264,7 +272,7 @@ public class GameHeaderFragment extends Fragment   {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return  v;
     }
 
@@ -299,7 +307,7 @@ public class GameHeaderFragment extends Fragment   {
     @Override
     public void onResume() {
         super.onResume();
-        if(wasPaused){
+        /*if(wasPaused){
             try {
 
 
@@ -310,7 +318,7 @@ public class GameHeaderFragment extends Fragment   {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
     //@Override
@@ -348,20 +356,20 @@ public class GameHeaderFragment extends Fragment   {
 
     }*/
 
-    @Override
+   /* @Override
     public void onPause() {
         super.onPause();
         score = scoreTextView.getText().toString();
         savePrefs(currentStage,score,words,numLifes,timeProgressBar.getProgress());
         stopGame();
         wasPaused = true;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onDestroy() {
         super.onDestroy();
         savePrefs(currentStage,lastStageScore,"",lastStageLifes,0);
-    }
+    }*/
 
     private void savePrefs(int stage, String score, String words, int numLifes, int pausedTime ) {
         SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences(Strings.GAME_STATE_PREF, 0);
@@ -401,6 +409,39 @@ public class GameHeaderFragment extends Fragment   {
         }
 
 
+    }
+
+    public void setTime(final int time){
+        if(getActivity()!=null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    timeProgressBar.setProgress(time);
+                }
+            });
+        }
+    }
+
+    public void setScore(final int score){
+        if(getActivity()!=null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    scoreTextView.setText(String.valueOf(score));
+                }
+            });
+        }
+    }
+    public void setStage(final int stage){
+        currentStage = stage;
+        if(getActivity()!=null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    stageTextView.setText(String.valueOf(stage));
+                }
+            });
+        }
     }
 
     public void setLives(int num){
@@ -446,12 +487,12 @@ public class GameHeaderFragment extends Fragment   {
                 public void onFinish() {
                     if (currentScreenText != null && !Utils.isSreenTextComplete(currentScreenText)) {
 
-                        screenTextViewModel.updateSecondScreenText(screenTextViewModel.getRequiredText());
-                        screenTextViewModel.updateAllowWordUpdate(false);
+                        wordViewModel.updateSecondScreenText(wordViewModel.getRequiredText());
+                        wordViewModel.updateAllowWordUpdate(false);
                         (new Handler()).postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                screenTextViewModel.updateTurnOffSecondScreenText(true);
+                                wordViewModel.updateTurnOffSecondScreenText(true);
                                 lastTimeValue = 0;
                                 if(countDownTimer!=null){
                                     countDownTimer.cancel();
@@ -459,7 +500,7 @@ public class GameHeaderFragment extends Fragment   {
                                 }
                                 updateWorFoundStatus(false, currentWordNum);
                                 if (!isGameOver) {
-                                    screenTextViewModel.updateAllowWordUpdate(true);
+                                    wordViewModel.updateAllowWordUpdate(true);
                                     if(!wasPaused)
                                         findNewWord();
                                 }
@@ -509,18 +550,18 @@ public class GameHeaderFragment extends Fragment   {
        currentWordNum++;
        if (currentWordNum <= 10) {
            timeProgressBar.setProgress(0);
-           screenTextViewModel.updateCurrentTime(timeProgressBar.getProgress());
+           wordViewModel.updateCurrentTime(timeProgressBar.getProgress());
 
            currentWord = Utils.getNewWord(gameWords,currentStage,currentWordNum-1);
            String gameText =currentWord.getWord();
            currentWordHint = currentWord.getHint();
-           screenTextViewModel.updateWordHint(currentWordHint);
+           wordViewModel.updateWordHint(currentWordHint);
            int stage = Integer.valueOf(stageTextView.getText().toString());
            String newInitWord = Utils.initScreemFromText(gameText,stage);
-           // screenTextViewModel.initText(newInitWord);
-           screenTextViewModel.updateScreenText(newInitWord);
-           screenTextViewModel.setRequiredText(gameText);
-           screenTextViewModel.updateNumTouch(0);
+           // wordViewModel.initText(newInitWord);
+           wordViewModel.updateScreenText(newInitWord);
+           wordViewModel.setRequiredText(gameText);
+           wordViewModel.updateNumTouch(0);
            if(numLifes > 0) {
 
 
@@ -565,7 +606,7 @@ public class GameHeaderFragment extends Fragment   {
                                lastStageLifes = numLifes;
                                lastStageScore = scoreTextView.getText().toString();
 
-                               screenTextViewModel.updateStage(String.valueOf(currentStage));
+                               wordViewModel.updateStage(String.valueOf(currentStage));
                                setAllLedInvisible();
                                getActivity().finish();
                            }
@@ -620,23 +661,7 @@ public class GameHeaderFragment extends Fragment   {
        }.start();
    }
 
-   private void redrawLeds(boolean[] mask){
-       if (mask != null && mask.length> 0){
-           for (int i=0; i<mask.length ;i++){
-               if(mask[i]){
-                   leds[i].setVisibility(View.VISIBLE);
-                   leds[i].setImageResource(R.drawable.word_found_led);
-               }
-               else {
-                   leds[i].setVisibility(View.VISIBLE);
-                   leds[i].setImageResource(R.drawable.word_not_found_led);
-               }
-               }
 
-           }
-       if(mask!=null && mask.length==0)
-           setAllLedInvisible();
-       }
 
        public void gameOver(){
             isGameOver = true;
@@ -650,16 +675,19 @@ public class GameHeaderFragment extends Fragment   {
            Intent intent = new Intent(getActivity(),GameOverActivity.class);
            intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,currentStage);
            startActivity(intent);
-           getActivity().finish();
+           //getActivity().finish();
 
        }
-       private void startNextStageActivity(){
-           stopGame();
-           Intent intent = new Intent(getActivity(), LoadWordsActivity.class);
-           intent.putExtra("mode","solitare");
-           intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,currentStage);
-           stopDingle();
-           startActivity(intent);
+       public void startNextStageActivity(){
+           //stopGame();
+           if(getActivity()!= null) {
+               Intent intent = new Intent(getActivity(), LoadWordsActivity.class);
+               intent.putExtra("mode", "solitare");
+               intent.putExtra(Strings.NEXT_STAGE_TO_PLAY, currentStage);
+               //stopDingle();
+               startActivity(intent);
+           }
+           //getActivity().finish();
        }
 
        private void stopGame(){
@@ -712,7 +740,7 @@ public class GameHeaderFragment extends Fragment   {
      * @param word is like '0101010' 0 is word not found and 1 is word previously found
      */
 
-    private void buildWordLedsFromWord(String word){
+    public void buildWordLedsFromWord(String word){
         int length = word.length();
         if ( length > 0){
             for(int i = 0; i< length; i++){
@@ -737,12 +765,12 @@ public class GameHeaderFragment extends Fragment   {
             {
                 leds[ledIndex].setImageResource(R.drawable.word_found_led);
                 words +="1";
-                screenTextViewModel.wordFoundBluPrint(true);
+                wordViewModel.wordFoundBluPrint(true);
             }
             else {
                 leds[ledIndex].setImageResource(R.drawable.word_not_found_led);
                 words +="0";
-                screenTextViewModel.wordFoundBluPrint(false);
+                wordViewModel.wordFoundBluPrint(false);
                 decrementlifeLife();
                 if(numLifes <= 0){
                     gameOver();
@@ -760,7 +788,7 @@ public class GameHeaderFragment extends Fragment   {
     private  void pauseGame(boolean pause){
         if(pause){
             lastTimeValue =timeProgressBar.getProgress();
-            countDownTimer.cancel();
+            //countDownTimer.cancel();
             wasPaused = true;
 
         }

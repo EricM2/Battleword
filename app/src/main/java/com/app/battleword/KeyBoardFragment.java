@@ -14,7 +14,7 @@ import android.widget.GridView;
 
 import com.app.battleword.adapters.KeyBoardAdapter;
 import com.app.battleword.objects.Letter;
-import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.battleword.viewmodels.WordViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class KeyBoardFragment extends Fragment {
     private KeyBoardAdapter keyBoardAdapter;
     private ScreenFragment screenFragment;
     private FragmentManager fm;
-    private ScreenTextViewModel screenTextViewModel;
+    private WordViewModel wordViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,9 +44,9 @@ public class KeyBoardFragment extends Fragment {
         List<Letter> letters = builtLetters();
         fm = getFragmentManager();
         screenFragment = (ScreenFragment) fm.findFragmentById(R.id.screen_fragment);
-        screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
-        int stage = Integer.valueOf(screenTextViewModel.getGameStage().getValue());
-        keyBoardAdapter = new KeyBoardAdapter(v.getContext(),R.layout.keyboard_items,letters,screenTextViewModel,stage);
+        wordViewModel = new ViewModelProvider(requireActivity()).get(WordViewModel.class);
+        int stage = Integer.valueOf(wordViewModel.getGameStage().getValue());
+        keyBoardAdapter = new KeyBoardAdapter(getActivity(),R.layout.keyboard_items,letters, wordViewModel,stage);
         gridView.setAdapter(keyBoardAdapter);
         return v;
     }
@@ -108,5 +108,7 @@ public class KeyBoardFragment extends Fragment {
         }
         return result;
     }
+
+
 
 }

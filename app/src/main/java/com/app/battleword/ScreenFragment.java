@@ -3,6 +3,7 @@ package com.app.battleword;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 
 import com.app.battleword.adapters.LanguageSpinnerAdapter;
 import com.app.battleword.objects.Letter;
-import com.app.battleword.viewmodels.ScreenTextViewModel;
+import com.app.battleword.viewmodels.WordViewModel;
 import com.app.utils.Touch;
 import com.app.utils.Utils;
 
@@ -34,7 +35,7 @@ public class ScreenFragment extends Fragment  {
     private TextView screenTextView ;
     private TextView secondaryTextView;
     private String gameText ;
-    private ScreenTextViewModel screenTextViewModel;
+    private WordViewModel wordViewModel;
     private Button tipButton;
     private TextView tipTextView;
     private boolean isHintOn;
@@ -42,6 +43,15 @@ public class ScreenFragment extends Fragment  {
     private int touches;
     private TextView touchesLeftTextView;
     private LinearLayout touchesCountLayout;
+    private String screenText;
+    private String hint;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +59,7 @@ public class ScreenFragment extends Fragment  {
         View v =inflater.inflate(R.layout.fragment_screen, container, false);
         screenTextView=v.findViewById(R.id.screen_text);
         secondaryTextView = v.findViewById(R.id.segondary_screen_text);
-        secondaryTextView.setVisibility(View.INVISIBLE);
+        //secondaryTextView.setVisibility(View.INVISIBLE);
         tipButton = v.findViewById(R.id.tip_button);
         tipTextView = v.findViewById(R.id.tip_text);
         touchesLeftTextView = v.findViewById(R.id.touch_left_value);
@@ -57,8 +67,8 @@ public class ScreenFragment extends Fragment  {
         touchesCountLayout = v.findViewById(R.id.touch_left);
         isHintOn = false;
 
-        screenTextViewModel = new ViewModelProvider(requireActivity()).get(ScreenTextViewModel.class);
-        screenTextViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel = new ViewModelProvider(requireActivity()).get(WordViewModel.class);
+        wordViewModel.getScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
 
@@ -70,7 +80,7 @@ public class ScreenFragment extends Fragment  {
 
     );
 
-        screenTextViewModel.getWordHint().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel.getWordHint().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 tipTextView.setText(s);
@@ -78,7 +88,7 @@ public class ScreenFragment extends Fragment  {
         });
 
 
-        screenTextViewModel.getSecondScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel.getSecondScreenText().observe(getViewLifecycleOwner(), new Observer<String>() {
                     @Override
                     public void onChanged(String s) {
 
@@ -91,7 +101,7 @@ public class ScreenFragment extends Fragment  {
                     }
                 }
         );
-        screenTextViewModel.getTurnOffSecondScreenText().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        wordViewModel.getTurnOffSecondScreenText().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean){
@@ -102,7 +112,7 @@ public class ScreenFragment extends Fragment  {
                     secondaryTextView.setVisibility(View.VISIBLE);
             }
         });
-        screenTextViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 currentStage = Integer.valueOf(s);
@@ -114,7 +124,7 @@ public class ScreenFragment extends Fragment  {
             }
         });
 
-        screenTextViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        wordViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if( (currentStage!=-1) && currentStage>=4){
@@ -143,7 +153,7 @@ public class ScreenFragment extends Fragment  {
                 isHintOn = !isHintOn;
             }
         });
-        if(savedInstanceState!=null){
+        /*if(savedInstanceState!=null){
             screenTextView.setText(savedInstanceState.getString("current_text"));
             tipTextView.setText(savedInstanceState.getString("current_hint"));
             secondaryTextView.setText(savedInstanceState.getString("secondary_text"));
@@ -157,7 +167,7 @@ public class ScreenFragment extends Fragment  {
                 closeTipAfter(4000);
             }
 
-        }
+        }*/
 
 
 
@@ -210,6 +220,46 @@ public class ScreenFragment extends Fragment  {
         outState.putString("secondary_text",secondaryTextView.getText().toString());
 
     }
+
+    public void setHint(String hint){
+        this.hint = hint;
+        tipTextView.setText(hint);
+    }
+    public void setScreenText(final String text){
+        if(getActivity()!=null){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    screenTextView.setText(text);
+                }
+            });
+        }
+    }
+
+    public void setSegondaryScreen(final String text){
+        if(getActivity()!=null){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    secondaryTextView.setText("");
+                    Timer t = new Timer();
+                    if(!text.equals("")) {
+                        secondaryTextView.setVisibility(View.VISIBLE);
+                        secondaryTextView.setText(text);
+                        //Utils.setTextViewText(getActivity(), secondaryTextView, text, 30, -1, t);
+                    }
+                    else {
+                        secondaryTextView.setText("");
+                        secondaryTextView.setVisibility(View.INVISIBLE);
+                    }
+
+                }
+            });
+
+
+        }
+    }
+
 
     /* @Override
     public void onWordFound() {

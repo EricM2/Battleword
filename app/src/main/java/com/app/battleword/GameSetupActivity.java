@@ -33,7 +33,7 @@ public class GameSetupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        startGameEngine();
         setContentView(R.layout.activity_game_setup);
         solitaireButton = findViewById(R.id.play_solitaire);
         battleButton = findViewById(R.id.play_battle);
@@ -76,9 +76,11 @@ public class GameSetupActivity extends AppCompatActivity {
                     //stopDingle();
                     stopBackgroundSoundService();
                     startActivity(intent);
+
+                String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
+                String lang = prefCode.split("-")[0];
                 if(Utils.hasInternet(GameSetupActivity.this)){
-                    String prefCode = Utils.getGameLanguage(getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
-                    String lang = prefCode.split("-")[0];
+
                     (new AsyncTask<String, Integer, Map<String, List<Word>>>() {
                         @Override
                         protected Map<String, List<Word>> doInBackground(String... str) {
@@ -92,6 +94,11 @@ public class GameSetupActivity extends AppCompatActivity {
                         }
                     }).execute(lang);
 
+                }
+                try {
+                    Utils.innerGameWords = Utils.getWordInnerGameWord(GameSetupActivity.this,lang);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -173,6 +180,7 @@ public class GameSetupActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         stopBackgroundSoundService();
+        stopGameEngineService();
     }
 
     @Override
@@ -183,6 +191,11 @@ public class GameSetupActivity extends AppCompatActivity {
     private void stopBackgroundSoundService(){
         Intent sound = new Intent(GameSetupActivity.this,BackgroundSoundService.class);
         stopService(sound);
+    }
+
+    private void stopGameEngineService(){
+        Intent engineServiceIntent = new Intent(this,GameEngineService.class);
+        stopService(engineServiceIntent);
     }
 
     public void stopGeneric(){
@@ -216,6 +229,11 @@ public class GameSetupActivity extends AppCompatActivity {
         else
             pauseGeneric();
         super.onWindowFocusChanged(hasFocus);
+    }
+
+    public void startGameEngine(){
+        Intent i = new Intent(this, GameEngineService.class);
+        startService(i);
     }
 
 
