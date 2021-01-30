@@ -45,10 +45,12 @@ public class PlayerControlActivity extends AppCompatActivity {
     private GameStateViewModel gameStateViewModel;
     private int currentStage;
     private boolean wasPaused = false;
+    private Bundle saved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        saved = savedInstanceState;
         setContentView(R.layout.activity_player_control);
         closeGameIntentFilter = new IntentFilter(Strings.CLOSE_GAME_INTENT_FILTER);
         closeGameListener = new CloseGameListener(this);
@@ -104,13 +106,17 @@ public class PlayerControlActivity extends AppCompatActivity {
         if(wasPaused && gameEngineService!=null){
             gameEngineService.resumeGame();
             wasPaused = false;
+
         }
+
+
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(!wasPaused && gameEngineService!=null){
+        if(!wasPaused && gameEngineService!=null ){
             gameEngineService.pauseGame();
             wasPaused = true;
         }
@@ -332,10 +338,17 @@ public class PlayerControlActivity extends AppCompatActivity {
                         gameHeaderFragment.setTime(integer);
                     }
                 });
-                gameEngineService.playGame();
-                Word word  = gameStateViewModel.getWord().getValue();
-                if(word!=null)
-                    screenFragment.setHint(word.getHint());
+                if(wasPaused){
+                    gameEngineService.resumeGame();
+                    wasPaused = false;
+                }
+                else{
+                    gameEngineService.playGame();
+                    Word word  = gameStateViewModel.getWord().getValue();
+                    if(word!=null)
+                        screenFragment.setHint(word.getHint());
+                }
+
             }
         }
 

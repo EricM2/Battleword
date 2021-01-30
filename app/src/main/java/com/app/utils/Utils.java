@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.battleword.BackgroundSoundService;
+import com.app.battleword.GameEngineService;
 import com.app.battleword.R;
 import com.app.battleword.objects.Word;
 
@@ -632,6 +633,8 @@ public class Utils {
                     Intent i = new Intent(c, serviceClass);
                     c.stopService(i);
             }
+
+            public static GameEngineService  gameEngineService = null;
 
 
 
