@@ -10,7 +10,7 @@ public class GameStateViewModel extends ViewModel {
     private MutableLiveData<Integer> time = new MutableLiveData<>(0);
     private MutableLiveData<Integer> score = new MutableLiveData<>(0);
     private MutableLiveData<Word> word = new MutableLiveData<>();
-    private MutableLiveData<Integer> touches = new MutableLiveData<>(30);
+    private MutableLiveData<Integer> touches = new MutableLiveData<>(0);
     private MutableLiveData<String> wordFound = new MutableLiveData<>("");
     private MutableLiveData<Integer> stage = new MutableLiveData<>(1);
     private MutableLiveData<String> screenWord = new MutableLiveData<>("");

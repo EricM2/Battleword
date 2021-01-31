@@ -57,13 +57,33 @@ public class GameWonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateGame();
-                Intent i = new Intent(GameWonActivity.this,GameSetupActivity.class);
-                i.putExtra(Strings.NEW_GAME,true);
-                startActivity(i);
+                Utils.stopService(GameWonActivity.this,BackgroundSoundService.class);
+                resetGameServiceToZero();
+                closeGameActivity();
+                startNewGame(1);
+                Utils.stopService(GameWonActivity.this,GameEngineService.class);
                 finish();
             }
         });
 
+    }
+
+    public void closeGameActivity(){
+        Intent i = new Intent(Strings.CLOSE_GAME_INTENT_FILTER);
+        sendBroadcast(i);
+    }
+
+    public void resetGameServiceToZero(){
+        Intent i = new Intent(Strings.GAME_STATE_INTENT_FILTER);
+        i.putExtra(Strings.GAME_ENGINE_ACTION,Strings.RESET_TO_ZERO);
+        sendBroadcast(i);
+    }
+
+    private void startNewGame(int nextStage){
+        Intent i = new Intent(this, GameSetupActivity.class);
+
+        i.putExtra(Strings.NEW_GAME,true);
+        startActivity(i);
     }
     private void updateGame(){
         Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);

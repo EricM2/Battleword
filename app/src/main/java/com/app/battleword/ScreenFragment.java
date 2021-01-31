@@ -260,6 +260,17 @@ public class ScreenFragment extends Fragment  {
         }
     }
 
+    public void updateTouchesLeft(final int touchesL){
+        if(getActivity()!=null){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    touchesLeftTextView.setText(String.valueOf(touchesL));
+                }
+            });
+        }
+    }
+
 
     /* @Override
     public void onWordFound() {

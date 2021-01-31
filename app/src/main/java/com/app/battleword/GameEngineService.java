@@ -86,6 +86,8 @@ public class GameEngineService extends LifecycleService  {
         gameStateReceiver = new GameStateReceiver(this);
         registerReceiver(gameStateReceiver,gameStateIntentFilter);
         gameStateViewModel = new GameStateViewModel(lives,score,stage);
+        if(stage >=4)
+            gameStateViewModel.getTouches().setValue(Touch.getNumTouches(stage));
         gameStateViewModel.getClickedKey().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -99,8 +101,6 @@ public class GameEngineService extends LifecycleService  {
                 if(Utils.isSreenTextComplete(s)) {
                     if ( gameStateViewModel.getTime().getValue() > 0){
                         gameStateViewModel.updateAllowWordUpdate(false);
-                        words += "1";
-                        gameStateViewModel.updateWordFound(words);
                         currentWordNum++;
                         updatScore(100);
                         if (countDownTimer != null) {
@@ -114,6 +114,10 @@ public class GameEngineService extends LifecycleService  {
                                 gameStateViewModel.updateTimeCompleted(false);
                                 gameStateViewModel.updateAllowWordUpdate(true);
                                 isPlaying = false;
+                                words +="1";
+                                if(stage>=4)
+                                    gameStateViewModel.updateTouches(Touch.getNumTouches(stage));
+                                gameStateViewModel.updateWordFound(words);
                                 if (!isGameOver) {
                                     playGame();
                                 }
@@ -151,6 +155,11 @@ public class GameEngineService extends LifecycleService  {
                 && gameStateViewModel.getGameOver().getValue() ){
             gameStateViewModel.updateGameOver(false);
         }
+        if(gameStateViewModel!=null &&gameStateViewModel.getGameWon().getValue()!=null
+                && gameStateViewModel.getGameWon().getValue() ){
+            gameStateViewModel.updateGameWon(false);
+        }
+
     }
 
     public  void playGame(){
@@ -164,10 +173,11 @@ public class GameEngineService extends LifecycleService  {
             try {
 
                 //final long max1 = GameTime.getTime(stage);
-                final long max1 = 8000;
+                final long max1 = 15000;
                 final long max = max1 - pausedTime * max1 / 100;
                 if(pausedTime==0) {
-                    Word w = Utils.getNewWord(gameWords, stage, currentWordNum);
+                    //Word w = Utils.getNewWord(gameWords, stage, currentWordNum);
+                    Word w = gameWords.get("stage"+stage).get(currentWordNum);
                     gameStateViewModel.updateWord(w);
                     String initext = Utils.initScreemFromText(w.getWord(), stage);
                     gameStateViewModel.updateScreenWord(initext);
@@ -232,11 +242,11 @@ public class GameEngineService extends LifecycleService  {
         else {
             if(currentWordNum == 10){
 
-                if ((currentStage == 4 && getNumWorfound() < Limit.LIMIT_STAGE_4) || (currentStage == 5 && getNumWorfound() < Limit.LIMIT_STAGE_5)) {
+                if ((stage == 4 && getNumWorfound() < Limit.LIMIT_STAGE_4) || (stage == 5 && getNumWorfound() < Limit.LIMIT_STAGE_5)) {
                     //scoreTextView.setText(lastStageScore);
                     gameOver();
                 } else {
-                    if (currentStage < 5) {
+                    if (stage < 5) {
                     if (!isGameOver) {
                         if (stageWinPlayer == null || (stageWinPlayer != null && !stageWinPlayer.isPlaying())){
                             stageWinPlayer = Utils.playSound(GameEngineService.this, R.raw.stage_win_sound, true);
@@ -253,12 +263,14 @@ public class GameEngineService extends LifecycleService  {
                                 gameStateViewModel.updateStage(stage);
                                 gameStateViewModel.updateWordFound(words);
                                 gameStateViewModel.updateTime(0);
-                                gameStateViewModel.updateTouches(30);
+                                if(stage >= 4)
+                                    gameStateViewModel.updateTouches(Touch.getNumTouches(stage));
                                 gameStateViewModel.updateTimeCompleted(false);
                                 gameWords = null;
                                 startNextStageActivity();
                                 lastStageLifes = lives;
                                 lastStageScore = String.valueOf(score);
+
                                 gameStateViewModel.updateStageCompleted(false);
 
 
@@ -271,14 +283,22 @@ public class GameEngineService extends LifecycleService  {
 
 
                 } else {
-                    if (currentStage == 5) {
+                    if (stage == 5) {
                         if (!isGameOver) {
-                            Intent gameWonIntent = new Intent(GameEngineService.this, GameWonActivity.class);
+                            /*Intent gameWonIntent = new Intent(GameEngineService.this, GameWonActivity.class);
                             startActivity(gameWonIntent);
                             Intent soundServiceIntent = new Intent(GameEngineService.this, BackgroundSoundService.class);
-                            stopService(soundServiceIntent);
+                            stopService(soundServiceIntent);*/
                             stopStageWinSound();
                             stopFiveSecLeftSound();
+                            stopGame();
+                            (new Handler()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    gameStateViewModel.updateGameWon(true);
+                                }
+                            },1000);
+
 
                         }
                     }
@@ -292,7 +312,11 @@ public class GameEngineService extends LifecycleService  {
 
     private void loadWords(int stage){
         gameWords = new HashMap<>();
-        if(Utils.apiWords!=null && Utils.apiWords.get("stage"+String.valueOf(stage))!=null
+        List<Word> ws = new ArrayList<>();
+        for (int i=1; i<=10;i++ )
+            ws.add(new Word("test",stage,"test"));
+        gameWords.put("stage"+stage,ws);
+        /*if(Utils.apiWords!=null && Utils.apiWords.get("stage"+String.valueOf(stage))!=null
                 && Utils.apiWords.get("stage"+String.valueOf(stage)).size()>= 10) {
             gameWords.put("stage"+String.valueOf(stage),Utils.apiWords.get("stage"+String.valueOf(stage)));
 
@@ -312,7 +336,7 @@ public class GameEngineService extends LifecycleService  {
                 Log.d("Exception", e.getMessage());
             }
 
-        }
+        }*/
     }
 
 
@@ -352,9 +376,9 @@ public class GameEngineService extends LifecycleService  {
             String screenText =  gameStateViewModel.getScreenWord().getValue();
             if(!key.isEmpty() && !Utils.isSreenTextComplete(screenText)) {
                 numTouches = gameStateViewModel.getTouches().getValue();
-                numTouches++;
+                numTouches--;
                 if (gameStateViewModel.getAllowWordUpdate().getValue()) {
-                    if (Touch.getNumTouches(stage) != -1 && numTouches <= Touch.getNumTouches(stage)) {
+                    if (Touch.getNumTouches(stage) != -1 && numTouches >= 0) {
                         Log.d("KEY_PRESSED", key);
                         //Toast.makeText(getContext(), l, Toast.LENGTH_SHORT).show();
                         String newString = Utils.putCharInScreenText(key, gameStateViewModel.getWord().getValue().getWord(), screenText, this);
@@ -369,6 +393,36 @@ public class GameEngineService extends LifecycleService  {
                             Log.d("NEW_STRING", newString);
                             gameStateViewModel.updateScreenWord(newString);
                         }
+                        else{
+
+                            gameStateViewModel.updateTimeCompleted(true);
+                            currentWordNum++;
+                            gameStateViewModel.updateAllowWordUpdate(false);
+                            countDownTimer.cancel();
+
+                            (new Handler()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(!wasPaused) {
+                                        if (countDownTimer != null) {
+                                            countDownTimer.cancel();
+                                            countDownTimer = null;
+                                        }
+                                        gameStateViewModel.updateTimeCompleted(false);
+                                        gameStateViewModel.updateAllowWordUpdate(true);
+                                        gameStateViewModel.updateTouches(Touch.getNumTouches(stage));
+                                        isPlaying = false;
+                                        words +="0";
+                                        gameStateViewModel.updateWordFound(words);
+                                        decrementLives();
+                                        if (!isGameOver) {
+                                            playGame();
+                                        }
+                                    }
+                                }
+                            }, 2000);
+                        }
+
                     }
                 }
             }

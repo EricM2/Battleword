@@ -664,20 +664,31 @@ public class GameHeaderFragment extends Fragment   {
 
 
        public void gameOver(){
-            isGameOver = true;
+       if(getActivity()!=null) {
+           isGameOver = true;
            stopStageWinSound();
            stopFiveSecLeftSound();
            stopDingle();
            stopGame();
-           numLifes= lastStageLifes;
-           words ="";
+           numLifes = lastStageLifes;
+           words = "";
            score = lastStageScore;
-           Intent intent = new Intent(getActivity(),GameOverActivity.class);
-           intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,currentStage);
+           Intent intent = new Intent(getActivity(), GameOverActivity.class);
+           intent.putExtra(Strings.NEXT_STAGE_TO_PLAY, currentStage);
            startActivity(intent);
-           //getActivity().finish();
+       }
 
        }
+
+    public void gameWon(){
+       if(getActivity()!=null){
+            Intent intent = new Intent(getActivity(),GameWonActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+       }
+
+
+    }
        public void startNextStageActivity(){
            //stopGame();
            if(getActivity()!= null) {

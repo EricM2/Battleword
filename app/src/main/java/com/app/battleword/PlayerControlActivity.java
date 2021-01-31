@@ -22,6 +22,7 @@ import com.app.battleword.objects.Word;
 import com.app.battleword.viewmodels.GameStateViewModel;
 import com.app.battleword.viewmodels.WordViewModel;
 import com.app.utils.Strings;
+import com.app.utils.Touch;
 import com.app.utils.Utils;
 
 import java.util.concurrent.Callable;
@@ -259,7 +260,7 @@ public class PlayerControlActivity extends AppCompatActivity {
             if(gameEngineService != null){
                 gameStateViewModel = gameEngineService.getGameStateViewModel();
                 String words = gameStateViewModel.getWordFound().getValue();
-                int stage = gameStateViewModel.getStage().getValue();
+                final int stage = gameStateViewModel.getStage().getValue();
                 int time = gameStateViewModel.getTime().getValue();
                 int score = gameStateViewModel.getScore().getValue();
 
@@ -272,6 +273,13 @@ public class PlayerControlActivity extends AppCompatActivity {
                 gameHeaderFragment.setLives(lives);
                 gameHeaderFragment.setScore(score);
                 gameHeaderFragment.setTime(time);
+                gameStateViewModel.getGameWon().observe(gameEngineService, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        if(aBoolean)
+                            gameHeaderFragment.gameWon();
+                    }
+                });
                 gameStateViewModel.getGameOver().observe(gameEngineService, new Observer<Boolean>() {
                     @Override
                     public void onChanged(Boolean aBoolean) {
@@ -336,6 +344,12 @@ public class PlayerControlActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(Integer integer) {
                         gameHeaderFragment.setTime(integer);
+                    }
+                });
+                gameStateViewModel.getTouches().observe(gameEngineService, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        screenFragment.updateTouchesLeft(integer);
                     }
                 });
                 if(wasPaused){
