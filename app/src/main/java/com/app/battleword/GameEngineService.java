@@ -172,8 +172,8 @@ public class GameEngineService extends LifecycleService  {
         if(!isPlaying && countDownTimer == null && currentWordNum< 10 && !wasPaused){
             try {
 
-                //final long max1 = GameTime.getTime(stage);
-                final long max1 = 15000;
+                final long max1 = GameTime.getTime(stage);
+                //final long max1 = 15000;
                 final long max = max1 - pausedTime * max1 / 100;
                 if(pausedTime==0) {
                     //Word w = Utils.getNewWord(gameWords, stage, currentWordNum);
@@ -312,11 +312,11 @@ public class GameEngineService extends LifecycleService  {
 
     private void loadWords(int stage){
         gameWords = new HashMap<>();
-        List<Word> ws = new ArrayList<>();
+        /*List<Word> ws = new ArrayList<>();
         for (int i=1; i<=10;i++ )
             ws.add(new Word("test",stage,"test"));
-        gameWords.put("stage"+stage,ws);
-        /*if(Utils.apiWords!=null && Utils.apiWords.get("stage"+String.valueOf(stage))!=null
+        gameWords.put("stage"+stage,ws);*/
+        if(Utils.apiWords!=null && Utils.apiWords.get("stage"+String.valueOf(stage))!=null
                 && Utils.apiWords.get("stage"+String.valueOf(stage)).size()>= 10) {
             gameWords.put("stage"+String.valueOf(stage),Utils.apiWords.get("stage"+String.valueOf(stage)));
 
@@ -336,7 +336,7 @@ public class GameEngineService extends LifecycleService  {
                 Log.d("Exception", e.getMessage());
             }
 
-        }*/
+        }
     }
 
 
