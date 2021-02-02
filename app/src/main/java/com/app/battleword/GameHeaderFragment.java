@@ -131,7 +131,7 @@ public class GameHeaderFragment extends Fragment   {
         stageTextView = v.findViewById(R.id.stage_value);
         words = "";
         currentWord = null;
-        setAllLedInvisible();
+        //setAllLedInvisible();
 
         retreiveprefs();
         lastStageLifes = numLifes;
@@ -763,7 +763,7 @@ public class GameHeaderFragment extends Fragment   {
                     if(String.valueOf(word.charAt(i)).equals("0"))
                         leds[i].setImageResource(R.drawable.word_not_found_led);
                 }
-                leds[i].setVisibility(View.VISIBLE);
+                //leds[i].setVisibility(View.VISIBLE);
             }
 
         }

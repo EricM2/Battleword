@@ -161,70 +161,70 @@
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_2"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_3"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_4"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_5"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_6"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_7"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_8"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_9"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_not_found_led" />
+            android:background="@drawable/empty_led" />
 
         <ImageView
             android:id="@+id/word_found_led_10"
             android:layout_width="@dimen/word_led_size_land"
             android:layout_height="@dimen/word_led_size_land"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/word_found_led" />
+            android:background="@drawable/empty_led" />
 
     </LinearLayout>
 

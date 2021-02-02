@@ -40,7 +40,7 @@ public class PlayerControlActivity extends AppCompatActivity {
     private CloseGameListener closeGameListener;
     private IntentFilter closeGameIntentFilter;
     private boolean isAppWentToBg;
-    private boolean  isWindowFocused ;
+    private boolean  isWindowFocused = false ;
     private GameEngineService gameEngineService;
     private boolean mBound;
     private GameStateViewModel gameStateViewModel;
@@ -69,10 +69,12 @@ public class PlayerControlActivity extends AppCompatActivity {
             if(savedInstanceState == null ) {
                 Intent intent1 = new Intent(getApplicationContext(), BackgroundSoundService.class);
                 startService(intent1);
+                isWindowFocused = true;
             }
 
             if(savedInstanceState!=null){
                 wasPaused = savedInstanceState.getBoolean("was_paused");
+                isWindowFocused = savedInstanceState.getBoolean("is_focused");
             }
         //}
         /*dingleCallable = new Callable() {
@@ -127,6 +129,7 @@ public class PlayerControlActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putBoolean("was_paused",wasPaused);
+        outState.putBoolean("is_focused",isWindowFocused);
         super.onSaveInstanceState(outState);
 
     }
@@ -332,6 +335,11 @@ public class PlayerControlActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(Integer integer) {
                         gameHeaderFragment.setStage(integer);
+                        if(integer >= 4)
+                            screenFragment.enableToucheCountLayout(true);
+                        else
+                            screenFragment.enableToucheCountLayout(false);
+
                     }
                 });
                 gameStateViewModel.getScore().observe(gameEngineService, new Observer<Integer>() {
@@ -352,7 +360,7 @@ public class PlayerControlActivity extends AppCompatActivity {
                         screenFragment.updateTouchesLeft(integer);
                     }
                 });
-                if(wasPaused){
+                if(wasPaused && isWindowFocused){
                     gameEngineService.resumeGame();
                     wasPaused = false;
                 }

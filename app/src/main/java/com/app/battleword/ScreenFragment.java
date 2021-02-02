@@ -112,7 +112,7 @@ public class ScreenFragment extends Fragment  {
                     secondaryTextView.setVisibility(View.VISIBLE);
             }
         });
-        wordViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        /*wordViewModel.getGameStage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 currentStage = Integer.valueOf(s);
@@ -122,7 +122,8 @@ public class ScreenFragment extends Fragment  {
                     touchesCountLayout.setVisibility(View.INVISIBLE);
 
             }
-        });
+        });*/
+
 
         wordViewModel.getNumTouch().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -231,6 +232,20 @@ public class ScreenFragment extends Fragment  {
                 @Override
                 public void run() {
                     screenTextView.setText(text);
+                }
+            });
+        }
+    }
+
+    public void enableToucheCountLayout(final  boolean enable){
+        if(getActivity()!=null){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(enable)
+                        touchesCountLayout.setVisibility(View.VISIBLE);
+                    else
+                        touchesCountLayout.setVisibility(View.INVISIBLE);
                 }
             });
         }

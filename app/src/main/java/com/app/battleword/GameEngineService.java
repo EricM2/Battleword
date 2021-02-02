@@ -218,6 +218,8 @@ public class GameEngineService extends LifecycleService  {
                                     words +="0";
                                     gameStateViewModel.updateWordFound(words);
                                     decrementLives();
+                                    if(stage >= 4)
+                                        gameStateViewModel.updateTouches(Touch.getNumTouches(stage));
                                     if (!isGameOver) {
                                         playGame();
                                     }
