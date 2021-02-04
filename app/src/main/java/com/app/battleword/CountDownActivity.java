@@ -21,7 +21,7 @@ public class CountDownActivity extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
     private TextView countDownTextView;
-    private long currentCount;
+    private long currentCount=5l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,10 @@ public class CountDownActivity extends AppCompatActivity {
                 startGameEngineService();
         }
         countDownTextView = findViewById(R.id.count_down_text);
-        countDownTimer = new CountDownTimer(5000,1000) {
+        if(savedInstanceState!=null)
+            currentCount = savedInstanceState.getLong("count");
+         long init = 5000 - (5-currentCount)*1000;
+        countDownTimer = new CountDownTimer(init,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 currentCount = millisUntilFinished/1000;
@@ -64,7 +67,17 @@ public class CountDownActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         if(countDownTimer!=null)
             countDownTimer.cancel();
+        outState.putLong("count",currentCount);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(countDownTimer!=null){
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+        super.onDestroy();
     }
 
     @Override

@@ -106,10 +106,29 @@ public class GameSetupActivity extends AppCompatActivity {
         battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(GameSetupActivity.this,BattleActivity.class);
-                startActivity(i);
+                if(isFirstTimeBattleMode())
+                    startBattleScenario();
+                else
+                    startGameLinkActivity();
+                /*Intent i = new Intent(GameSetupActivity.this,BattleActivity.class);
+                startActivity(i);*/
             }
         });
+    }
+
+    private void startGameLinkActivity(){
+        Intent i = new Intent(this, GameLinkActivity.class);
+        i.putExtra(Strings.MODE,Strings.BATTLE);
+        startActivity(i);
+    }
+    private void startBattleScenario(){
+        Intent i = new Intent(this, BattleScenarioActivity.class);
+        i.putExtra(Strings.MODE,Strings.BATTLE);
+        startActivity(i);
+    }
+
+    private boolean isFirstTimeBattleMode(){
+        return false;
     }
 
     @Override
@@ -125,7 +144,7 @@ public class GameSetupActivity extends AppCompatActivity {
              nextStage= prefs.getInt("stage",1);
         }
         Intent intent = new Intent(this,LoadWordsActivity.class);
-        intent.putExtra(MODE,"solitare");
+        intent.putExtra(Strings.MODE,Strings.SOLITAIRE);
         intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,nextStage);
         return  intent;
     }
