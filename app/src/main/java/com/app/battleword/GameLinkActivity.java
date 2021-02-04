@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.utils.Strings;
+import com.app.utils.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.dynamiclinks.DynamicLink;
@@ -78,9 +79,10 @@ public class GameLinkActivity extends AppCompatActivity {
     private void generateGameLink(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Create a new user with a first and last name
-        Map<String, Object> game = new HashMap<>();
-        game.put("status", "active");
-        game.put("created", new Date());
+        final Map<String, Object> game = new HashMap<>();
+        game.put(Strings.GAME_ID, Utils.generateGameId());
+        game.put(Strings.GAME_STATUS, Strings.ACTIVE);
+        game.put(Strings.CREATED, new Date());
 
 
 // Add a new document with a generated ID
@@ -91,11 +93,10 @@ public class GameLinkActivity extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
 
                          gameId=documentReference.getId();
-                         String link1 = Strings.DOMAIN_URI_PREFIX+"/?gameid="+gameId;
+                         String link1 = Strings.DOMAIN_URI_PREFIX+"/?gameid="+game.get(Strings.GAME_ID);
                          Uri uri = buildLink(link1);
                          link = uri.toString();
                          linkTextView.setText(link);
-
 
                     }
                 })

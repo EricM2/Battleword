@@ -47,6 +47,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 
 public class Utils {
@@ -636,6 +637,10 @@ public class Utils {
 
             public static GameEngineService  gameEngineService = null;
 
+
+        public static String generateGameId(){
+            return UUID.randomUUID().toString();
+        }
 
 
 

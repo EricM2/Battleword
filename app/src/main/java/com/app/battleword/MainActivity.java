@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
     private void startPseudoActivity(){
         Intent intent=  new Intent(this,PseudoSetupActivity.class);
         if(link!=null)
-            intent.putExtra("link",link.toString());
+            intent.putExtra(Strings.GAME_LINK,link.toString());
         startActivity(intent);
 
     }
