@@ -547,6 +547,7 @@ public class GameEngineService extends LifecycleService  {
     private void decrementLives(){
         if( lives < 10 && lives > 0 ){
             lives--;
+            Utils.playSound(this,R.raw.life_lost_sound,false);
             if(lives== 0)
                 gameOver();
             else
@@ -618,6 +619,8 @@ public class GameEngineService extends LifecycleService  {
     public void resetToZero(){
         score = 0;
         lives = 5;
+        lastStageLifes = lives;
+        lastStageScore = String.valueOf(score);
         stage = 1;
         words = "";
         pausedTime = 0;

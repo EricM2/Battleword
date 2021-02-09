@@ -68,7 +68,7 @@
         android:textColor="@color/colorPrimaryLight"
         android:textSize="30dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/game_button_background"
+        android:background="@drawable/dark_transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

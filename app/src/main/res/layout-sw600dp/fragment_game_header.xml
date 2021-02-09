@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="230dp"
     android:background="@drawable/header_background"
     tools:context=".GameHeaderFragment">
 
@@ -274,5 +274,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/stage_container"
         app:layout_constraintTop_toBottomOf="@id/time_progressbar" />
-
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:id="@+id/langauge"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="20dp"
+        android:textSize="@dimen/stage_text_size"
+        app:layout_constraintTop_toBottomOf="@id/word_found_led_container"
+        android:text="@string/language"
+        android:fontFamily="@font/snapitc"
+        android:textColor="@color/colorSegondary"/>
+    <ImageView
+        android:id="@+id/lang_flag"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        app:layout_constraintStart_toEndOf="@id/langauge"
+        app:layout_constraintTop_toTopOf="@id/langauge"
+        app:layout_constraintBottom_toBottomOf="@id/langauge"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/france_flag"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

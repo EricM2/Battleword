@@ -87,6 +87,8 @@ public class GameHeaderFragment extends Fragment   {
     private boolean wasPaused = false;
     private Boolean settingBut;
     private boolean isGameOver = false;
+    private ImageView languageImage;
+    private int lang_flag_id;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,6 +101,8 @@ public class GameHeaderFragment extends Fragment   {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_game_header, container, false);
+        String prefCode = Utils.getGameLanguage(getActivity().getApplicationContext(), Strings.GAME_LANGUAGE_PREF, Strings.LANGUAGE_PREF);
+        lang_flag_id =Utils.getLangFlagFromCode(prefCode);
         fiveSecLeft = false;
         fiveSecLeftPlayer = null;
         stageWinPlayer = null;
@@ -129,6 +133,8 @@ public class GameHeaderFragment extends Fragment   {
         settingsButton = v.findViewById(R.id.settings_button);
         scoreTextView  = v.findViewById(R.id.score);
         stageTextView = v.findViewById(R.id.stage_value);
+        languageImage = v.findViewById(R.id.lang_flag);
+        languageImage.setImageResource(lang_flag_id);
         words = "";
         currentWord = null;
         //setAllLedInvisible();

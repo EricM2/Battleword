@@ -14,7 +14,8 @@ public class Strings {
     public static String LANGUAGE_PREF="language_pref";
     public static String FIRST_TIME_APP_INSTALLED_PREF= "first_time_pref";
     public  static String FIRST_TIME_APP_KEY = "first_time";
-
+    public static  String BATTLE = "battle";
+    public static String SOLITAIRE = "solitaire";
     public static String SOUND_ACTION="sound_action";
     public  static String STOP = "stop";
     public  static String PLAY = "play";

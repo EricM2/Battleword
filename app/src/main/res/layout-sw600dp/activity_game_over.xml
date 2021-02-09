@@ -62,12 +62,12 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/game_button_background"
+        android:background="@drawable/dark_transparent"
         android:fontFamily="@font/snapitc"
         android:gravity="center"
         android:text="@string/you_loosed_message"
         android:textColor="@color/colorPrimaryLight"
-        android:textSize="30dp"
+        android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
@@ -77,12 +77,12 @@
 
     <ImageView
         android:id="@+id/loosed_head"
-        android:layout_width="104dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="68dp"
+        android:layout_width="190dp"
+        android:layout_height="142dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/loosed_head"
         app:layout_constraintEnd_toEndOf="@id/loosed_message"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="@id/loosed_message"
         app:layout_constraintTop_toTopOf="@id/loosed_message" />
 </androidx.constraintlayout.widget.ConstraintLayout>

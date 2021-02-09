@@ -81,7 +81,7 @@
     <TextView
         android:id="@+id/tip_text"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tip_button"
         app:layout_constraintStart_toStartOf="parent"

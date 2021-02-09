@@ -46,7 +46,10 @@ public class GameMenuActivity extends Activity {
         resetLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopGeneric();
+                Utils.stopService(GameMenuActivity.this,BackgroundSoundService.class);
+                resetGameServiceToZero();
+                closeGameActivity();
+                Utils.stopService(GameMenuActivity.this,GameEngineService.class);
                 Utils.resetGameStatePreferences(getApplicationContext(), Strings.GAME_STATE_PREF);
                 Utils.resetGameStatePreferences(getApplicationContext(), Strings.FIRST_TIME_APP_INSTALLED_PREF);
                 gotoMainActivity();
@@ -62,6 +65,7 @@ public class GameMenuActivity extends Activity {
 
     public void gotoMainActivity(){
         Intent i = new Intent(this,MainActivity.class);
+        i.putExtra(Strings.NEW_GAME,true);
         startActivity(i);
     }
 

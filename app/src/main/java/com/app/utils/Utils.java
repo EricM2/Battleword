@@ -590,7 +590,8 @@ public class Utils {
                     for (int i = 1; i <= 5; i++){
                         String inline = "";
                         List<Word> ws = new ArrayList<>();
-                        URL url = new URL(Strings.GET_WORD_BASE_URL+i+"/10/"+lang+"/");
+                        int k = i==5? 4 : i;
+                        URL url = new URL(Strings.GET_WORD_BASE_URL+k+"/10/"+lang+"/");
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                         conn.setRequestMethod("GET");
@@ -635,6 +636,21 @@ public class Utils {
             }
 
             public static GameEngineService  gameEngineService = null;
+
+    public static int getLangFlagFromCode(String code){
+        String lc = code.toLowerCase();
+        if(lc.contains("fr"))
+            return R.drawable.france_flag;
+        if (lc.contains("es"))
+            return R.drawable.spain_flag;
+        if(lc.contains("gb"))
+            return  R.drawable.uk_flag;
+        if(lc.contains("us"))
+            return  R.drawable.usa_flag;
+        else
+            return 0;
+
+    }
 
 
 

@@ -125,7 +125,7 @@ public class GameSetupActivity extends AppCompatActivity {
              nextStage= prefs.getInt("stage",1);
         }
         Intent intent = new Intent(this,LoadWordsActivity.class);
-        intent.putExtra(MODE,"solitare");
+        intent.putExtra(Strings.MODE,Strings.SOLITAIRE);
         intent.putExtra(Strings.NEXT_STAGE_TO_PLAY,nextStage);
         return  intent;
     }

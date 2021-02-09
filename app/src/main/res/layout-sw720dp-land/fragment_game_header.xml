@@ -274,6 +274,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/word_found_led_container"
         app:layout_constraintTop_toTopOf="@id/word_found_led_container" />
-
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:id="@+id/langauge"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="3dp"
+        android:textSize="@dimen/stage_text_size"
+        app:layout_constraintTop_toBottomOf="@id/word_found_led_container"
+        android:text="@string/language"
+        android:fontFamily="@font/snapitc"
+        android:textColor="@color/colorSegondary"/>
+    <ImageView
+        android:id="@+id/lang_flag"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toEndOf="@id/langauge"
+        app:layout_constraintTop_toTopOf="@id/langauge"
+        app:layout_constraintBottom_toBottomOf="@id/langauge"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/france_flag"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

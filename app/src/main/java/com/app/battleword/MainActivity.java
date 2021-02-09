@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Callable c = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        boolean newGame = getIntent().getBooleanExtra(Strings.NEW_GAME,false);
         boolean isFirstTimeAppInstall = Utils.getBooleanSharedPreferences(this, Strings.FIRST_TIME_APP_INSTALLED_PREF,Strings.FIRST_TIME_APP_KEY,true);
         if(savedInstanceState!=null) {
             firstTimeGameFragment = (FirstTimeGameFragment) getSupportFragmentManager().getFragment(savedInstanceState, "firstTimeGameFragment");
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         else {
             final Intent gameSetupIntent = new Intent(this,GameSetupActivity.class);
+            gameSetupIntent.putExtra(Strings.NEW_GAME,newGame);
+
 
             if (isFirstTimeAppInstall){
                 Utils.saveBooleanSharedPreferences(getApplicationContext(),Strings.FIRST_TIME_APP_INSTALLED_PREF,Strings.FIRST_TIME_APP_KEY,false);

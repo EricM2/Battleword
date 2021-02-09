@@ -238,6 +238,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/settings_button"
         app:layout_constraintVertical_weight="0.3"
         app:layout_constraintStart_toEndOf="@id/word_found_led_container"
         app:layout_constraintTop_toBottomOf="@id/time_progressbar">
@@ -249,18 +250,20 @@
             android:textSize="@dimen/stage_text_size"
             android:layout_gravity="center_vertical"
             android:text="@string/stage"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
             android:fontFamily="@font/snapitc"
             android:textColor="@color/colorSegondary" />
 
         <TextView
             android:id="@+id/stage_value"
-            android:textSize="@dimen/stage_text_size"
             android:layout_width="@dimen/stage_value_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/snapitc"
-            android:textStyle="bold"
-            android:text="5" />
+            android:text="5"
+            android:textSize="@dimen/stage_text_size"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <Button
@@ -273,5 +276,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/stage_container"
         app:layout_constraintTop_toBottomOf="@id/time_progressbar" />
-
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:id="@+id/langauge"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="20dp"
+        android:textSize="@dimen/stage_text_size"
+        app:layout_constraintTop_toBottomOf="@id/word_found_led_container"
+        android:text="@string/language"
+        android:fontFamily="@font/snapitc"
+        android:textColor="@color/colorSegondary"/>
+    <ImageView
+        android:id="@+id/lang_flag"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toEndOf="@id/langauge"
+        app:layout_constraintTop_toTopOf="@id/langauge"
+        app:layout_constraintBottom_toBottomOf="@id/langauge"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/france_flag"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
